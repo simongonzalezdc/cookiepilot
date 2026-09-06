@@ -5,7 +5,9 @@ import react from "@vitejs/plugin-react";
 // (vercel.json / netlify.toml / public/_redirects) so the browser never hits
 // swap.cookiescan.io directly (it sends no CORS headers) and api calls stay origin-relative.
 export default defineConfig({
-  base: "/cookiepilot/",
+  // GH Pages serves under /cookiepilot/ (set VITE_BASE=/cookiepilot/ for that build);
+  // Netlify/Vercel serve at the domain root (default "/").
+  base: process.env.VITE_BASE || "/",
   plugins: [react()],
   server: {
     port: 5183,
