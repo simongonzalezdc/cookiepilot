@@ -12,22 +12,22 @@ export default defineConfig({
       "/explorer-api": {
         target: "https://cookiescan.io",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/explorer-api/, "/api"),
+        rewrite: (p: string) => p.replace(/^\/explorer-api/, "/api"),
       },
       "/swap-api": {
         target: "https://swap.cookiescan.io",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/swap-api/, "/api"),
+        rewrite: (p: string) => p.replace(/^\/swap-api/, "/api"),
       },
       "/agg-api": {
         target: "https://agg.cookiebox.app",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/agg-api/, ""),
+        rewrite: (p: string) => p.replace(/^\/agg-api/, ""),
       },
       "/chain-api": {
         target: "https://api.cookiescan.io",
         changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/chain-api/, ""),
+        rewrite: (p: string) => p.replace(/^\/chain-api/, ""),
       },
     },
   },
