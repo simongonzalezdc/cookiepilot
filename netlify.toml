@@ -1,0 +1,26 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/explorer-api/*"
+  to = "https://cookiescan.io/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/swap-api/*"
+  to = "https://swap.cookiescan.io/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/agg-api/*"
+  to = "https://agg.cookiebox.app/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

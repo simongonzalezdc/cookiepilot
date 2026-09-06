@@ -1,0 +1,10 @@
+/*
+  Options
+  Static order matters: first match wins. These proxy the chain APIs so the
+  browser never needs CORS on swap.cookiescan.io, and SPA routes fall back
+  to index.html.
+
+/explorer-api/*  https://cookiescan.io/api/:splat  200
+/swap-api/*      https://swap.cookiescan.io/api/:splat  200
+/agg-api/*       https://agg.cookiebox.app/:splat  200
+/*               /index.html  200
