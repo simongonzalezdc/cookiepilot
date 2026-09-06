@@ -54,3 +54,12 @@ Panel files: org-hq docs/cfo-corpus/consensus/panel-{astra,grok,sol}.md|.log
 - **AM-5 (all 3): judging-frame contract.** First viewport at 1440×900 AND 390×844 must show: product name, one-line value proposition, live network state, one legible Bite chart, theme toggle top-right (aria-pressed, localStorage-persisted, in both screenshot crops). Dark theme gets its own shadow token 0 8px 24px rgba(0,0,0,.40) + hairline (light token vanishes on cocoa). Icons: one 24px set, 1.5px round-cap stroke (2px @16px), bite/crumb motifs on 6–8 marks only; cookie glyph = favicon/wordmark only.
 
 Consensus state: amendments applied; final approval authority = CEO (panel verdicts superseded by his nod). Next: rebuild to v2 → dual-theme dual-browser render proof → tastecheck-pass gate (SHIP required) → CEO's 3 submission acts.
+
+## SKILL PROTOCOL (CEO order 2026-09-06: "make sure luna uses tastecheck all skills") — BINDING on every edit pass
+Every iteration in the visual ralph loop MUST consult and apply the installed tastecheck skill suite (read each SKILL.md before editing; apply its self-checks while editing; the gate will re-run them):
+- Gate + pipeline map: ~/.agents/skills/tastecheck-pass/SKILL.md
+- Foundations: ~/.agents/skills/color-system/SKILL.md · web-typography · spacing-system · theming
+- Structure/behavior: responsive-layout · component-states · form-ux · empty-states
+- Surface: micro-motion · data-viz · art-direction
+- Verification: a11y-pass · cognitive-a11y · deslop-ui (against THIS spec) · humanize-copy
+Working discipline per pass: fix verdict failures THROUGH these skills' lenses (e.g., type fixes via web-typography rules, token fixes via color-system, state coverage via component-states/empty-states), and name in your commit/summary which skills you applied.
