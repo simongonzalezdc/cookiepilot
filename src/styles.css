@@ -304,6 +304,7 @@ button { font-family: inherit; }
   .hero { padding: 20px 18px 18px; }
   .hero-slot { margin-left: 0; width: 100%; }
   .shell { padding: 0 14px 70px; }
+  .header { flex-wrap: wrap; row-gap: 10px; }
 }
 
 /* ============================================================
