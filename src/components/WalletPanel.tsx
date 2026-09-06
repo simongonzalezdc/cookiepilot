@@ -7,6 +7,7 @@ import { COOK_MINT, API } from "../lib/config";
 import { EmptyState } from "./ui";
 import { fmtNum, fmtUsd, shortAddr, timeAgoIso } from "../lib/format";
 import { CHAIN } from "../lib/config";
+import { IconBox, IconCoin, IconCrumbs, IconWallet } from "./icons";
 
 export function WalletPanel({ onWantConnect }: { onWantConnect: () => void }) {
   const w = useWallet();
@@ -17,7 +18,7 @@ export function WalletPanel({ onWantConnect }: { onWantConnect: () => void }) {
       <div className="card">
         <h3>Your wallet</h3>
         <EmptyState
-          icon="🔌"
+          icon={<IconWallet size={24} />}
           title="No wallet connected"
           body="Connect Nightly (recommended on Cookie Chain) or any standard SVM wallet to see balances, tokens, NFTs and your history."
           action={<button className="btn primary" onClick={onWantConnect}>Connect wallet</button>}
@@ -91,7 +92,7 @@ function TokensCard({ address, balance }: { address: string; balance: number | n
         {accts.loading && rows.length === 0 && <div className="skeleton" style={{ height: 40 }} />}
         {!accts.loading && rows.length === 0 && (
           <EmptyState
-            icon="🪙"
+            icon={<IconCoin size={24} />}
             title="No SPL tokens in this wallet"
             body="Only native COOK. SPL tokens you acquire will appear here automatically."
           />
@@ -129,7 +130,7 @@ function HistoryCard({ address }: { address: string }) {
       {hist.loading && !txs.length && <div className="skeleton" style={{ height: 40 }} />}
       {!hist.loading && !hist.error && txs.length === 0 && (
         <EmptyState
-          icon="📜"
+          icon={<IconCrumbs size={24} />}
           title="No transactions yet for this address"
           body={<>Send a ping from the Transactions panel, or get faucet COOK at <a href={CHAIN.faucet} target="_blank" rel="noreferrer">cookoven.xyz/faucet</a>.</>}
         />
@@ -188,7 +189,7 @@ function NftsCard({ address }: { address: string }) {
       {nfts.error && <div className="warnbox">DAS API unavailable: {nfts.error}</div>}
       {nfts.loading && <div className="skeleton" style={{ height: 60 }} />}
       {!nfts.loading && !nfts.error && items.length === 0 && (
-        <EmptyState icon="🖼" title="No NFTs in this wallet" body="Metaplex assets indexed via the official Cookie Chain DAS API will show up here." />
+        <EmptyState icon={<IconBox size={24} />} title="No NFTs in this wallet" body="Metaplex assets indexed via the official Cookie Chain DAS API will show up here." />
       )}
       {items.length > 0 && (
         <div className="nftgrid">

@@ -5,15 +5,18 @@ import { CHAIN } from "../lib/config";
 import { EmptyState } from "./ui";
 import { fmtNum, shortAddr } from "../lib/format";
 import { lamportsToUi } from "../lib/format";
+import { IconBite, IconCheck, IconClock, IconCookieFull, IconCrumbs, IconCross, IconLock, IconPen, IconSend } from "./icons";
+import type { ReactNode } from "react";
 
-const STAGES: { key: TxTrack["phase"]; label: string }[] = [
-  { key: "signing", label: "Signature" },
-  { key: "sending", label: "Sent" },
-  { key: "processed", label: "Processed" },
-  { key: "confirmed", label: "Confirmed" },
-  { key: "finalized", label: "Finalized" },
+const STAGES: { key: TxTrack["phase"]; label: string; icon: ReactNode }[] = [
+  { key: "signing", label: "Signature", icon: <IconPen size={15} /> },
+  { key: "sending", label: "Sent", icon: <IconSend size={15} /> },
+  { key: "processed", label: "Processed", icon: <IconCrumbs size={15} /> },
+  { key: "confirmed", label: "Confirmed", icon: <IconBite size={15} /> },
+  { key: "finalized", label: "Finalized", icon: <IconCookieFull size={15} /> },
 ];
 
+/** Confirmation tracker — crumb stations with millisecond timings per stage. */
 export function TxTracker({ track, onClear }: { track: TxTrack; onClear?: () => void }) {
   const stageIdx = (p: TxTrack["phase"]) => STAGES.findIndex((s) => s.key === p);
   const cur = track.phase === "failed" ? -1 : stageIdx(track.phase);
@@ -22,19 +25,26 @@ export function TxTracker({ track, onClear }: { track: TxTrack; onClear?: () => 
     <div className="track">
       <div className="head">
         <span>{track.kind}</span>
-        <span style={{ color: "var(--dim)" }}>· {shortAddr(track.signature, 10, 8)}</span>
-        <span style={{ marginLeft: "auto" }}>
-          {track.phase === "failed" ? "❌ failed" : track.phase === "finalized" ? `✅ finalized in ${fmtNum((total ?? 0) / 1000, 2)}s` : "⏳ in flight"}
+        <span style={{ color: "var(--ink-dim)" }}>· {shortAddr(track.signature, 10, 8)}</span>
+        <span style={{ marginLeft: "auto" }} className={`state ${track.phase === "failed" ? "bad" : track.phase === "finalized" ? "ok" : "flying"}`}>
+          {track.phase === "failed" ? (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><IconCross size={13} /> failed</span>
+          ) : track.phase === "finalized" ? (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><IconCheck size={13} /> finalized in {fmtNum((total ?? 0) / 1000, 2)}s</span>
+          ) : (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}><IconClock size={13} /> in flight</span>
+          )}
         </span>
       </div>
-      <div className="stages">
+      <div className="stages" role="img" aria-label={`confirmation: ${track.phase}`}>
         {STAGES.map((s, i) => {
           const done = cur > i || track.phase === "finalized";
           const active = cur === i;
+          const failed = track.phase === "failed" && cur === i;
           const ms = elapsedMs(track, s.key);
           return (
-            <div key={s.key} className={`stage ${done ? "done" : ""} ${active ? "active" : ""}`} style={{ flex: i === 0 ? 0.7 : 1 }}>
-              <div className="bar" />
+            <div key={s.key} className={`stage ${done ? "done" : ""} ${active && !failed ? "active" : ""} ${failed ? "failed" : ""}`} style={{ flex: i === 0 ? 0.7 : 1 }}>
+              <div className="stationicon">{failed ? <IconCross size={15} /> : s.icon}</div>
               {s.label}
               <div className="ms">{ms != null ? `${ms}ms` : active ? "…" : ""}</div>
             </div>
@@ -55,7 +65,7 @@ export function TxPanel() {
   const [mode, setMode] = useState<"transfer" | "ping">("ping");
   const [dest, setDest] = useState("");
   const [amount, setAmount] = useState("0.001");
-  const [memo, setMemo] = useState("cookiepilot ping 🍪");
+  const [memo, setMemo] = useState("cookiepilot ping");
   const [track, setTrack] = useState<TxTrack | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -82,9 +92,13 @@ export function TxPanel() {
 
   return (
     <div className="card" id="send">
-      <h3>Transactions <span className="right">execute on-chain · live confirmation</span></h3>
+      <h3><IconSend size={16} /> Transactions <span className="right">execute on-chain · live confirmation</span></h3>
       {!w.address ? (
-        <EmptyState icon="🔒" title="Connect a wallet to send transactions" body="Everything else on this dashboard is read-only and works without a wallet. Sending requires COOK for the 0.000005 fee." />
+        <EmptyState
+          icon={<IconLock size={24} />}
+          title="Connect a wallet to send transactions"
+          body="Everything else on this dashboard is read-only and works without a wallet. Sending requires COOK for the 0.000005 fee."
+        />
       ) : (
         <>
           <div className="seg" role="tablist" style={{ marginBottom: 14 }}>
@@ -93,8 +107,8 @@ export function TxPanel() {
           </div>
           {mode === "ping" ? (
             <div className="field">
-              <label>Memo text (onscribe on-chain via the Memo program)</label>
-              <input value={memo} maxLength={120} onChange={(e) => setMemo(e.target.value)} placeholder="cookiepilot ping 🍪" />
+              <label>Memo text (inscribed on-chain via the Memo program)</label>
+              <input value={memo} maxLength={120} onChange={(e) => setMemo(e.target.value)} placeholder="cookiepilot ping" />
             </div>
           ) : (
             <>
@@ -112,7 +126,7 @@ export function TxPanel() {
             <button className="btn primary" disabled={busy || !funded} onClick={() => void send()}>
               {busy ? "Sending…" : mode === "ping" ? "Send ping" : "Send transfer"}
             </button>
-            <span className="dim" style={{ fontSize: 12 }}>
+            <span className="dim data" style={{ fontSize: 12.5 }}>
               fee 0.000005 COOK{w.balance != null ? ` · balance ${fmtNum(w.balance, 5)} COOK` : ""}
             </span>
           </div>

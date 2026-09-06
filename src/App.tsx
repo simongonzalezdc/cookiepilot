@@ -14,7 +14,13 @@ import { CHAIN } from "./lib/config";
 import { fetchBridgeStats, BridgeStats } from "./lib/api";
 import { usePoll } from "./hooks/usePoll";
 import { fmtCompact, fmtNum } from "./lib/format";
+import { CookieMark, IconChart, IconLink, IconOven, IconSwap, IconWallet } from "./components/icons";
 
+/**
+ * v2 structure (DESIGN-SYSTEM build contract):
+ * 01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail)
+ * → 05 swap + NL console. First viewport = judging frame.
+ */
 export default function App() {
   const wallet = useWalletInternal();
   const ctx = useMemo(() => wallet, [wallet]);
@@ -26,39 +32,37 @@ export default function App() {
         <StatTiles />
         <BridgeNote />
 
-        <Section no="01" title="Ask CookiePilot" hint="natural language → live chain queries">
-          <AskPanel />
+        <Section no="02" title="Your wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
+          <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
         </Section>
 
-        <Section no="02" title="Analytics" hint="indexer + swap feeds">
+        <Section no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
           <NetworkPanel />
-          <div style={{ height: 16 }} />
+          <div style={{ height: 18 }} />
           <MarketsPanel />
         </Section>
 
-        <Section no="03" title="Live activity" hint="sub-second finality, in the flesh">
+        <Section no="04" title="Live activity" hint="sub-second finality, on the Crumb Trail" icon={<IconOven size={20} />}>
           <div className="grid cols-2">
             <ActivityFeed />
             <TxPanel />
           </div>
         </Section>
 
-        <Section no="04" title="Your wallet" hint="Nightly + any standard SVM wallet">
-          <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
-        </Section>
-
-        <Section no="05" title="Swap" hint="keyless quotes · non-custodial execution">
+        <Section no="05" title="Swap & console" hint="keyless quotes · non-custodial execution · NL chain queries" icon={<IconSwap size={20} />}>
           <SwapPanel />
+          <div style={{ height: 18 }} />
+          <AskPanel />
         </Section>
 
         <footer className="footer">
-          <span>
-            🍪 <strong>CookiePilot</strong> — open-source cockpit for Cookie Chain
+          <span className="brandmark">
+            <CookieMark size={17} /> <strong>CookiePilot</strong> — open-source cockpit for Cookie Chain
           </span>
           <a href={CHAIN.docs} target="_blank" rel="noreferrer">docs</a>
           <a href={CHAIN.explorer} target="_blank" rel="noreferrer">explorer</a>
           <a href={CHAIN.faucet} target="_blank" rel="noreferrer">COOK faucet</a>
-          <a href={CHAIN.bridge} target="_blank" rel="noreferrer">bridge</a>
+          <a href={CHAIN.bridge} target="_blank" rel="noreferrer">bridge <IconLink size={13} /></a>
           <a href={CHAIN.cookieMcp} target="_blank" rel="noreferrer">cookie-mcp</a>
           <span className="spacer" />
           <span className="mono">
@@ -75,7 +79,7 @@ function BridgeNote() {
   if (!data?.totalBridged) return null;
   return (
     <div className="bridgenote">
-      <span className="icon" aria-hidden>🌉</span>
+      <span className="icon" aria-hidden><IconLink size={16} /></span>
       <span>
         <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
         {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.

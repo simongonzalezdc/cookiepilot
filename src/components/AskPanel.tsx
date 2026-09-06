@@ -3,6 +3,7 @@ import { askCookiePilot, NLAnswer } from "../lib/nlq";
 import { useWallet } from "../hooks/useWallet";
 import { EmptyState } from "./ui";
 import { CHAIN } from "../lib/config";
+import { IconConsole } from "./icons";
 
 interface Exchange {
   q: string;
@@ -42,7 +43,7 @@ export function AskPanel() {
   return (
     <div className="card" id="ask">
       <h3>
-        Console <span className="right">deterministic · local · no AI keys</span>
+        <IconConsole size={16} /> Console <span className="right">deterministic · local · no AI keys</span>
       </h3>
       <form
         className="askbox"
@@ -66,7 +67,7 @@ export function AskPanel() {
 
       {exchanges.length === 0 && !busy && (
         <EmptyState
-          icon="🧠"
+          icon={<IconConsole size={24} />}
           title="Your cockpit copilot"
           body="Queries run against the same live APIs as this dashboard — intent matching is deterministic and 100% local. Nothing to configure, nothing to pay."
         />

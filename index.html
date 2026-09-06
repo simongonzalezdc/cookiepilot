@@ -1,17 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d0a06" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FAF3E7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1C1210" />
     <title>CookiePilot — AI-native dashboard for Cookie Chain</title>
     <meta
       name="description"
       content="CookiePilot: live analytics, wallet, transaction explorer, natural-language chain console and swap quotes for Cookie Chain (SVM). Sub-second finality, zero keys, zero spend."
     />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%AA%3C/text%3E%3C/svg%3E" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='17' r='12' fill='%23E85D2F'/%3E%3Ccircle cx='12.6' cy='6' r='5.2' fill='%23FAF3E7'/%3E%3Ccircle cx='11' cy='15' r='1.4' fill='%232B1A12'/%3E%3Ccircle cx='18.5' cy='13' r='1.4' fill='%232B1A12'/%3E%3Ccircle cx='14' cy='21' r='1.4' fill='%232B1A12'/%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/mplus-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/mplus-700.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Light-first dual theme; restore saved choice before first paint (no flash).
+      (function () {
+        try {
+          var t = localStorage.getItem("cookiepilot-theme");
+          if (t !== "light" && t !== "dark") t = "light";
+          document.documentElement.dataset.theme = t;
+          document.body.style.background = t === "dark" ? "#1C1210" : "#FAF3E7";
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body style="background:#0d0a06">
+  <body style="background: #faf3e7">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

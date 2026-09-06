@@ -3,6 +3,7 @@ import { usePoll } from "../hooks/usePoll";
 import { EmptyState, ErrorBox, Loading } from "./ui";
 import { fmtCompact, fmtNum, fmtUsd, pct, shortAddr } from "../lib/format";
 import { useState } from "react";
+import { IconCoin, IconSwap } from "./icons";
 
 function TokenCell({ token }: { token?: { symbol?: string; mint: string } }) {
   if (!token?.symbol) return <span className="dim">{token ? `${token.mint.slice(0, 6)}…` : "—"}</span>;
@@ -49,7 +50,7 @@ export function MarketsPanel() {
         (markets.loading && !pools.length ? (
           <Loading label="loading pools from Cookieswap" />
         ) : pools.length === 0 ? (
-          <EmptyState icon="🌊" title="No pools indexed yet" body="Cookieswap reports zero markets right now — refresh in a moment." />
+          <EmptyState icon={<IconSwap size={24} />} title="No pools indexed yet" body="Cookieswap reports zero markets right now — refresh in a moment." />
         ) : (
           <table className="tbl">
             <thead>
@@ -84,7 +85,7 @@ export function MarketsPanel() {
         (registry.loading && !tokens.length ? (
           <Loading label="loading token registry" />
         ) : tokens.length === 0 ? (
-          <EmptyState icon="🪙" title="No tokens with market cap indexed" />
+          <EmptyState icon={<IconCoin size={24} />} title="No tokens with market cap indexed" />
         ) : (
           <table className="tbl">
             <thead>

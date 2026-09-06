@@ -1,9 +1,10 @@
 import { ReactNode, useState } from "react";
+import { IconCheck, IconCopy, IconCrumbs } from "./icons";
 
-export function EmptyState({ icon = "🫙", title, body, action }: { icon?: string; title: string; body?: ReactNode; action?: ReactNode }) {
+export function EmptyState({ icon, title, body, action }: { icon?: ReactNode; title: string; body?: ReactNode; action?: ReactNode }) {
   return (
     <div className="empty">
-      <div className="icon" aria-hidden>{icon}</div>
+      <div className="icon" aria-hidden>{icon ?? <IconCrumbs size={24} />}</div>
       <div className="title">{title}</div>
       {body && <div>{body}</div>}
       {action && <div style={{ marginTop: 12 }}>{action}</div>}
@@ -38,6 +39,7 @@ export function CopyBtn({ text, label }: { text: string; label?: string }) {
     <button
       className="copybtn"
       title="Copy"
+      aria-label={done ? "Copied" : "Copy"}
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(text);
@@ -48,17 +50,19 @@ export function CopyBtn({ text, label }: { text: string; label?: string }) {
         }
       }}
     >
-      {done ? "✓" : label ?? "⧉"}
+      {done ? <IconCheck size={14} /> : label ?? <IconCopy size={14} />}
     </button>
   );
 }
 
-export function Section({ id, no, title, hint, children }: { id?: string; no?: string; title: string; hint?: string; children: ReactNode }) {
+export function Section({
+  id, no, title, hint, icon, children,
+}: { id?: string; no?: string; title: string; hint?: string; icon?: ReactNode; children: ReactNode }) {
   return (
     <section id={id} className="sect">
       <div className="sect-head">
         {no && <span className="sect-no">{no}</span>}
-        <h2>{title}</h2>
+        <h2>{icon}{title}</h2>
         {hint && <span className="sect-hint">{hint}</span>}
       </div>
       {children}

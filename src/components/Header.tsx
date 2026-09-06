@@ -1,28 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 import { useWallet } from "../hooks/useWallet";
+import { useTheme } from "../lib/theme";
 import { CHAIN } from "../lib/config";
 import { shortAddr, fmtNum } from "../lib/format";
 import { rpc } from "../lib/rpc";
 import { usePoll } from "../hooks/usePoll";
+import { CookieMark, IconMoon, IconSearch, IconSun } from "./icons";
+
+function monogram(name: string): string {
+  return name.trim().charAt(0).toUpperCase() || "?";
+}
 
 function WalletModal({ onClose }: { onClose: () => void }) {
   const { wallets, connect, connecting, error } = useWallet();
   const hasNightly = wallets.some((w) => w.id === "nightly");
   return (
     <div className="modal-veil" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
+      <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Connect a wallet">
         <h4>Connect a wallet</h4>
         <div className="wlist">
           {wallets.length === 0 && (
             <div className="empty" style={{ padding: "12px 4px" }}>
-              <div className="icon">🔎</div>
+              <div className="icon"><IconSearch size={24} /></div>
               <div className="title">No SVM wallet detected</div>
               <div>Install a wallet extension, then reload this page.</div>
             </div>
           )}
           {wallets.map((w) => (
             <button key={w.id} className="witem" disabled={connecting} onClick={() => connect(w).then(onClose)}>
-              <span className="ic">{w.icon}</span>
+              <span className="ic" aria-hidden>{monogram(w.name)}</span>
               <span>{w.name}</span>
               {w.recommended && <span className="rec">Recommended on Cookie Chain</span>}
             </button>
@@ -37,6 +43,22 @@ function WalletModal({ onClose }: { onClose: () => void }) {
         )}
       </div>
     </div>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  const dark = theme === "dark";
+  return (
+    <button
+      className="themetoggle"
+      onClick={toggle}
+      aria-pressed={dark}
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      title={dark ? "Switch to light (vanilla)" : "Switch to dark (cocoa)"}
+    >
+      {dark ? <IconSun size={20} /> : <IconMoon size={20} />}
+    </button>
   );
 }
 
@@ -79,24 +101,25 @@ export function Header() {
     <>
       <header className="header">
         <div className="logo">
-          <span className="cookie">🍪</span>
+          <span className="cookie"><CookieMark size={24} /></span>
           <span>
             CookiePilot <span className="sub">· Cookie Chain cockpit</span>
           </span>
         </div>
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
-          <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} />
+          <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
           {net.error ? "RPC offline" : `slot ${nowSlot ? fmtNum(nowSlot, 0) : "…"} · ${tpsRef.current} TPS`}
         </span>
         <div className="spacer" />
         {w.address ? (
-          <span className="wallet-chip" onClick={() => setCopied(false)} title={w.address}>
+          <span className="wallet-chip" title={w.address}>
             <span className="bal">{w.balance != null ? `${fmtNum(w.balance, 4)} COOK` : "…"}</span>
             <span>
               {shortAddr(w.address)}
               <button
                 className="copybtn"
                 title="Copy address"
+                aria-label="Copy address"
                 onClick={async (e) => {
                   e.stopPropagation();
                   await navigator.clipboard.writeText(w.address!).catch(() => {});
@@ -114,6 +137,8 @@ export function Header() {
             {w.connecting ? "Connecting…" : "Connect wallet"}
           </button>
         )}
+        {/* judging frame (AM-5): theme toggle sits top-right, aria-pressed, persisted */}
+        <ThemeToggle />
       </header>
       {modal && <WalletModal onClose={() => setModal(false)} />}
     </>

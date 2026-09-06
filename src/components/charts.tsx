@@ -1,11 +1,64 @@
-// Hand-rolled SVG charts — no chart library, fast + dependency-free.
-// Colors are applied via style props (not presentation attributes) so CSS
-// variables resolve correctly in Safari and Chrome alike.
+/**
+ * Hand-rolled SVG charts — no chart library, dependency-free.
+ * v2: rendered in measured pixel space (uniform scale) so The Bite
+ * keeps true circular geometry (DESIGN-SYSTEM v2 / AM-3).
+ *
+ * Bite geometry law:
+ *  - one notch max per element, never crossing axes/labels/thresholds/
+ *    the last data point/current value;
+ *  - charts: chord = 10–14% of plot min-dimension, ~40° arc
+ *    (depth = r(1−cos20°) ≈ 6% of r; chord = 2·r·sin20°);
+ *  - meters: bite depth ≤ 8px, on the TRACK, never at the fill endpoint;
+ *  - exact value printed beside every bitten element;
+ *  - max two bitten elements per viewport.
+ */
+import { useEffect, useId, useRef, useState } from "react";
+
+function useWidth<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [w, setW] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      for (const e of entries) setW(e.contentRect.width);
+    });
+    ro.observe(el);
+    setW(el.getBoundingClientRect().width);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, w] as const;
+}
+
+/** ~40°-arc bite from a chord width (chart elements). */
+function biteFromChord(chord: number) {
+  const r = chord / (2 * Math.sin(Math.PI / 9)); // sin20°
+  const depth = r * (1 - Math.cos(Math.PI / 9)); // ≈ 0.0603 r
+  return { r, depth };
+}
+
+interface BiteMaskProps {
+  id: string;
+  w: number;
+  h: number;
+  cx: number;
+  cy: number;
+  r: number;
+}
+/** SVG mask: white plot, black bite circle — the notch. */
+function BiteMask({ id, w, h, cx, cy, r }: BiteMaskProps) {
+  return (
+    <mask id={id} maskUnits="userSpaceOnUse" x="0" y="0" width={w} height={h}>
+      <rect x="0" y="0" width={w} height={h} fill="#fff" />
+      <circle cx={cx} cy={cy} r={r} fill="#000" />
+    </mask>
+  );
+}
 
 export function BarChart({
   data,
-  height = 120,
-  color = "var(--accent)",
+  height = 130,
+  color = "var(--ember)",
   format,
 }: {
   data: { label: string; value: number }[];
@@ -13,36 +66,82 @@ export function BarChart({
   color?: string;
   format?: (n: number) => string;
 }) {
-  if (!data.length) return null;
+  const [ref, w] = useWidth<HTMLDivElement>();
+  const gid = useId().replace(/[^a-zA-Z0-9]/g, "");
+  const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
+  if (!data.length || w < 40) return <div ref={ref} style={{ height, display: "block" }} />;
+
+  const axisH = 16;
+  const plotH = height - axisH;
   const max = Math.max(...data.map((d) => d.value), 1);
-  const w = 100 / data.length;
-  const gradId = `bg${color.replace(/[^a-z0-9]/gi, "")}`;
+  const slot = w / data.length;
+  const barW = slot * 0.64;
+
+  // Bite eligibility (AM-3): dense charts stay unbitten; the bitten bar
+  // is never among the last three points and keeps headroom for the
+  // notch + printed value without crossing the plot top or neighbours.
+  let bite: { i: number; cx: number; top: number; value: number; label: string } | null = null;
+  const minChord = 0.1 * Math.min(w, plotH);
+  const maxChord = 0.14 * Math.min(w, plotH);
+  const chord = Math.min(Math.max(minChord, barW * 0.8), maxChord, barW * 0.8);
+  const geo = biteFromChord(chord);
+  if (barW >= 18 && data.length > 4) {
+    for (let i = data.length - 4; i >= 0; i--) {
+      const h = Math.max(2, (data[i].value / max) * (plotH - 2));
+      const top = plotH - h;
+      // headroom for bite circle + value tag above the bar
+      if (h >= geo.r + 8 && top >= geo.r + 20) {
+        bite = { i, cx: i * slot + slot / 2, top, value: data[i].value, label: data[i].label };
+        break;
+      }
+    }
+  }
+
   return (
-    <div className="chartwrap">
-      <svg viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" style={{ width: "100%", height, display: "block" }}>
+    <div className="chartwrap" ref={ref}>
+      <svg width="100%" height={height} viewBox={`0 0 ${w} ${height}`} style={{ display: "block" }} role="img" aria-label="bar chart">
         <defs>
-          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={`bg${gid}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.95 }} />
             <stop offset="100%" style={{ stopColor: color, stopOpacity: 0.35 }} />
           </linearGradient>
+          {bite && (
+            <BiteMask id={`bm${mid}`} w={w} h={height} cx={bite.cx} cy={bite.top - geo.r + geo.depth} r={geo.r} />
+          )}
         </defs>
         {data.map((d, i) => {
-          const h = Math.max(2, (d.value / max) * (height - 18));
+          const h = Math.max(2, (d.value / max) * (plotH - 2));
+          const x = i * slot + slot * 0.18;
+          const y = plotH - h;
+          const bitten = bite?.i === i;
           return (
             <rect
               key={i}
               className="bar-rect"
-              x={i * w + w * 0.18}
-              y={height - 14 - h}
-              width={w * 0.64}
+              x={x}
+              y={y}
+              width={barW}
               height={h}
-              rx="1.5"
-              style={{ fill: `url(#${gradId})`, opacity: 0.9 }}
+              rx={Math.min(2.5, barW / 3)}
+              mask={bitten ? `url(#bm${mid})` : undefined}
+              style={{ fill: `url(#bg${gid})`, opacity: 0.92 }}
             >
               <title>{`${d.label}: ${format ? format(d.value) : d.value}`}</title>
             </rect>
           );
         })}
+        {/* exact value printed beside the bitten element (AM-3) */}
+        {bite && (
+          <text
+            className="bite-tag"
+            x={Math.min(Math.max(bite.cx, 34), w - 34)}
+            y={Math.max(bite.top - geo.r - 6, 10)}
+            textAnchor="middle"
+          >
+            {`${bite.label} · ${format ? format(bite.value) : bite.value}`}
+          </text>
+        )}
+        <line x1="0" y1={plotH + 0.5} x2={w} y2={plotH + 0.5} style={{ stroke: "var(--line)", strokeWidth: 1 }} />
       </svg>
       <div className="chartaxis">
         <span>{data[0]?.label}</span>
@@ -52,32 +151,40 @@ export function BarChart({
   );
 }
 
-export function Sparkline({ points, height = 46, color = "var(--blue)" }: { points: number[]; height?: number; color?: string }) {
-  if (points.length < 2) return null;
+export function Sparkline({ points, height = 46, color = "var(--ember)" }: { points: number[]; height?: number; color?: string }) {
+  const [ref, w] = useWidth<HTMLDivElement>();
+  const gid = useId().replace(/[^a-zA-Z0-9]/g, "");
+  if (points.length < 2 || w < 20) return <div ref={ref} style={{ height, display: "block" }} />;
   const min = Math.min(...points);
   const max = Math.max(...points);
   const span = max - min || 1;
-  const pts = points.map((p, i) => [(i / (points.length - 1)) * 100, height - 4 - ((p - min) / span) * (height - 8)] as const);
-  const path = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
-  const area = `${path} L100,${height} L0,${height} Z`;
-  const gradId = `sg${color.replace(/[^a-z0-9]/gi, "")}`;
+  const pts = points.map((p, i) => [(i / (points.length - 1)) * w, height - 4 - ((p - min) / span) * (height - 8)] as const);
+  const path = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
+  const area = `${path} L${w},${height} L0,${height} Z`;
   return (
-    <svg viewBox={`0 0 100 ${height}`} preserveAspectRatio="none" style={{ width: "100%", height, display: "block" }}>
-      <defs>
-        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.28 }} />
-          <stop offset="100%" style={{ stopColor: color, stopOpacity: 0 }} />
-        </linearGradient>
-      </defs>
-      <path d={area} style={{ fill: `url(#${gradId})` }} />
-      <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="1.75" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-    </svg>
+    <div ref={ref}>
+      <svg width="100%" height={height} viewBox={`0 0 ${w} ${height}`} style={{ display: "block" }} aria-hidden="true">
+        <defs>
+          <linearGradient id={`sg${gid}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.26 }} />
+            <stop offset="100%" style={{ stopColor: color, stopOpacity: 0 }} />
+          </linearGradient>
+        </defs>
+        <path d={area} style={{ fill: `url(#sg${gid})` }} />
+        <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="1.75" strokeLinecap="round" />
+      </svg>
+    </div>
   );
 }
 
+/**
+ * Horizontal bar meters. When there are ≥2 rows the SECOND row's exposed
+ * TRACK carries the bite (never the fill endpoint; ≤8px depth, meter rule);
+ * the exact value is already printed beside every row.
+ */
 export function HBarList({
   data,
-  color = "var(--accent)",
+  color = "var(--ember)",
   format,
 }: {
   data: { label: string; value: number; sub?: string }[];
@@ -85,19 +192,112 @@ export function HBarList({
   format?: (n: number) => string;
 }) {
   const max = Math.max(...data.map((d) => d.value), 1);
+  const biteIdx = data.length >= 2 ? 1 : -1;
+  const bitePct = biteIdx >= 0 ? (data[biteIdx].value / max) * 100 : 0;
+  const biteX = Math.min(bitePct + 14, 92); // inside exposed track, away from the fill end
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-      {data.map((d, i) => (
-        <div key={i}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
-            <span className="mono" style={{ overflow: "hidden", textOverflow: "ellipsis" }} title={d.label}>{d.sub ?? d.label}</span>
-            <span className="mono" style={{ color: "var(--muted)", fontVariantNumeric: "tabular-nums" }}>{format ? format(d.value) : d.value}</span>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      {data.map((d, i) => {
+        const fillPct = (d.value / max) * 100;
+        const bitten = i === biteIdx;
+        return (
+          <div key={i}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12.5, marginBottom: 4 }}>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis" }} title={d.label}>{d.sub ?? d.label}</span>
+              <span className="data" style={{ color: "var(--ink-dim)" }}>{format ? format(d.value) : d.value}</span>
+            </div>
+            <div
+              style={{
+                height: 7,
+                background: "var(--surface-sunken)",
+                borderRadius: 4,
+                overflow: "hidden",
+                position: "relative",
+                // meter bite: ≤8px deep notch in the exposed track
+                ...(bitten
+                  ? {
+                      WebkitMaskImage: `radial-gradient(circle 7px at ${biteX}% 50%, transparent 6.5px, #000 7px)`,
+                      maskImage: `radial-gradient(circle 7px at ${biteX}% 50%, transparent 6.5px, #000 7px)`,
+                    }
+                  : {}),
+              }}
+            >
+              <div style={{ height: 7, width: `${fillPct}%`, background: color, borderRadius: 4, opacity: 0.92 }} />
+            </div>
           </div>
-          <div style={{ height: 6, background: "var(--bg1)", borderRadius: 3, overflow: "hidden" }}>
-            <div style={{ height: 6, width: `${(d.value / max) * 100}%`, background: color, borderRadius: 3, opacity: 0.9 }} />
-          </div>
-        </div>
-      ))}
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * The Bite ring — hero meter. Bite is cut from the ring body
+ * (the track), offset ≥45° from the fill endpoint so the notch never
+ * touches the current value; exact value printed beside (AM-3).
+ */
+export function BiteRing({
+  percent,
+  size = 148,
+  big,
+  unit,
+  label,
+  sub,
+}: {
+  percent: number;
+  size?: number;
+  big: string;
+  unit?: string;
+  label: string;
+  sub?: string;
+}) {
+  const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
+  const p = Math.max(0, Math.min(100, percent));
+  const stroke = 13;
+  const c = size / 2;
+  const r = (size - stroke) / 2 - 2;
+  // bite size: ~13% of ring bbox chord, depth ≤ 8px (meter rule)
+  const br = size * 0.08;
+  const depth = Math.min(6, size * 0.04);
+  // place the notch ≥45° away from the fill endpoint (never cross current value)
+  const endAngle = (p / 100) * 360;
+  const biteAngle = endAngle + 48;
+  const rad = ((biteAngle - 90) * Math.PI) / 180;
+  const bcx = c + Math.cos(rad) * (r + br - depth);
+  const bcy = c + Math.sin(rad) * (r + br - depth);
+  return (
+    <div className="bitering">
+      <svg className="ring" width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label}: ${big}${unit ?? ""}`}>
+        <defs>
+          <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+            <rect x="0" y="0" width={size} height={size} fill="#fff" />
+            <circle cx={bcx} cy={bcy} r={br} fill="#000" />
+          </mask>
+        </defs>
+        <g mask={`url(#ringbite${mid})`}>
+          <circle cx={c} cy={c} r={r} fill="none" style={{ stroke: "var(--line-ctl)" }} strokeWidth={stroke} />
+          <circle
+            cx={c}
+            cy={c}
+            r={r}
+            fill="none"
+            pathLength={100}
+            strokeDasharray={`${p} ${100 - p}`}
+            transform={`rotate(-90 ${c} ${c})`}
+            style={{ stroke: "var(--ember)" }}
+            strokeWidth={stroke}
+            strokeLinecap="round"
+          />
+        </g>
+      </svg>
+      <div className="bitemeta">
+        <span className="lbl">{label}</span>
+        <span className="big">
+          {big}
+          {unit && <span className="unit"> {unit}</span>}
+        </span>
+        {sub && <span className="sub">{sub}</span>}
+      </div>
     </div>
   );
 }

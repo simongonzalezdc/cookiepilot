@@ -7,6 +7,7 @@ import { useWallet } from "../hooks/useWallet";
 import { TxTracker } from "./TxPanel";
 import { TxTrack } from "../lib/txs";
 import { VersionedTransaction } from "@solana/web3.js";
+import { IconSwap } from "./icons";
 import { connection } from "../lib/txs";
 
 interface TokenOpt extends RegistryToken {
@@ -141,7 +142,7 @@ export function SwapPanel() {
 
   return (
     <div className="card" id="swap">
-      <h3>Quote &amp; execute <span className="right">Cookieswap (Candy Shop) router · keyless quotes</span></h3>
+      <h3><IconSwap size={16} /> Quote &amp; execute <span className="right">Cookieswap (Candy Shop) router · keyless quotes</span></h3>
       <div className="swapgrid">
         <div>
           <TokenSelect value={inTok} onChange={setInTok} />
@@ -183,7 +184,7 @@ export function SwapPanel() {
               <div className="dim" style={{ fontSize: 12, margin: "4px 0 10px" }}>
                 for {fmtNum(Number(quote.multiRoute.totalInAmount) / 10 ** inDec, 4)} {inTok.metadata?.symbol} · min received {fmtNum(minUi ?? 0, 6)} · impact{" "}
                 {quote.multiRoute.combinedPriceImpactPct}% · protocol fee {quote.multiRoute.protocolFeeBps / 100}%
-                {quote.multiRoute.lowLiquidity ? " · ⚠ low liquidity" : ""}
+                {quote.multiRoute.lowLiquidity ? " · low liquidity" : ""}
               </div>
               <div>
                 {quote.multiRoute.segments.map((s, i) => (
@@ -207,7 +208,7 @@ export function SwapPanel() {
           )}
           {!quote && !err && (
             <EmptyState
-              icon="🔁"
+              icon={<IconSwap size={24} />}
               title="Quotes route all Cookie Chain DEX liquidity"
               body="Cookiebox DAMM/CLMM, Cookieswap BAMM and more. Pick tokens and get a keyless quote — execution needs a funded wallet (see faucet)."
             />
