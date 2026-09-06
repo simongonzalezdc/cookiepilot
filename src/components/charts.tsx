@@ -60,11 +60,14 @@ export function BarChart({
   height = 130,
   color = "var(--ember)",
   format,
+  allowBite = true,
 }: {
   data: { label: string; value: number }[];
   height?: number;
   color?: string;
   format?: (n: number) => string;
+  /** AM-3: set false to keep this chart unbitten (viewport bite budget). */
+  allowBite?: boolean;
 }) {
   const [ref, w] = useWidth<HTMLDivElement>();
   const gid = useId().replace(/[^a-zA-Z0-9]/g, "");
@@ -85,7 +88,7 @@ export function BarChart({
   const maxChord = 0.14 * Math.min(w, plotH);
   const chord = Math.min(Math.max(minChord, barW * 0.8), maxChord, barW * 0.8);
   const geo = biteFromChord(chord);
-  if (barW >= 18 && data.length > 4) {
+  if (allowBite && barW >= 18 && data.length > 4) {
     for (let i = data.length - 4; i >= 0; i--) {
       const h = Math.max(2, (data[i].value / max) * (plotH - 2));
       const top = plotH - h;

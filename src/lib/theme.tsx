@@ -23,6 +23,10 @@ export function initialTheme(): Theme {
 
 function applyTheme(t: Theme) {
   document.documentElement.dataset.theme = t;
+  // keep the browser chrome tint in sync with the toggle (not the OS preference)
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((m) => m.setAttribute("content", t === "dark" ? "#1C1210" : "#FAF3E7"));
 }
 
 const ThemeCtx = createContext<{ theme: Theme; toggle: () => void }>({ theme: "light", toggle: () => {} });

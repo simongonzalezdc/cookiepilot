@@ -18,17 +18,17 @@
     <link rel="preload" href="/fonts/mplus-700.woff2" as="font" type="font/woff2" crossorigin />
     <script>
       // Light-first dual theme; restore saved choice before first paint (no flash).
+      // CSS is render-blocking, so data-theme alone guarantees a correct first paint.
       (function () {
         try {
           var t = localStorage.getItem("cookiepilot-theme");
           if (t !== "light" && t !== "dark") t = "light";
           document.documentElement.dataset.theme = t;
-          document.body.style.background = t === "dark" ? "#1C1210" : "#FAF3E7";
         } catch (e) {}
       })();
     </script>
   </head>
-  <body style="background: #faf3e7">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

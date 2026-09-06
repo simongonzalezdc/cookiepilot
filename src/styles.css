@@ -323,7 +323,7 @@ button { font-family: inherit; }
   align-items: center;
   margin-top: 14px;
 }
-.hstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 26px; }
+.hstats { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 22px 26px; }
 .hstat { display: flex; flex-direction: column; gap: 4px; min-width: 0; position: relative; }
 .hstat .hlabel {
   display: inline-flex; align-items: center; gap: 6px;
@@ -332,7 +332,7 @@ button { font-family: inherit; }
 }
 .hstat .hlabel svg { width: 15px; height: 15px; color: var(--ember-text); }
 .hvalue {
-  font-size: clamp(26px, 3vw, 36px); font-weight: 700; letter-spacing: 0;
+  font-size: clamp(24px, 2.1vw, 32px); font-weight: 700; letter-spacing: -0.01em;
   line-height: 1.12; color: var(--ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -432,7 +432,7 @@ button { font-family: inherit; }
   .hero { padding: 20px 18px; }
   .hero-grid { grid-template-columns: 1fr; }
   .hstats { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .hvalue { font-size: 24px; }
+  .hvalue { font-size: 22px; }
   .hero-slot { margin-left: 0; width: 100%; }
   .shell { padding: 0 14px 70px; }
   .header { flex-wrap: wrap; row-gap: 10px; }
