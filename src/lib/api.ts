@@ -60,7 +60,7 @@ export interface CookPrice {
   data: { price: { usd: number; native: number; change24h: number } };
 }
 
-export const fetchCookPrice = () => getJson<CookPrice>(`${API.explorer}/price/cook`);
+export const fetchCookPrice = () => getJson<CookPrice>(`${API.chain}/api/price/cook`);
 
 // ---------- token registry + markets ----------
 
@@ -78,20 +78,67 @@ export interface RegistryToken {
   holderCount?: number;
 }
 
+/** Cookiescan's index exposes a flat token shape; normalize to our nested view. */
+interface FlatToken {
+  mint: string;
+  symbol?: string;
+  name?: string;
+  logoUri?: string;
+  logo?: string;
+  decimals?: number;
+  description?: string;
+  price?: string | number;
+  change24h?: string | number;
+  marketCap?: string | number;
+  volume24h?: string | number;
+  liquidity?: string | number;
+  supply?: string | number;
+  holderCount?: number;
+  holders?: number;
+}
+
+const num = (v: unknown): number | undefined => {
+  if (v === null || v === undefined || v === "") return undefined;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : undefined;
+};
+
+function normalizeToken(t: FlatToken): RegistryToken {
+  const usd = num(t.price);
+  const chg = num(t.change24h);
+  const native = usd != null ? usd : undefined;
+  return {
+    mint: t.mint,
+    metadata: {
+      name: t.name,
+      symbol: t.symbol,
+      logo: t.logoUri ?? t.logo,
+      decimals: t.decimals,
+      description: t.description,
+    },
+    price: usd != null || chg != null ? { usd, native, change24h: chg } : undefined,
+    marketData: {
+      volume24h: num(t.volume24h),
+      liquidity: num(t.liquidity),
+      marketCap: num(t.marketCap),
+      supply: num(t.supply),
+      holderCount: t.holderCount ?? t.holders,
+    },
+    holderCount: t.holderCount ?? t.holders,
+  };
+}
+
 export async function fetchTokenRegistry(): Promise<RegistryToken[]> {
-  const json = await getJson<{ data?: RegistryToken[] } | RegistryToken[]>(
-    `${API.explorer}/tokens`,
-    25_000,
-  );
-  if (Array.isArray(json)) return json;
-  return json.data ?? [];
+  const json = await getJson<FlatToken[] | { data?: FlatToken[] }>(`${API.explorer}/tokens`, 25_000);
+  const arr = Array.isArray(json) ? json : (json.data ?? []);
+  return arr.map(normalizeToken);
 }
 
 export async function searchTokens(query: string, limit = 6): Promise<RegistryToken[]> {
-  const json = await getJson<RegistryToken[]>(
+  const json = await getJson<FlatToken[]>(
     `${API.explorer}/tokens?search=${encodeURIComponent(query)}&limit=${limit}`,
   );
-  return Array.isArray(json) ? json : [];
+  return (Array.isArray(json) ? json : []).map(normalizeToken);
 }
 
 export interface PoolMarket {
@@ -104,7 +151,9 @@ export interface PoolMarket {
 }
 
 export async function fetchMarkets(): Promise<PoolMarket[]> {
-  const json = await getJson<{ markets?: PoolMarket[] } | PoolMarket[]>(`${API.swap}/markets`, 25_000);
+  // Pool/venue feed lives on the Cookiescan API (same source cookie-mcp uses);
+  // swap.cookiescan.io/api/markets is a separate flat token list, not pools.
+  const json = await getJson<{ markets?: PoolMarket[] } | PoolMarket[]>(`${API.chain}/api/markets`, 25_000);
   if (Array.isArray(json)) return json;
   return json.markets ?? [];
 }

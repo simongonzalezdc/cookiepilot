@@ -3,7 +3,7 @@ import { useWallet } from "../hooks/useWallet";
 import { usePoll } from "../hooks/usePoll";
 import { rpc, TokenAccountParsed, AssetItem } from "../lib/rpc";
 import { fetchAddressTxs, fetchTokenRegistry, fetchCookPrice, IndexedTx, RegistryToken } from "../lib/api";
-import { COOK_MINT } from "../lib/config";
+import { COOK_MINT, API } from "../lib/config";
 import { EmptyState } from "./ui";
 import { fmtNum, fmtUsd, shortAddr, timeAgoIso } from "../lib/format";
 import { CHAIN } from "../lib/config";
@@ -163,7 +163,7 @@ function HistoryCard({ address }: { address: string }) {
 function NftsCard({ address }: { address: string }) {
   const nfts = usePoll<AssetItem[]>(
     async () => {
-      const res = await fetch("https://api.cookiescan.io", {
+      const res = await fetch(`${API.chain}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

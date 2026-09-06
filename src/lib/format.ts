@@ -3,24 +3,33 @@ export function shortAddr(a: string, head = 4, tail = 4): string {
   return a.length <= head + tail + 2 ? a : `${a.slice(0, head)}…${a.slice(-tail)}`;
 }
 
-export function fmtNum(n: number | null | undefined, maxFrac = 2): string {
-  if (n === null || n === undefined || Number.isNaN(n)) return "—";
-  const abs = Math.abs(n);
+const N = (v: unknown): number | null => {
+  if (v === null || v === undefined || v === "") return null;
+  const n = typeof v === "number" ? v : Number(v);
+  return Number.isFinite(n) ? n : null;
+};
+
+export function fmtNum(n: number | string | null | undefined, maxFrac = 2): string {
+  const v = N(n);
+  if (v === null) return "—";
+  const abs = Math.abs(v);
   const frac = abs >= 1000 ? 0 : abs >= 1 ? maxFrac : Math.min(9, Math.max(2, maxFrac + 4));
-  return n.toLocaleString("en-US", { maximumFractionDigits: frac });
+  return v.toLocaleString("en-US", { maximumFractionDigits: frac });
 }
 
-export function fmtUsd(n: number | null | undefined): string {
-  if (n === null || n === undefined || Number.isNaN(n)) return "—";
-  const abs = Math.abs(n);
-  if (abs >= 1) return `$${n.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
-  if (abs >= 0.01) return `$${n.toFixed(4)}`;
-  return `$${n.toPrecision(3)}`;
+export function fmtUsd(n: number | string | null | undefined): string {
+  const v = N(n);
+  if (v === null) return "—";
+  const abs = Math.abs(v);
+  if (abs >= 1) return `$${v.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+  if (abs >= 0.01) return `$${v.toFixed(4)}`;
+  return `$${v.toPrecision(3)}`;
 }
 
-export function fmtCompact(n: number | null | undefined): string {
-  if (n === null || n === undefined || Number.isNaN(n)) return "—";
-  return Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(n);
+export function fmtCompact(n: number | string | null | undefined): string {
+  const v = N(n);
+  if (v === null) return "—";
+  return Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(v);
 }
 
 export function timeAgo(unixSec: number | null | undefined): string {
@@ -52,7 +61,8 @@ export function uiToRaw(ui: string | number, decimals: number): string | null {
   return `${int}${frac.padEnd(decimals, "0")}`.replace(/^0+(?=\d)/, "");
 }
 
-export function pct(n: number | null | undefined, digits = 2): string {
-  if (n === null || n === undefined || Number.isNaN(n)) return "—";
-  return `${n >= 0 ? "+" : ""}${n.toFixed(digits)}%`;
+export function pct(n: number | string | null | undefined, digits = 2): string {
+  const v = N(n);
+  if (v === null) return "—";
+  return `${v >= 0 ? "+" : ""}${v.toFixed(digits)}%`;
 }

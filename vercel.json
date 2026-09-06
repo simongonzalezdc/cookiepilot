@@ -4,6 +4,7 @@
     { "source": "/explorer-api/:path*", "destination": "https://cookiescan.io/api/:path*" },
     { "source": "/swap-api/:path*", "destination": "https://swap.cookiescan.io/api/:path*" },
     { "source": "/agg-api/:path*", "destination": "https://agg.cookiebox.app/:path*" },
+    { "source": "/chain-api/:path*", "destination": "https://api.cookiescan.io/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

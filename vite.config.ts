@@ -24,6 +24,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/agg-api/, ""),
       },
+      "/chain-api": {
+        target: "https://api.cookiescan.io",
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/chain-api/, ""),
+      },
     },
   },
   build: {

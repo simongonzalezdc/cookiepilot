@@ -21,6 +21,12 @@
   force = true
 
 [[redirects]]
+  from = "/chain-api/*"
+  to = "https://api.cookiescan.io/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

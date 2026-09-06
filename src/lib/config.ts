@@ -60,4 +60,5 @@ export const API = {
   explorer: "/explorer-api",
   swap: "/swap-api",
   cookieboxAgg: "/agg-api",
+  chain: "/chain-api", // api.cookiescan.io — REST registry + Cookie DAS API
 } as const;

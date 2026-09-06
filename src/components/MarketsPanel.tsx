@@ -109,7 +109,7 @@ export function MarketsPanel() {
           </table>
         ))}
       <div className="dim" style={{ fontSize: 11, marginTop: 8 }}>
-        Pools: Cookieswap (Candy Shop) market feed · Tokens: Cookiescan registry ({fmtNum(registry.data?.length ?? 0, 0)} tokens)
+        Pools: Cookiescan venue feed (Cookiebox DAMM/CLMM, Cookieswap, Raydium…) · Tokens: Cookiescan registry ({fmtNum(registry.data?.length ?? 0, 0)} tokens)
       </div>
     </div>
   );
