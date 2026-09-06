@@ -7,7 +7,7 @@ import { COOK_MINT, API } from "../lib/config";
 import { EmptyState } from "./ui";
 import { fmtNum, fmtUsd, shortAddr, timeAgoIso } from "../lib/format";
 import { CHAIN } from "../lib/config";
-import { IconBox, IconCoin, IconCrumbs, IconWallet } from "./icons";
+import { IconBox, IconCheck, IconCoin, IconCross, IconCrumbs, IconWallet } from "./icons";
 
 export function WalletPanel({ onWantConnect }: { onWantConnect: () => void }) {
   const w = useWallet();
@@ -147,7 +147,7 @@ function HistoryCard({ address }: { address: string }) {
           }
           return (
             <div key={tx.signature} className="txrow">
-              <span className={tx.status === "success" ? "ok" : "bad"}>{tx.status === "success" ? "✓" : "✖"}</span>
+              <span className={tx.status === "success" ? "ok" : "bad"}>{tx.status === "success" ? <IconCheck size={13} /> : <IconCross size={13} />}</span>
               <span>
                 <a className="sig" href={`${CHAIN.explorer}/tx/${tx.signature}`} target="_blank" rel="noreferrer">{label}</a>
                 <div className="meta">fee {tx.fee} COOK · slot {tx.slot.toLocaleString()}</div>

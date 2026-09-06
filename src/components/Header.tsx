@@ -5,7 +5,7 @@ import { CHAIN } from "../lib/config";
 import { shortAddr, fmtNum } from "../lib/format";
 import { rpc } from "../lib/rpc";
 import { usePoll } from "../hooks/usePoll";
-import { CookieMark, IconMoon, IconSearch, IconSun } from "./icons";
+import { CookieMark, IconCheck, IconCopy, IconMoon, IconSearch, IconSun } from "./icons";
 
 function monogram(name: string): string {
   return name.trim().charAt(0).toUpperCase() || "?";
@@ -127,7 +127,7 @@ export function Header() {
                   setTimeout(() => setCopied(false), 1000);
                 }}
               >
-                {copied ? " ✓" : " ⧉"}
+                {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
               </button>
             </span>
             <button className="btn small ghost" onClick={() => void w.disconnect()}>Disconnect</button>

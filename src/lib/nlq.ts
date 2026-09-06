@@ -131,8 +131,8 @@ const INTENTS: Intent[] = [
         intent: "movers",
         title: "Top movers (24h, tokens with real liquidity)",
         cards: [
-          { ...card(up), title: "🟢 Leading" },
-          { ...card(down), title: "🔴 Lagging" },
+          { ...card(up), title: "Leading" },
+          { ...card(down), title: "Lagging" },
         ],
         hint: "Sorted by 24h price change from the Cookiescan token registry.",
         timingMs: Math.round(performance.now() - t0),

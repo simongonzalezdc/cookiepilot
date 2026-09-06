@@ -45,12 +45,12 @@ export function detectWallets(): DetectedWallet[] {
   const push = (id: string, name: string, icon: string, p: StandardProvider | undefined, recommended = false) => {
     if (p && !out.some((w) => w.id === id)) out.push({ id, name, icon, provider: p, recommended });
   };
-  push("nightly", "Nightly", "🌙", window.nightly?.solana, true);
-  push("phantom", "Phantom", "👻", window.phantom?.solana);
-  push("backpack", "Backpack", "🎒", window.backpack);
-  push("solflare", "Solflare", "🔆", window.solflare);
+  push("nightly", "Nightly", "", window.nightly?.solana, true);
+  push("phantom", "Phantom", "", window.phantom?.solana);
+  push("backpack", "Backpack", "", window.backpack);
+  push("solflare", "Solflare", "", window.solflare);
   // Generic standard-injection wallet that is none of the above.
-  if (window.solana && !out.length) push("injected", "Browser wallet", "🔗", window.solana);
+  if (window.solana && !out.length) push("injected", "Browser wallet", "", window.solana);
   return out;
 }
 
