@@ -38,8 +38,10 @@ export function MarketsPanel() {
       <h3>
         Markets
         <span className="right">
-          <button className={`btn small ${tab === "pools" ? "primary" : "ghost"}`} onClick={() => setTab("pools")}>Pools</button>{" "}
-          <button className={`btn small ${tab === "tokens" ? "primary" : "ghost"}`} onClick={() => setTab("tokens")}>Tokens</button>
+          <span className="seg" role="tablist">
+            <button className={tab === "pools" ? "on" : ""} onClick={() => setTab("pools")}>Pools</button>
+            <button className={tab === "tokens" ? "on" : ""} onClick={() => setTab("tokens")}>Tokens</button>
+          </span>
         </span>
       </h3>
 

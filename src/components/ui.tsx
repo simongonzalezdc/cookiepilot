@@ -3,10 +3,10 @@ import { ReactNode, useState } from "react";
 export function EmptyState({ icon = "🫙", title, body, action }: { icon?: string; title: string; body?: ReactNode; action?: ReactNode }) {
   return (
     <div className="empty">
-      <div className="icon">{icon}</div>
+      <div className="icon" aria-hidden>{icon}</div>
       <div className="title">{title}</div>
       {body && <div>{body}</div>}
-      {action && <div style={{ marginTop: 10 }}>{action}</div>}
+      {action && <div style={{ marginTop: 12 }}>{action}</div>}
     </div>
   );
 }
@@ -27,7 +27,7 @@ export function ErrorBox({ message, onRetry }: { message: string; onRetry?: () =
 export function Loading({ label }: { label?: string }) {
   return (
     <div className="thinking" style={{ padding: "10px 0" }}>
-      <i /><i /><i /> <span style={{ marginLeft: 4 }}>{label ?? "loading live data"}</span>
+      <i /><i /><i /> <span style={{ marginLeft: 6 }}>{label ?? "loading live data"}</span>
     </div>
   );
 }
@@ -53,10 +53,14 @@ export function CopyBtn({ text, label }: { text: string; label?: string }) {
   );
 }
 
-export function Section({ id, title, hint, children }: { id?: string; title: string; hint?: string; children: ReactNode }) {
+export function Section({ id, no, title, hint, children }: { id?: string; no?: string; title: string; hint?: string; children: ReactNode }) {
   return (
-    <section id={id}>
-      <div className="section-title">{title} {hint && <span className="hint">{hint}</span>}</div>
+    <section id={id} className="sect">
+      <div className="sect-head">
+        {no && <span className="sect-no">{no}</span>}
+        <h2>{title}</h2>
+        {hint && <span className="sect-hint">{hint}</span>}
+      </div>
       {children}
     </section>
   );

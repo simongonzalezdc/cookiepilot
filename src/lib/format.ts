@@ -21,9 +21,12 @@ export function fmtUsd(n: number | string | null | undefined): string {
   const v = N(n);
   if (v === null) return "—";
   const abs = Math.abs(v);
+  if (abs === 0) return "$0";
   if (abs >= 1) return `$${v.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
   if (abs >= 0.01) return `$${v.toFixed(4)}`;
-  return `$${v.toPrecision(3)}`;
+  // tiny prices: fixed notation, never exponents (4 significant digits)
+  const decimals = Math.min(12, Math.max(4, 4 - Math.floor(Math.log10(abs))));
+  return `$${v.toFixed(decimals).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "")}`;
 }
 
 export function fmtCompact(n: number | string | null | undefined): string {

@@ -30,7 +30,7 @@ export function NetworkPanel() {
       </div>
       <div className="card">
         <h3>Active wallets + fees (COOK) <span className="right">indexer</span></h3>
-        <BarChart data={days.map((d) => ({ label: d.date.slice(5), value: d.activeWallets }))} color="#6ea8fe" format={(n) => fmtNum(n, 0)} />
+        <BarChart data={days.map((d) => ({ label: d.date.slice(5), value: d.activeWallets }))} color="var(--blue)" format={(n) => fmtNum(n, 0)} />
         <div className="dim" style={{ fontSize: 11.5, marginTop: 6 }}>
           Fees last day: <span className="mono">{fmtNum(days.at(-1)?.feesCook ?? 0, 4)} COOK</span> · failed txs: {days.at(-1)?.failed ?? 0}
         </div>

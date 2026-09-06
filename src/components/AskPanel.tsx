@@ -42,7 +42,7 @@ export function AskPanel() {
   return (
     <div className="card" id="ask">
       <h3>
-        Ask CookiePilot <span className="right">deterministic NL console · local · no AI keys</span>
+        Console <span className="right">deterministic · local · no AI keys</span>
       </h3>
       <form
         className="askbox"
@@ -51,12 +51,14 @@ export function AskPanel() {
           void ask(q);
         }}
       >
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder={"Try: \"top movers\" · \"what's in my wallet\" · \"quote 10 COOK to bCOOK\" · \"price of CHAT\""}
-          aria-label="Ask about Cookie Chain"
-        />
+        <span className="promptfield">
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder={"Try: \"top movers\" · \"what's in my wallet\" · \"quote 10 COOK to bCOOK\" · \"price of CHAT\""}
+            aria-label="Ask about Cookie Chain"
+          />
+        </span>
         <button className="btn primary" disabled={busy || !q.trim()}>
           {busy ? "…" : "Ask"}
         </button>
@@ -74,10 +76,7 @@ export function AskPanel() {
         {exchanges.map((x, i) => (
           <div key={i} style={{ marginBottom: 14 }}>
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <span
-                className="mono"
-                style={{ background: "var(--panel-2)", border: "1px solid var(--border-2)", padding: "4px 10px", borderRadius: "10px 10px 2px 10px", fontSize: 12.5 }}
-              >
+              <span className="querybubble">
                 {x.q}
               </span>
             </div>

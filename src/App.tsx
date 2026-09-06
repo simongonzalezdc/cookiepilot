@@ -23,33 +23,31 @@ export default function App() {
     <WalletCtx.Provider value={ctx}>
       <div className="shell">
         <Header />
-        <BridgeBanner />
-        <Section title="Network pulse" hint="live · refreshes automatically">
-          <StatTiles />
-        </Section>
+        <StatTiles />
+        <BridgeNote />
 
-        <Section title="Ask CookiePilot" hint="natural language → live chain queries">
+        <Section no="01" title="Ask CookiePilot" hint="natural language → live chain queries">
           <AskPanel />
         </Section>
 
-        <Section title="Analytics" hint="indexer + swap feeds">
+        <Section no="02" title="Analytics" hint="indexer + swap feeds">
           <NetworkPanel />
-          <div style={{ height: 14 }} />
+          <div style={{ height: 16 }} />
           <MarketsPanel />
         </Section>
 
-        <Section title="Live activity" hint="sub-second finality, in the flesh">
+        <Section no="03" title="Live activity" hint="sub-second finality, in the flesh">
           <div className="grid cols-2">
             <ActivityFeed />
             <TxPanel />
           </div>
         </Section>
 
-        <Section title="Your wallet" hint="Nightly + any standard SVM wallet">
+        <Section no="04" title="Your wallet" hint="Nightly + any standard SVM wallet">
           <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
         </Section>
 
-        <Section title="Swap" hint="keyless quotes · non-custodial execution">
+        <Section no="05" title="Swap" hint="keyless quotes · non-custodial execution">
           <SwapPanel />
         </Section>
 
@@ -63,7 +61,7 @@ export default function App() {
           <a href={CHAIN.bridge} target="_blank" rel="noreferrer">bridge</a>
           <a href={CHAIN.cookieMcp} target="_blank" rel="noreferrer">cookie-mcp</a>
           <span className="spacer" />
-          <span className="mono" style={{ fontSize: 11 }}>
+          <span className="mono">
             rpc.cookiescan.io · wss.cookiescan.io · api.cookiescan.io (DAS) · swap.cookiescan.io
           </span>
         </footer>
@@ -72,13 +70,16 @@ export default function App() {
   );
 }
 
-function BridgeBanner() {
+function BridgeNote() {
   const { data } = usePoll<BridgeStats>(fetchBridgeStats, 120_000);
   if (!data?.totalBridged) return null;
   return (
-    <div className="warnbox" style={{ marginBottom: 16 }}>
-      🌉 <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
-      {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.
+    <div className="bridgenote">
+      <span className="icon" aria-hidden>🌉</span>
+      <span>
+        <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
+        {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.
+      </span>
     </div>
   );
 }

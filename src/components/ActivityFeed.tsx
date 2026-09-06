@@ -69,7 +69,7 @@ export function ActivityFeed() {
   return (
     <div className="card">
       <h3>
-        Live activity <span className="right">SPL Token program · poll 4s</span>
+        Transaction stream <span className="right">SPL Token program · poll 4s</span>
       </h3>
       {error && items.length === 0 && <ErrorBox message={error} onRetry={() => setPaused((p) => !p)} />}
       {items.length === 0 && !error && <Loading />}

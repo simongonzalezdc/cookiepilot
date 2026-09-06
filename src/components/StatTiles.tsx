@@ -1,7 +1,7 @@
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
 import { usePoll } from "../hooks/usePoll";
 import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
-import { ErrorBox, Loading } from "./ui";
+import { ErrorBox } from "./ui";
 import { Sparkline } from "./charts";
 import { rpc } from "../lib/rpc";
 
@@ -9,77 +9,122 @@ interface AllStats {
   stats: ChainStats;
   price: CookPrice;
   daily: DailyAnalytics;
-  bridge: BridgeStats;
+  bridge: BridgeStats | null;
   supply: { circulating: number };
+  slotMs: number | null;
 }
 
 async function fetchAll(): Promise<AllStats> {
-  const [stats, price, daily, bridge, supply] = await Promise.all([
+  const [stats, price, daily, bridge, supply, perf] = await Promise.all([
     fetchChainStats(),
     fetchCookPrice(),
     fetchDailyAnalytics(),
     fetchBridgeStats().catch(() => null),
     rpc<{ value: { circulating: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]),
+    // block time → the finality story, straight from validator perf samples
+    rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [1]).catch(() => null),
   ]);
-  return { stats, price, daily, bridge: bridge ?? ({} as BridgeStats), supply: { circulating: supply.value.circulating / 1e9 } };
+  const slotMs = perf?.[0]?.numSlots ? (perf[0].samplePeriodSecs * 1000) / perf[0].numSlots : null;
+  return {
+    stats,
+    price,
+    daily,
+    bridge: bridge ?? null,
+    supply: { circulating: supply.value.circulating / 1e9 },
+    slotMs,
+  };
+}
+
+function fmtSlotTime(ms: number | null): string {
+  if (ms == null || !Number.isFinite(ms)) return "—";
+  return ms >= 1000 ? `~${(ms / 1000).toFixed(2)}s` : `~${Math.round(ms)}ms`;
 }
 
 export function StatTiles() {
   const { data, error, loading, refresh } = usePoll(fetchAll, 30_000);
 
-  if (error && !data) return <ErrorBox message={error} onRetry={refresh} />;
-  if (!data) return <div className="card"><Loading label="reading chain state" /></div>;
+  if (error && !data)
+    return (
+      <div className="hero">
+        <ErrorBox message={error} onRetry={refresh} />
+      </div>
+    );
+  if (!data)
+    return (
+      <div className="hero">
+        <div className="hero-top">
+          <span className="livebadge"><span className="dot warn" /> Connecting</span>
+        </div>
+        <div className="thinking"><i /><i /><i /> <span style={{ marginLeft: 6 }}>lighting the oven — reading chain state</span></div>
+      </div>
+    );
 
-  const { stats, price, daily, bridge, supply } = data;
+  const { stats, price, daily, bridge, supply, slotMs } = data;
   const chg = price.data.price.change24h;
   const lastDay = daily.days.at(-1);
   const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : null;
+  const subSec = slotMs != null && slotMs < 1000;
 
   return (
-    <div className="grid cols-4">
-      <div className="card tile">
-        <span className="label">COOK price</span>
-        <span className="value">{fmtUsd(price.data.price.usd)}</span>
-        <span className={`sub ${chg >= 0 ? "up" : "down"}`}>{pct(chg)} · 24h · Cookiescan</span>
+    <div className="hero">
+      <div className="hero-top">
+        <span className="livebadge">
+          <span className="dot" /> Live · Cookie Chain
+        </span>
+        <span className="hero-slot">
+          epoch {stats.epoch}
+          {epochPct != null ? ` · ${epochPct.toFixed(0)}% through` : ""} · refreshes automatically
+        </span>
       </div>
-      <div className="card tile">
-        <span className="label">Live TPS</span>
-        <span className="value">{fmtNum(stats.liveTps ?? stats.tps, 1)}</span>
-        <span className="sub">~1s blocks · sub-second finality</span>
-        {feesSeries.length > 2 && <Sparkline points={feesSeries} height={26} color="#3ddc97" />}
+
+      <div className="hero-grid">
+        <div className="hstat">
+          <span className="hlabel">COOK price</span>
+          <span className="hvalue">{fmtUsd(price.data.price.usd)}</span>
+          <span className="hsub">
+            <span className={`chg ${chg >= 0 ? "up" : "down"}`}>{pct(chg)}</span>
+            24h · Cookiescan
+          </span>
+        </div>
+
+        <div className="hstat">
+          <span className="hlabel">Live TPS</span>
+          <span className="hvalue">{fmtNum(stats.liveTps ?? stats.tps, 1)}</span>
+          <span className="hsub">{subSec ? "sub-second blocks" : "network throughput"}</span>
+        </div>
+
+        <div className="hstat">
+          <span className="hlabel">Block time</span>
+          <span className="hvalue" style={subSec ? { color: "var(--green)" } : undefined}>{fmtSlotTime(slotMs)}</span>
+          <span className="hsub">finality in the sub-second club</span>
+        </div>
+
+        <div className="hstat">
+          <span className="hlabel">Transactions</span>
+          <span className="hvalue">{fmtCompact(Number(stats.totalTransactions))}</span>
+          <span className="hsub">
+            {fmtNum(stats.txns24h, 0)} in 24h
+            {lastDay ? ` · ${fmtNum(lastDay.activeWallets, 0)} wallets yesterday` : ""}
+          </span>
+          {feesSeries.length > 2 && (
+            <span className="hspark">
+              <Sparkline points={feesSeries} height={22} color="var(--green)" />
+            </span>
+          )}
+        </div>
       </div>
-      <div className="card tile">
-        <span className="label">Transactions</span>
-        <span className="value">{fmtCompact(Number(stats.totalTransactions))}</span>
-        <span className="sub">{fmtNum(stats.txns24h, 0)} in 24h{lastDay ? ` · ${fmtNum(lastDay.activeWallets, 0)} wallets yesterday` : ""}</span>
+
+      <div className="hero-strip">
+        <span><b>{stats.baseFee}</b> base fee <span className="sep">·</span> ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span>
+        <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
+        <span><b>{stats.validators}</b> validators</span>
+        <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>
+        {bridge?.totalBridged != null && (
+          <span><b>{fmtCompact(bridge.totalBridged)}</b> bridged from Solana</span>
+        )}
+        {loading && <span className="mono" style={{ color: "var(--accent)", opacity: 0.7 }}>refreshing…</span>}
       </div>
-      <div className="card tile">
-        <span className="label">Base fee</span>
-        <span className="value">{stats.baseFee}<small style={{ fontSize: 13, color: "var(--muted)" }}> COOK</small></span>
-        <span className="sub">per signature ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span>
-      </div>
-      <div className="card tile">
-        <span className="label">COOK supply</span>
-        <span className="value">{fmtCompact(supply.circulating)}</span>
-        <span className="sub">circulating · native asset</span>
-      </div>
-      <div className="card tile">
-        <span className="label">Validators</span>
-        <span className="value">{stats.validators}</span>
-        <span className="sub">community-run · epoch {stats.epoch}{epochPct != null ? ` (${epochPct.toFixed(0)}% through)` : ""}</span>
-      </div>
-      <div className="card tile">
-        <span className="label">Tokens launched</span>
-        <span className="value">{fmtCompact(stats.tokensLaunched)}</span>
-        <span className="sub">{fmtNum(stats.programsLaunched, 0)} programs deployed</span>
-      </div>
-      <div className="card tile">
-        <span className="label">Bridged from Solana</span>
-        <span className="value">{fmtCompact(bridge.totalBridged ?? null)}</span>
-        <span className="sub">{bridge.totalTransfers != null ? `${fmtNum(bridge.totalTransfers, 0)} transfers · Hyperlane` : "Hyperlane warp route"}</span>
-      </div>
-      {loading && <span className="dim" style={{ gridColumn: "1 / -1", fontSize: 11 }}>refreshing…</span>}
     </div>
   );
 }

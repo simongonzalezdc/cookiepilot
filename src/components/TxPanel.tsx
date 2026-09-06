@@ -44,7 +44,7 @@ export function TxTracker({ track, onClear }: { track: TxTrack; onClear?: () => 
       {track.error && <div className="err">{track.error}</div>}
       <div className="links">
         <a href={`${CHAIN.explorer}/tx/${track.signature}`} target="_blank" rel="noreferrer">open on Cookiescan ↗</a>
-        {onClear && <button className="btn small ghost" style={{ marginLeft: 10 }} onClick={onClear}>clear</button>}
+        {onClear && <button className="btn small ghost" onClick={onClear}>clear</button>}
       </div>
     </div>
   );
@@ -87,9 +87,9 @@ export function TxPanel() {
         <EmptyState icon="🔒" title="Connect a wallet to send transactions" body="Everything else on this dashboard is read-only and works without a wallet. Sending requires COOK for the 0.000005 fee." />
       ) : (
         <>
-          <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
-            <button className={`btn small ${mode === "ping" ? "primary" : ""}`} onClick={() => setMode("ping")}>Memo ping</button>
-            <button className={`btn small ${mode === "transfer" ? "primary" : ""}`} onClick={() => setMode("transfer")}>Send COOK</button>
+          <div className="seg" role="tablist" style={{ marginBottom: 14 }}>
+            <button className={mode === "ping" ? "on" : ""} onClick={() => setMode("ping")}>Memo ping</button>
+            <button className={mode === "transfer" ? "on" : ""} onClick={() => setMode("transfer")}>Send COOK</button>
           </div>
           {mode === "ping" ? (
             <div className="field">

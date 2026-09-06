@@ -141,75 +141,80 @@ export function SwapPanel() {
 
   return (
     <div className="card" id="swap">
-      <h3>Swap <span className="right">Cookieswap (Candy Shop) router · keyless quotes</span></h3>
-      <TokenSelect value={inTok} onChange={setInTok} />
-      <div style={{ margin: "10px 0" }}><span className="dim">↓</span></div>
-      {outTok ? (
-        <TokenSelect value={outTok} onChange={setOutTok} />
-      ) : (
-        <div className="field">
-          <label>Output token</label>
-          <OutPick onPick={setOutTok} />
+      <h3>Quote &amp; execute <span className="right">Cookieswap (Candy Shop) router · keyless quotes</span></h3>
+      <div className="swapgrid">
+        <div>
+          <TokenSelect value={inTok} onChange={setInTok} />
+          <div className="swaparrow">↓</div>
+          {outTok ? (
+            <TokenSelect value={outTok} onChange={setOutTok} />
+          ) : (
+            <div className="field">
+              <label>Output token</label>
+              <OutPick onPick={setOutTok} />
+            </div>
+          )}
+          <div className="row2">
+            <div className="field">
+              <label>Amount in</label>
+              <input value={amount} inputMode="decimal" onChange={(e) => setAmount(e.target.value)} />
+            </div>
+            <div className="field">
+              <label>Slippage</label>
+              <select value={slip} onChange={(e) => setSlip(Number(e.target.value))}>
+                <option value={100}>1%</option>
+                <option value={500}>5%</option>
+                <option value={1000}>10%</option>
+              </select>
+            </div>
+          </div>
+          <button className="btn primary" disabled={!canQuote || busy} onClick={() => void getQuote()}>
+            {busy ? "Routing…" : "Get quote"}
+          </button>
+          {err && <div className="errbox" style={{ marginTop: 10 }}>{err}</div>}
         </div>
-      )}
-      <div className="row2">
-        <div className="field">
-          <label>Amount in</label>
-          <input value={amount} inputMode="decimal" onChange={(e) => setAmount(e.target.value)} />
-        </div>
-        <div className="field">
-          <label>Slippage</label>
-          <select value={slip} onChange={(e) => setSlip(Number(e.target.value))}>
-            <option value={100}>1%</option>
-            <option value={500}>5%</option>
-            <option value={1000}>10%</option>
-          </select>
-        </div>
-      </div>
-      <button className="btn primary" disabled={!canQuote || busy} onClick={() => void getQuote()}>
-        {busy ? "Routing…" : "Get quote"}
-      </button>
 
-      {err && <div className="errbox" style={{ marginTop: 10 }}>{err}</div>}
-
-      {quote && (
-        <div style={{ marginTop: 14 }}>
-          <div className="quoteout">
-            {fmtNum(outUi ?? 0, 6)} <span style={{ fontSize: 14, color: "var(--muted)" }}>{outTok?.metadata?.symbol}</span>
-          </div>
-          <div className="dim" style={{ fontSize: 12, margin: "4px 0 10px" }}>
-            for {fmtNum(Number(quote.multiRoute.totalInAmount) / 10 ** inDec, 4)} {inTok.metadata?.symbol} · min received {fmtNum(minUi ?? 0, 6)} · impact{" "}
-            {quote.multiRoute.combinedPriceImpactPct}% · protocol fee {quote.multiRoute.protocolFeeBps / 100}%
-            {quote.multiRoute.lowLiquidity ? " · ⚠ low liquidity" : ""}
-          </div>
-          <div>
-            {quote.multiRoute.segments.map((s, i) => (
-              <span key={i} className="routepill" title={`pool ${s.poolAddress}`}>
-                {s.programName} {quote.multiRoute.segments.length > 1 ? `${s.percentage}%` : ""} · fee {s.feeBps / 100}%
-              </span>
-            ))}
-          </div>
-          <div style={{ marginTop: 12 }}>
-            {w.address ? (
-              <button className="btn primary" disabled={signing} onClick={() => void execute()}>
-                {signing ? "Simulating + signing…" : "Simulate & sign with wallet"}
-              </button>
-            ) : (
-              <div className="warnbox">
-                Connect a wallet to execute. Quotes are free and keyless — execution signs locally with your wallet and is simulated before sending.
+        <div>
+          {quote && (
+            <div>
+              <div className="quoteout">
+                {fmtNum(outUi ?? 0, 6)} <span style={{ fontSize: 14, color: "var(--muted)" }}>{outTok?.metadata?.symbol}</span>
               </div>
-            )}
-          </div>
+              <div className="dim" style={{ fontSize: 12, margin: "4px 0 10px" }}>
+                for {fmtNum(Number(quote.multiRoute.totalInAmount) / 10 ** inDec, 4)} {inTok.metadata?.symbol} · min received {fmtNum(minUi ?? 0, 6)} · impact{" "}
+                {quote.multiRoute.combinedPriceImpactPct}% · protocol fee {quote.multiRoute.protocolFeeBps / 100}%
+                {quote.multiRoute.lowLiquidity ? " · ⚠ low liquidity" : ""}
+              </div>
+              <div>
+                {quote.multiRoute.segments.map((s, i) => (
+                  <span key={i} className="routepill" title={`pool ${s.poolAddress}`}>
+                    {s.programName} {quote.multiRoute.segments.length > 1 ? `${s.percentage}%` : ""} · fee {s.feeBps / 100}%
+                  </span>
+                ))}
+              </div>
+              <div style={{ marginTop: 12 }}>
+                {w.address ? (
+                  <button className="btn primary" disabled={signing} onClick={() => void execute()}>
+                    {signing ? "Simulating + signing…" : "Simulate & sign with wallet"}
+                  </button>
+                ) : (
+                  <div className="warnbox">
+                    Connect a wallet to execute. Quotes are free and keyless — execution signs locally with your wallet and is simulated before sending.
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {!quote && !err && (
+            <EmptyState
+              icon="🔁"
+              title="Quotes route all Cookie Chain DEX liquidity"
+              body="Cookiebox DAMM/CLMM, Cookieswap BAMM and more. Pick tokens and get a keyless quote — execution needs a funded wallet (see faucet)."
+            />
+          )}
           {track && <TxTracker track={track} onClear={() => setTrack(null)} />}
         </div>
-      )}
-      {!quote && !err && (
-        <EmptyState
-          icon="🔁"
-          title="Quotes route all Cookie Chain DEX liquidity"
-          body="Cookiebox DAMM/CLMM, Cookieswap BAMM and more. Pick tokens and get a keyless quote — execution needs a funded wallet (see faucet)."
-        />
-      )}
+      </div>
     </div>
   );
 }
