@@ -38,4 +38,30 @@ export default defineConfig({
     target: "es2020",
     chunkSizeWarningLimit: 1200,
   },
+  // same proxies for `vite preview` so the production build is fully exercisable locally
+  preview: {
+    port: 4173,
+    proxy: {
+      "/explorer-api": {
+        target: "https://cookiescan.io",
+        changeOrigin: true,
+        rewrite: (p: string) => p.replace(/^\/explorer-api/, "/api"),
+      },
+      "/swap-api": {
+        target: "https://swap.cookiescan.io",
+        changeOrigin: true,
+        rewrite: (p: string) => p.replace(/^\/swap-api/, "/api"),
+      },
+      "/agg-api": {
+        target: "https://agg.cookiebox.app",
+        changeOrigin: true,
+        rewrite: (p: string) => p.replace(/^\/agg-api/, ""),
+      },
+      "/chain-api": {
+        target: "https://api.cookiescan.io",
+        changeOrigin: true,
+        rewrite: (p: string) => p.replace(/^\/chain-api/, ""),
+      },
+    },
+  },
 });

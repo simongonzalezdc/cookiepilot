@@ -1,10 +1,83 @@
 # 🍪 CookiePilot
 
-**An AI-native analytics + execution dashboard for [Cookie Chain](https://www.cookiechain.wtf)** — live network pulse, natural-language chain console, wallet, real-time transaction tracking, and keyless swap quotes. Dark, fast, and 100% free to run: no API keys, no paid services, no secrets.
+**An AI-native analytics + execution dashboard for [Cookie Chain](https://www.cookiechain.wtf)** — live network pulse, natural-language chain console, wallet, real-time transaction tracking, and keyless swap quotes. Warm bakery design, fast, and 100% free to run: no API keys, no paid services, no secrets.
 
 **Live: https://cookiepilot.netlify.app**
 
 ![CookiePilot dashboard](docs/screenshot-dashboard.png)
+
+---
+
+## Design system v2 — "Bakery" (DESIGN-SYSTEM.md v2, all panel amendments applied)
+
+Playful-premium, cookie-native: warm vanilla/chocolate **dual theme, light-first**, one-click toggle top-right (`aria-pressed`, persisted in `localStorage`). One self-hosted warm rounded family; signature geometry = **The Bite** (bitten charts/meters) + **Crumb Trail** (static tx-state stations) + **Oven** (ambient feed motion). Restraint law: all three share one palette + geometry.
+
+### AM-1 — executable color tokens (solid hexes, both themes)
+
+| Token | Light (vanilla) | Dark (cocoa) | Job |
+| --- | --- | --- | --- |
+| `--surface` | `#FAF3E7` | `#1C1210` | page |
+| `--surface-raised` | `#FFFDF8` | `#2A1D18` | cards |
+| `--ink` | `#2B1A12` | `#F5E9D6` | body text |
+| `--ink-dim` | `#6B5443` | `#C9B8A3` | secondary text (solid, never opacity) |
+| `--ember` | `#E85D2F` | `#E85D2F` | decorative fills / live marks / icons only |
+| `--mint` | `#1E8A60` | `#4CC79A` | confirmed marks (light variant darkened for ≥3:1) |
+| `--jam` | `#C03A2B` | `#E05A4A` | error marks |
+| `--ember-text` | `#B53F1F` | `#FF8A5C` | accent as **text** |
+| `--mint-text` | `#1F7A5C` | `#4CC79A` | confirmed as **text** |
+| `--jam-text` | `#A03225` | `#E87A6B` | errors as **text** |
+| `--line` | `#E8DCC8` | `#3A2A22` | decorative hairlines |
+| `--line-ctl` | `#8A6F52` | `#8A6F58` | control boundaries ≥3:1 |
+
+Bright accents are **never body text or ≤14px labels**; state is never color-alone (every state carries an icon + label).
+
+**Published contrast table** (WCAG 2.1, computed; gate-verified):
+
+| Pair | Light | Dark | Required |
+| --- | --- | --- | --- |
+| ink / surface | **15.12** | **15.31** | ≥4.5 ✓ |
+| ink / raised | **16.41** | **13.60** | ≥4.5 ✓ |
+| ink-dim / surface | **6.40** | **9.51** | ≥4.5 ✓ |
+| ink-dim / raised | **6.95** | **8.44** | ≥4.5 ✓ |
+| ember-text / surface | **5.15** | **7.91** | ≥4.5 ✓ |
+| ember-text / raised | **5.59** | **7.02** | ≥4.5 ✓ |
+| mint-text / surface | **4.76** | **8.70** | ≥4.5 ✓ |
+| mint-text / raised | **5.17** | **7.72** | ≥4.5 ✓ |
+| jam-text / surface | **6.39** | **6.50** | ≥4.5 ✓ |
+| jam-text / raised | **6.94** | **5.77** | ≥4.5 ✓ |
+| button text on ember fill | **5.23** (`#241100`) | **5.23** | ≥4.5 ✓ |
+| ember mark / surface | **3.15** | **5.28** | ≥3 ✓ |
+| mint mark / surface | **3.92** (`#1E8A60`) | **8.70** | ≥3 ✓ |
+| jam mark / surface | **4.91** | **5.01** | ≥3 ✓ |
+| control border / surface | **4.25** | **3.93** | ≥3 ✓ |
+| control border / raised | **4.61** | **3.49** | ≥3 ✓ |
+
+### AM-2 — one bundled typeface, tabular numerals verified
+
+**M PLUS Rounded 1c** (400/500/700), self-hosted woff2 in `public/fonts/` (~21.5 KB each, latin subset, `font-display: swap`, two weights preloaded). Rounded terminals echo the cookie world. Digit advance measured in a **real browser via Playwright in both Chromium 148 and WebKit 26.4**: all ten digits render at identical width (tabular by default; `font-variant-numeric: tabular-nums` applied to every data element and honored). Evidence: `design-shots-v2/tnum-verification.png`. Metric-matched fallback stack (`ui-rounded → SF Pro Rounded → Nunito → system`); **Inter is forbidden** and not in the stack.
+
+### AM-3 — The Bite (geometry law)
+
+One notch max per element, cut with an SVG/CSS **mask** (zero chart deps — charts are hand-rolled SVG):
+- **Charts:** chord = 10–14% of plot min-dimension, **~40° arc** (depth = r·(1−cos 20°) ≈ 6% of r), only when a bar is wide enough to carry it without crossing neighbours/axes/labels.
+- **Meters (ring + track bars):** bite depth ≤ 8px, cut from the **track**, never at the fill endpoint (ring notch is offset ≥48° from the arc end so it can never touch the current value).
+- Never crosses axes, labels, thresholds, the last data point, or the current value.
+- **Exact value printed beside every bitten element** (ring: "70 % through"; bitten bar: "09-03 · 4,443" tag; bitten meter row: value column).
+- **≤2 bitten elements per viewport** (hero: 1 — the epoch ring; analytics: bar-chart bar + one meter track; feed/swap/console: 0).
+
+### AM-4 — static-equivalent states + motion tokens
+
+- **Crumb Trail:** every feed row renders three discrete labeled stations — `processed → confirmed → finalized` — each with icon + text; parses in a still screenshot with zero motion. State upgrades happen **instantly** (poll diff), never animation-gated. The tx confirmation tracker uses the same station language with ms timings.
+- **Oven ambient only:** new feed rows tray-glide in (600 ms); finalized rows get a one-time golden sheen (600 ms). Motion tokens split: **interaction 180 ms** / **ambient 500–700 ms**.
+- **`prefers-reduced-motion`:** all durations → 0; the newest feed row keeps a static 2–4% warm sheen; labels and stations persist (the static contract — no content loss).
+
+### AM-5 — judging-frame contract + icons
+
+First viewport at **1440×900 and 390×844** shows: product name (header), one-line value proposition ("Live analytics, wallet & swaps on a sub-second chain."), live network state (slot/TPS pill + LIVE badge + price/TPS/block-time stats), **one legible Bite chart** (epoch ring), theme toggle top-right. Section order: `01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail) → 05 swap + NL console`. Dark theme carries its own shadow token `0 8px 24px rgba(0,0,0,.40)` + hairline; light uses `0 8px 24px rgba(43,26,18,.08)`. Icons: one custom 24 px set, 1.5 px round-cap stroke (2 px at 16 px), bite/crumb motifs on exactly 8 marks; the cookie glyph appears only as favicon + wordmark. Evidence: `design-shots-v2/`.
+
+**Budget:** JS 149 KB gzip (dominated by `@solana/web3.js`, unchanged from v1) + 5.7 KB CSS + 64 KB webfont (3 × woff2, non-blocking).
+
+**`npm audit` (2026-09-06):** 6 advisories — 5 moderate (`esbuild`, `stream-json`, `uuid` + 2 transitively pinned by `@solana/web3.js`) and 1 high, all on the **vite dev-server toolchain** (path-traversal / `server.fs.deny` / launch-editor advisories; dev-time only, Windows-specific vectors, not in the shipped bundle). The only fix is vite 8 (breaking major); accepted for this bounty window, tracked as a follow-up. Zero vulnerabilities ship in the production bundle's runtime dependencies beyond the audited `@solana/web3.js` pins.
 
 ---
 
