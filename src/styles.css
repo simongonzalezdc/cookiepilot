@@ -101,6 +101,7 @@
   --shadow-ember: 4px 4px 0 0 var(--ember);                    /* print offset */
   --shadow-ink: 3px 3px 0 0 var(--ink);                        /* chip offset */
   --grain-opacity: 0.07;
+  --ring-track: color-mix(in srgb, var(--ember) 24%, var(--surface-sunken));
 
   /* motion tokens (AM-4): interaction vs ambient, both reduced-motion aware */
   --dur-hit: 180ms;          /* interaction */
@@ -150,6 +151,7 @@
   --shadow-ember: 4px 4px 0 0 var(--ember);
   --shadow-ink: 3px 3px 0 0 var(--ember); /* on cocoa, ink offsets vanish — ember carries the print offset */
   --grain-opacity: 0.085;
+  --ring-track: var(--line-ctl); /* warm tan track on cocoa (8a6f58) */
 
   --focus-ring: #ff8a5c;
 
@@ -210,7 +212,11 @@ button { font-family: inherit; }
 }
 .shell::before { left: 8px; }
 .shell::after { right: 8px; }
-@media (max-width: 900px) { .shell::before, .shell::after { display: none; } }
+@media (max-width: 900px) {
+  .shell::before, .shell::after { font-size: 12px; top: 0; }
+  .shell::before { left: 0; }
+  .shell::after { right: 0; }
+}
 
 /* ---------- type utilities ---------- */
 .data, .mono {
@@ -257,6 +263,8 @@ button { font-family: inherit; }
 .logo .sub {
   color: var(--ink-dim); font-weight: 700; font-size: 10.5px;
   letter-spacing: 0.22em; text-transform: uppercase;
+  border-left: 1px solid var(--rule); /* editorial pipe after the wordmark */
+  padding-left: 12px; margin-left: 2px;
 }
 .netpill {
   display: inline-flex; align-items: center; gap: 8px;
@@ -321,6 +329,11 @@ button { font-family: inherit; }
   box-shadow: var(--shadow-ember);
 }
 .btn.primary:hover { color: var(--surface); filter: none; border-color: transparent; transform: translate(1px, 1px); box-shadow: 3px 3px 0 0 var(--ember); }
+[data-theme="dark"] .btn.primary {
+  background: var(--surface-sunken);
+  color: var(--ink);
+  border-color: var(--line-ctl);
+}
 .btn.primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 var(--ember); }
 .btn.ghost { background: transparent; border-color: transparent; }
 .btn.ghost:hover { color: var(--ember-text); border-color: var(--line); box-shadow: none; }
@@ -540,7 +553,10 @@ button { font-family: inherit; }
   white-space: nowrap;
   pointer-events: none;
 }
-@media (max-width: 1280px) { .marginalia { display: none; } }
+@media (max-width: 1024px) { .marginalia { display: none; } }
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .marginalia { right: 1px; font-size: 8px; letter-spacing: 0.26em; opacity: 0.85; }
+}
 
 /* ---- The Bite ring meter (AM-3) — centerpiece size ---- */
 .bitering { display: flex; align-items: center; gap: 16px; padding: 0; position: relative; }
@@ -665,10 +681,10 @@ button { font-family: inherit; }
   .themetoggle { order: 2; width: auto; height: 32px; padding: 0 10px; gap: 6px; }
   .themetoggle .tt-sep { height: 12px; }
   .themetoggle svg { width: 14px; height: 14px; }
-  /* compact live pill in the top bar (reference: status lives in the masthead) */
+  /* compact live pill in the top bar, right cluster beside the toggle */
   .netpill {
     display: inline-flex;
-    order: 1;
+    order: 2;
     padding: 5px 11px; font-size: 9.5px; letter-spacing: 0.12em;
   }
   /* one live status on mobile: the hero LIVE badge carries it; the header

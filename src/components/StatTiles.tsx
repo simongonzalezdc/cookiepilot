@@ -73,7 +73,6 @@ export function StatTiles() {
   const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
   const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
-  const subSec = slotMs != null && slotMs < 1000;
   const up = chg >= 0;
   // centerpiece ring: share of circulating supply bridged from Solana —
   // a core chain story that lives mid-scale (reference: 68.4% ring);
@@ -95,10 +94,6 @@ export function StatTiles() {
         <span className="hero-topright">
           <span className="livebadge">
             <span className="dot" /> Live · Mainnet
-          </span>
-          <span className="hero-slot">
-            {stats.epoch != null ? `epoch ${stats.epoch}` : ""}
-            {slotMs != null ? ` · block ${fmtSlotTime(slotMs)}` : ""}
           </span>
         </span>
       </div>
@@ -143,17 +138,16 @@ export function StatTiles() {
                 {fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}
                 <span className="unit">TPS</span>
               </span>
-              <span className="hsub">{subSec ? "sub-second blocks" : "network throughput"}</span>
             </div>
             <div className="herostat">
               <span className="hlabel">Block time</span>
               <span className="hvalue">{fmtSlotTime(slotMs)}</span>
-              <span className="hsub">finality in the sub-second club</span>
             </div>
             <div className="herostat">
-              <span className="hlabel">24h txns</span>
-              <span className="hvalue">{fmtNum(stats.txns24h, 0)}</span>
-              <span className="hsub">{fmtCompact(Number(stats.totalTransactions))} lifetime</span>
+              <span className="hlabel">Finality</span>
+              <span className="hvalue">
+                3<span className="unit">TICKS</span>
+              </span>
             </div>
           </div>
 

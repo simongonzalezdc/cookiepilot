@@ -294,14 +294,15 @@ export function BiteRing({
 }) {
   const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const p = Math.max(0, Math.min(100, percent));
-  const stroke = layout === "stacked" ? Math.round(size * 0.125) : 13;
+  const stroke = layout === "stacked" ? Math.round(size * 0.118) : 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
   // bite size: chord exactly at the AM-3 bound — 14% of plot bbox, ≤8px depth
   const br = size * 0.07;
-  // the bite circle must cross the FULL band (outer edge to inner edge) or a
-  // sliver of ring shows through the notch — anchor it just past the inner edge.
-  const centerRad = r - stroke / 2 + br - 1;
+  // the bite is taken from the cookie's OUTER EDGE (reference: the notch
+  // opens outward) and reaches just past the inner edge so no sliver of
+  // band shows through the notch.
+  const centerRad = r + stroke / 2 - br * 0.18;
   // place the notch inside the exposed TRACK (AM-3: bite the track, never
   // the fill endpoint/current value) — centered when the track allows,
   // else ≥18° past the fill end; never wrapping across the 0° seam.
@@ -329,9 +330,21 @@ export function BiteRing({
       <defs>
         <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
           <rect x="0" y="0" width={size} height={size} fill="#fff" />
-          {/* ONE clean bite (AM-3: one notch, crisp ~40° arc geometry).
-              No exposed track → no bite (never the fill endpoint). */}
-          {hasTrack && <circle cx={bcx} cy={bcy} r={br} fill="#000" />}
+          {/* ONE bite (AM-3: a single notch region, total arc ≤40°) with a
+              lightly scalloped edge like the reference's cookie bite —
+              satellites overlap the main circle so the region stays one
+              connected shape. No exposed track → no bite (AM-3). */}
+          {hasTrack && (
+            <g fill="#000">
+              <circle cx={bcx} cy={bcy} r={br} />
+              {[-16, 16].map((a) => {
+                const srad = ((biteAngle + a - 90) * Math.PI) / 180;
+                const sx = c + Math.cos(srad) * centerRad;
+                const sy = c + Math.sin(srad) * centerRad;
+                return <circle key={a} cx={sx} cy={sy} r={br * 0.62} />;
+              })}
+            </g>
+          )}
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>
@@ -341,7 +354,7 @@ export function BiteRing({
           cy={c}
           r={r}
           fill="none"
-          style={{ stroke: "color-mix(in srgb, var(--ember) 38%, var(--surface))" }}
+          style={{ stroke: "var(--ring-track)" }}
           strokeWidth={stroke}
         />
         {/* the fill: EMBER — per the approved reference, the donut is the

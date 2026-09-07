@@ -87,14 +87,14 @@ export function Header() {
         <div className="logo">
           <span className="cookie"><CookieMark size={24} /></span>
           <span>
-            CookiePilot <span className="sub">· oven-fresh L2 cockpit</span>
+            CookiePilot <span className="sub">oven-fresh L2 · issue 07</span>
           </span>
         </div>
+        <div className="spacer" />
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
           <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
           {net.error ? "RPC offline" : "Mainnet live"}
         </span>
-        <div className="spacer" />
         {w.address ? (
           <span className="wallet-chip" title={w.address}>
             <span className="bal">{w.balance != null ? `${fmtNum(w.balance, 4)} COOK` : "…"}</span>

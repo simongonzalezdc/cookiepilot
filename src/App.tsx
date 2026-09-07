@@ -28,7 +28,7 @@ export default function App() {
         <Header />
         <StatTiles />
 
-        <Section no="02" title="Your wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
+        <Section no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
           <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
         </Section>
 
