@@ -238,7 +238,13 @@ button { font-family: inherit; }
   position: sticky; top: 0; z-index: 50;
   background: var(--surface);
   border-bottom: 2px solid var(--ink);
-  box-shadow: 0 5px 0 -4px var(--ink); /* second line of the double rule */
+}
+/* second line of the masthead's double rule */
+.header::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -5px;
+  height: 1px; background: var(--ink);
+  pointer-events: none;
 }
 .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
 .logo .cookie {
@@ -262,7 +268,6 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.netpill .netpill-data { color: var(--ink-dim); font-weight: 700; letter-spacing: 0.1em; }
 /* live-state dots: ember IS the live/pulse token (--accent-live);
    connecting is neutral ink-dim, offline is jam. Mint stays confirm-only. */
 .dot {
@@ -605,7 +610,7 @@ button { font-family: inherit; }
 .sect-no {
   font-size: clamp(40px, 5.6vw, 76px);
   font-weight: 900; line-height: 0.95;
-  color: var(--ember-text); letter-spacing: -0.02em;
+  color: var(--ink); letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 .sect-no::after { content: "—"; color: var(--ink); margin-left: 14px; font-weight: 800; }
@@ -646,7 +651,7 @@ button { font-family: inherit; }
   .herostat { padding: 0 10px; }
   .herostat:first-child { padding-left: 0; }
   .herostat .hvalue { font-size: 17px; white-space: nowrap; }
-  .herostat .hvalue .unit { display: inline; margin-left: 2px; }
+  .herostat .hvalue .unit { display: inline; margin-left: 3px; }
   .herocta .btn.primary { flex: 1; justify-content: center; text-align: center; }
   /* AM-5: theme toggle stays top-right on mobile — one control row
      (logo · · · connect, toggle); compact caps keep all three on one line */
@@ -657,10 +662,18 @@ button { font-family: inherit; }
   .header .spacer { order: 1; }
   .header .btn.primary, .header .wallet-chip { order: 2; }
   .header .btn.primary { padding: 7px 11px; font-size: 10px; letter-spacing: 0.07em; box-shadow: 2.5px 2.5px 0 0 var(--ember); }
-  .themetoggle { order: 2; width: 34px; height: 34px; }
+  .themetoggle { order: 2; width: auto; height: 32px; padding: 0 10px; gap: 6px; }
+  .themetoggle .tt-sep { height: 12px; }
+  .themetoggle svg { width: 14px; height: 14px; }
+  /* compact live pill in the top bar (reference: status lives in the masthead) */
+  .netpill {
+    display: inline-flex;
+    order: 1;
+    padding: 5px 11px; font-size: 9.5px; letter-spacing: 0.12em;
+  }
   /* one live status on mobile: the hero LIVE badge carries it; the header
      slot pill would be a redundant second status strip (AM-5 judging frame) */
-  .netpill { display: none; }
+  .hero .livebadge { display: none; }
   .hero-topright { margin-left: 0; width: 100%; justify-content: space-between; }
   .hero-slot { max-width: 48%; text-align: right; }
   .hidecap { display: none; }

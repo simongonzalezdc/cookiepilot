@@ -98,10 +98,7 @@ export function StatTiles() {
           </span>
           <span className="hero-slot">
             {stats.epoch != null ? `epoch ${stats.epoch}` : ""}
-            {stats.epochInfo ? ` · ${((stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100).toFixed(1)}% through` : ""}
-            {stats.liveTps != null ? ` · ${fmtNum(stats.liveTps, 1)} TPS` : ""}
             {slotMs != null ? ` · block ${fmtSlotTime(slotMs)}` : ""}
-            <span className="hidecap"> · refreshes automatically</span>
           </span>
         </span>
       </div>

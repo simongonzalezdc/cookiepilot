@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWallet } from "../hooks/useWallet";
 import { useTheme } from "../lib/theme";
 import { CHAIN } from "../lib/config";
@@ -73,25 +73,6 @@ export function Header() {
     const slot = await rpc<number>("getSlot", [], { retries: 0 });
     return slot;
   }, 3000);
-  const tpsRef = useRef("…");
-
-  // lightweight live TPS from perf samples
-  const perf = usePoll(async () => {
-    const s = await rpc<{ numTransactions: number; samplePeriodSecs: number; numSlots: number }[]>(
-      "getRecentPerformanceSamples",
-      [2],
-      { retries: 0 },
-    );
-    const tps = s[0] ? Math.round((s[0].numTransactions / s[0].samplePeriodSecs) * 10) / 10 : null;
-    const slotTimeMs = s[0] ? (s[0].samplePeriodSecs * 1000) / s[0].numSlots : null;
-    return { tps, slotTimeMs };
-  }, 15000);
-  if (perf.data?.tps != null) tpsRef.current = String(perf.data.tps);
-
-  const [nowSlot, setNowSlot] = useState<number | null>(null);
-  useEffect(() => {
-    if (net.data != null) setNowSlot(net.data);
-  }, [net.data]);
 
   // other panels can request the connect modal (e.g. empty wallet states)
   useEffect(() => {
@@ -111,14 +92,7 @@ export function Header() {
         </div>
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
           <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
-          {net.error ? (
-            "RPC offline"
-          ) : (
-            <>
-              Mainnet live
-              <span className="netpill-data">· slot {nowSlot ? fmtNum(nowSlot, 0) : "…"} · {tpsRef.current} TPS</span>
-            </>
-          )}
+          {net.error ? "RPC offline" : "Mainnet live"}
         </span>
         <div className="spacer" />
         {w.address ? (

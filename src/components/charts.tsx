@@ -329,20 +329,9 @@ export function BiteRing({
       <defs>
         <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
           <rect x="0" y="0" width={size} height={size} fill="#fff" />
-          {/* ONE bite (AM-3), scalloped edge like the reference's cookie
-              bite: main circle + merged satellites, region ≈ 40° of arc.
+          {/* ONE clean bite (AM-3: one notch, crisp ~40° arc geometry).
               No exposed track → no bite (never the fill endpoint). */}
-          {hasTrack && (
-            <g fill="#000">
-              <circle cx={bcx} cy={bcy} r={br} />
-              {[-12, 12].map((a) => {
-                const srad = ((biteAngle + a - 90) * Math.PI) / 180;
-                const sx = c + Math.cos(srad) * (centerRad + br * 0.3);
-                const sy = c + Math.sin(srad) * (centerRad + br * 0.3);
-                return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
-              })}
-            </g>
-          )}
+          {hasTrack && <circle cx={bcx} cy={bcy} r={br} fill="#000" />}
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>
