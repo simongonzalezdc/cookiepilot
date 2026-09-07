@@ -91,6 +91,13 @@ export function Header() {
           </span>
         </div>
         <div className="spacer" />
+        {/* v5 POSTER-PURIFY: connect is reachable as a pill in the masthead
+            — quiet ink outline, so the ring stays the only loud ember */}
+        {!w.address && (
+          <button className="connect-pill" onClick={() => setModal(true)}>
+            Connect wallet
+          </button>
+        )}
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
           <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
           {net.error ? "RPC offline" : "Mainnet live"}
@@ -117,8 +124,7 @@ export function Header() {
             <button className="btn small ghost" onClick={() => void w.disconnect()}>Disconnect</button>
           </span>
         ) : null}
-        {/* Reference masthead: logo · tagline · ONE live pill · toggle.
-            Connect lives on the hero CTA (editorial restraint here). */}
+        {/* Reference masthead: logo · pipe · tagline · connect + ONE live pill · toggle. */}
         <ThemeToggle />
       </header>
       {modal && <WalletModal onClose={() => setModal(false)} />}

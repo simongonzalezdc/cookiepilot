@@ -100,8 +100,8 @@
   --halftone: color-mix(in srgb, var(--ink) 55%, transparent); /* dot matrix */
   --shadow-ember: 4px 4px 0 0 var(--ember);                    /* print offset */
   --shadow-ink: 3px 3px 0 0 var(--ink);                        /* chip offset */
-  --grain-opacity: 0.07;
-  --ring-track: color-mix(in srgb, var(--ember) 24%, var(--surface-sunken));
+  --grain-opacity: 0.085;
+  --ring-track: #e6cfa8; /* solid dough — the reference's printed tan remainder */
 
   /* motion tokens (AM-4): interaction vs ambient, both reduced-motion aware */
   --dur-hit: 180ms;          /* interaction */
@@ -150,7 +150,7 @@
   --halftone: color-mix(in srgb, var(--ink) 45%, transparent);
   --shadow-ember: 4px 4px 0 0 var(--ember);
   --shadow-ink: 3px 3px 0 0 var(--ember); /* on cocoa, ink offsets vanish — ember carries the print offset */
-  --grain-opacity: 0.085;
+  --grain-opacity: 0.1;
   --ring-track: var(--line-ctl); /* warm tan track on cocoa (8a6f58) */
 
   --focus-ring: #ff8a5c;
@@ -287,6 +287,20 @@ button { font-family: inherit; }
 .dot.warn { background: var(--ink-dim); box-shadow: 0 0 0 3px rgba(107, 84, 67, 0.14); animation: none; }
 .header .spacer { flex: 1; }
 
+/* masthead connect pill — quiet ink outline (the ring owns the loud ember) */
+.connect-pill {
+  display: inline-flex; align-items: center;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--ink);
+  padding: 7px 16px; border-radius: var(--radius-ctl);
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink); cursor: pointer; white-space: nowrap;
+  font-family: inherit;
+  transition: border-color var(--dur-hit) var(--ease-out), color var(--dur-hit) var(--ease-out),
+    transform var(--dur-hit) var(--ease-out);
+}
+.connect-pill:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); }
+
 /* theme toggle — reference masthead pill: sun|moon pair, active at ink */
 .themetoggle {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
@@ -369,68 +383,50 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
-   HERO — the poster front page (reference-approved.png).
-   Unboxed editorial: flat paper, strong rules, GIANT display
-   numerals, ember chip with hard ink offset, halftone sparkline,
-   the bitten donut as graphic centerpiece on the right with
-   vertical marginalia on the page edge.
+   HERO — the poster front page (v5 POSTER-PURIFY).
+   Viewport 01 carries ONLY: the giant COOK price + poster-weight
+   delta, the bitten ember ring centerpiece, and a thin fold-edge
+   stat strip. The hero fills the first viewport so the fold lands
+   on the strip; everything else lives in numbered sections below.
    ============================================================ */
 .hero {
   position: relative;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin-top: 26px;
-  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  /* the poster fills the first viewport; the strip sits on the fold edge */
+  min-height: calc(100vh - 80px);
+  padding-top: 10px;
 }
-.hero-top {
-  display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap;
-  position: relative;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule);
+@supports (height: 1svh) {
+  .hero { min-height: calc(100svh - 80px); }
 }
-/* eyebrow: "01 — NETWORK PULSE ▪" in loud caps */
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--ink);
+/* boot states keep the poster frame, quietly centered */
+.hero-boot { justify-content: center; padding-bottom: 30px; }
+.bootcaps {
+  margin: 0 0 12px;
+  font-size: 11.5px; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--ink-dim);
 }
-.hero-eyebrow .hero-no { color: var(--ember-text); letter-spacing: 0.08em; }
-.hero-eyebrow .rule-dash { width: 26px; height: 2px; background: var(--ink); opacity: 0.75; }
-.hero-eyebrow .sq { width: 9px; height: 9px; background: var(--ember); flex: none; }
-.hero-topright { margin-left: auto; display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.livebadge {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ink);
-  background: var(--surface-raised);
-  border: 1.5px solid var(--ink);
-  padding: 6px 14px; border-radius: var(--radius-ctl);
-  white-space: nowrap;
-}
-/* desktop masthead carries the live pill (reference restraint);
-   mobile hides the header pill, so the hero badge carries LIVE there */
-@media (min-width: 641px) { .hero .livebadge { display: none; } }
-.hero-slot { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
 
 .hero-grid {
+  flex: 1 0 auto;
   position: relative;
-  display: grid; grid-template-columns: minmax(0, 1.72fr) minmax(280px, 1fr);
-  gap: 0 44px;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  gap: 0 32px;
   align-items: stretch;
+  align-content: start;
+  padding: 34px 0 30px;
 }
-.hero-main { padding: 22px 0 26px; min-width: 0; }
+.hero-main { min-width: 0; container-type: inline-size; --price-cap: 150px; padding-top: 22px; }
 
-/* the GIANT price — poster display numeral, ink on paper.
-   Container-query fluid sizing: scales with the COLUMN so the
-   12-glyph price never overflows (incl. 400% zoom), poster-scale
-   (≈100px) on desktop columns. vw fallback for old engines. */
-.hero-main { container-type: inline-size; }
+/* the GIANT price — the poster's ONE hero numeral, ink on paper.
+   JS fit-to-column (useFitPrice) scales it to the largest size that
+   cannot overflow; this clamp is the no-JS fallback. 700-weight
+   tabular per the v5 brief; cap 150px desktop / 96px mobile. */
 .giantprice {
-  margin: 16px 0 0 -0.04em;
-  font-size: clamp(24px, 12.5vw, 132px);
-  font-weight: 900;
+  margin: 0 0 0 -0.045em;
+  font-size: clamp(28px, 13vw, 150px);
+  font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.94;
   color: var(--ink);
@@ -438,43 +434,35 @@ button { font-family: inherit; }
   white-space: nowrap;
 }
 @supports (width: 1cqw) {
-  .giantprice { font-size: clamp(24px, 17.5cqw, 132px); }
+  .giantprice { font-size: clamp(28px, 16.5cqw, 150px); }
 }
 .pricemeta {
-  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  margin-top: 16px;
+  display: flex; align-items: baseline; gap: 10px 18px; flex-wrap: wrap;
+  margin-top: 18px;
 }
-/* the ember moment: solid ember chip, hard ink offset shadow.
-   Text is INK on ember (4.79:1 — AA); white would be 3.4:1. */
-.chip-ember {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--ember);
-  color: var(--ink);
-  font-size: 13.5px; font-weight: 800;
-  letter-spacing: 0.04em;
+/* poster-weight delta companion: pure display type (single-ember
+   restraint — the ring owns the ember FILL, the delta owns ember TEXT) */
+.delta-poster {
+  font-size: clamp(26px, 3.2vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--ember-text);
   font-variant-numeric: tabular-nums;
-  padding: 7px 13px;
-  box-shadow: var(--shadow-ink);
+  white-space: nowrap;
 }
-.chip-ember em { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: 0.14em; }
+.delta-poster.down { color: var(--jam-text); }
+.delta-poster em {
+  font-style: normal; font-weight: 700; font-size: 11px;
+  letter-spacing: 0.16em; color: var(--ink-dim); margin-left: 7px;
+}
 .pair {
   font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--ink-dim);
 }
-/* value proposition as the standfirst paragraph under the price */
-.valueprop {
-  margin: 18px 0 0;
-  font-size: 15.5px;
-  font-weight: 500;
-  line-height: 1.55;
-  letter-spacing: 0;
-  color: var(--ink);
-  max-width: 56ch;
-}
-.valueprop .accent { color: var(--ember-text); font-weight: 700; }
 
-/* sparkline block: caps caption row + halftone-filled chart */
-.sparkblock { margin-top: 22px; border-top: 1px solid var(--rule); padding-top: 12px; }
+/* sparkline block (section 03): caps caption row + halftone-filled chart */
+.sparkblock { margin-top: 20px; border-top: 1px solid var(--rule); padding-top: 12px; }
 .sparkcap {
   display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
   font-size: 10.5px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
@@ -483,51 +471,37 @@ button { font-family: inherit; }
 }
 .sparkcap b { color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
 
-/* 3-stat strip with hairline vertical separators — big numerals */
-.herostats {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  margin-top: 22px;
-  border-top: 1px solid var(--rule);
-  padding-top: 16px;
+/* poster deck — the value proposition opens the below-fold paper */
+.deck { margin-top: 30px; max-width: 64ch; }
+.deck .valueprop {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+  color: var(--ink);
 }
-.herostat { padding: 0 22px; border-left: 1px solid var(--rule); min-width: 0; }
-.herostat:first-child { padding-left: 0; border-left: none; }
-.herostat .hlabel {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 10px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: 0.18em; color: var(--ink-dim);
-}
-.herostat .hlabel svg { width: 14px; height: 14px; }
-.herostat .hvalue {
-  display: block;
-  font-size: clamp(26px, 2.6vw, 38px); font-weight: 800; letter-spacing: -0.02em;
-  line-height: 1.1; color: var(--ink);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.herostat .hvalue .unit { font-size: 13px; font-weight: 700; color: var(--ink-dim); margin-left: 4px; letter-spacing: 0.08em; }
-.herostat .hsub { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; }
-
-/* hero CTA row: the print button + crumb-trail microcopy */
-.herocta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 20px; }
+.valueprop .accent { color: var(--ember-text); font-weight: 700; }
+.deck .crumbwords { display: inline-block; margin-top: 12px; }
 .crumbwords {
   font-size: 10.5px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--ink-dim);
 }
 
-/* RIGHT COLUMN — the bitten donut centerpiece */
+/* RIGHT COLUMN — the bitten donut centerpiece, poster-large */
 .hero-side {
   position: relative;
+  align-self: stretch;
   border-left: 1px solid var(--rule);
-  padding: 26px 6px 26px 34px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+  padding: 30px 0 30px 38px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
   overflow: visible;
 }
 /* halftone quarter-disc backdrop behind the ring's top-right (reference) */
 .bite-corner {
   position: absolute;
-  top: -6px; right: -18px;
-  width: 190px; height: 190px;
+  top: -14px; right: -30px;
+  width: 250px; height: 250px;
   border-radius: 50%;
   background-image: radial-gradient(var(--halftone) 1.25px, transparent 1.55px);
   background-size: 9px 9px;
@@ -561,6 +535,8 @@ button { font-family: inherit; }
 /* ---- The Bite ring meter (AM-3) — centerpiece size ---- */
 .bitering { display: flex; align-items: center; gap: 16px; padding: 0; position: relative; }
 .bitering.stacked { flex-direction: column; align-items: flex-start; gap: 14px; }
+/* the ring svg scales to its column (viewBox keeps stroke + bite geometry) */
+.bitering.stacked .ring { width: 100%; max-width: 380px; height: auto; }
 .bitering .ring { display: block; }
 .bitering .bitemeta { display: flex; flex-direction: column; gap: 2px; min-width: 130px; }
 .bitering .bitemeta .big {
@@ -597,19 +573,31 @@ button { font-family: inherit; }
 }
 .factsline .bridgeline { color: var(--ink-dim); }
 .factsline .bridgeline b { color: var(--ember-text); margin-right: 4px; }
+/* THIN FOLD-EDGE STAT STRIP — the only other content in viewport 01:
+   TPS · block time · bridged · height as small tabular entries */
 .hero-strip {
-  position: relative;
-  display: flex; flex-wrap: wrap; gap: 8px 20px;
-  margin-top: 2px; padding-top: 13px;
+  margin-top: auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--rule);
-  font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-dim);
+  padding: 14px 0 26px;
 }
-.hero-strip b {
+.hstrip {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 0 20px; border-left: 1px solid var(--rule);
+  min-width: 0;
+}
+.hstrip:first-child { padding-left: 0; border-left: none; }
+.hstrip .hlabel {
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--ink-dim);
+  white-space: nowrap;
+}
+.hstrip b {
   color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums;
-  font-size: 12.5px; margin-right: 5px; letter-spacing: 0.04em;
+  font-size: 15.5px; line-height: 1.25; letter-spacing: 0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.hero-strip .sep { color: var(--rule); }
+.hstrip b .unit { font-size: 10px; font-weight: 700; color: var(--ink-dim); margin-left: 4px; letter-spacing: 0.1em; }
 
 /* ---------- bridge line (quiet microtext inside the hero strip) ---------- */
 .bridgeline b { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -617,11 +605,19 @@ button { font-family: inherit; }
 /* ============================================================
    SECTIONS — giant numbered poster heads ("02 — WALLET")
    ============================================================ */
-.sect { margin-top: 54px; scroll-margin-top: 84px; }
+.sect { margin-top: 88px; scroll-margin-top: 84px; }
 .sect-head {
+  position: relative;
   display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
-  margin-bottom: 18px; padding-bottom: 6px;
+  margin-bottom: 20px; padding-bottom: 12px;
   border-bottom: 2px solid var(--ink);
+}
+/* second line of the section's print rule — poster double rule */
+.sect-head::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 1px; background: var(--ink);
+  pointer-events: none;
 }
 .sect-no {
   font-size: clamp(40px, 5.6vw, 76px);
@@ -654,73 +650,56 @@ button { font-family: inherit; }
 @media (max-width: 1000px) {
   .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
   .grid.cols-3 { grid-template-columns: 1fr; }
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-side { border-left: none; border-top: 1px solid var(--rule); padding: 26px 0 6px; align-items: center; }
+  .hero-grid { grid-template-columns: 1fr; gap: 0; align-content: start; }
+  .hero-side { border-left: none; border-top: 1px solid var(--rule); padding: 24px 0 10px; align-self: auto; }
   .hero-side .bitemeta { align-items: center; text-align: center; }
   .sect-hint { margin-left: 0; width: 100%; }
 }
 @media (max-width: 640px) {
   .grid.cols-4, .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
   .shell { padding: 0 16px 70px; }
-  .pricemeta { gap: 10px; margin-top: 12px; }
-  .herostats { grid-template-columns: repeat(3, 1fr); gap: 0 10px; }
-  .herostat { padding: 0 10px; }
-  .herostat:first-child { padding-left: 0; }
-  .herostat .hvalue { font-size: 17px; white-space: nowrap; }
-  .herostat .hvalue .unit { display: inline; margin-left: 3px; }
-  .herocta .btn.primary { flex: 1; justify-content: center; text-align: center; }
-  /* AM-5: theme toggle stays top-right on mobile — one control row
-     (logo · · · connect, toggle); compact caps keep all three on one line */
+  /* masthead stacks by design: row 1 = logo · toggle (top-right, AM-5);
+     row 2 = connect + live pills — both reachable in the masthead */
   .header { flex-wrap: wrap; row-gap: 10px; gap: 8px; border-bottom-width: 2px; }
   .logo { order: 0; font-size: 16.5px; gap: 9px; }
   .logo .cookie { width: 32px; height: 32px; border-radius: 10px; }
   .logo .sub { display: none; }
   .header .spacer { order: 1; }
-  .header .btn.primary, .header .wallet-chip { order: 2; }
-  .header .btn.primary { padding: 7px 11px; font-size: 10px; letter-spacing: 0.07em; box-shadow: 2.5px 2.5px 0 0 var(--ember); }
   .themetoggle { order: 2; width: auto; height: 32px; padding: 0 10px; gap: 6px; }
   .themetoggle .tt-sep { height: 12px; }
   .themetoggle svg { width: 14px; height: 14px; }
-  /* compact live pill in the top bar, right cluster beside the toggle */
-  .netpill {
-    display: inline-flex;
-    order: 2;
-    padding: 5px 11px; font-size: 9.5px; letter-spacing: 0.12em;
-  }
-  /* one live status on mobile: the hero LIVE badge carries it; the header
-     slot pill would be a redundant second status strip (AM-5 judging frame) */
-  .hero .livebadge { display: none; }
-  .hero-topright { margin-left: 0; width: 100%; justify-content: space-between; }
-  .hero-slot { max-width: 48%; text-align: right; }
+  .header .connect-pill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .netpill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .header .wallet-chip { order: 3; }
+  /* mobile poster: giant number (cap 96px), ring below, strip wraps 2×2.
+     Masthead stacks to two rows (~106px) — subtract that so the strip
+     still lands on the fold edge. */
+  .hero { min-height: calc(100svh - 108px); padding-top: 6px; }
+  .hero-grid { padding: 12px 0 8px; }
+  .hero-main { padding-top: 8px; }
+  .hero-main { --price-cap: 96px; }
+  .giantprice { font-size: clamp(40px, 18cqw, 96px); }
+  .delta-poster { font-size: 27px; }
+  .pricemeta { gap: 8px 14px; margin-top: 12px; }
+  .hero-side { padding: 18px 0 8px; align-items: center; }
+  .bite-corner { width: 130px; height: 130px; right: -8px; top: 12px; }
+  .bitering.stacked .ring { width: min(62vw, 236px); }
+  .hero-strip { grid-template-columns: 1fr 1fr; gap: 12px 18px; padding: 12px 0 20px; }
+  .hstrip { padding: 0 12px; }
+  .hstrip:nth-child(odd) { padding-left: 0; border-left: none; }
+  .hstrip b { font-size: 14px; }
   .hidecap { display: none; }
-  .hero-main { padding-top: 10px; }
-  .valueprop { font-size: 14px; margin-top: 10px; }
   .hidelong { display: none; }
-  .sparkblock { margin-top: 12px; padding-top: 8px; }
+  .deck { margin-top: 22px; }
+  .deck .valueprop { font-size: 14.5px; }
+  .sparkblock { margin-top: 14px; padding-top: 8px; }
   .sparkcap { gap: 8px; margin-bottom: 2px; font-size: 9.5px; }
   .sparkcap span:first-child { max-width: 52%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sparkcap .data { text-align: right; }
   .sparkblock svg { height: 46px; }
-  /* donut scales down so the bite centerpiece fits the 844px fold (AM-5) */
-  .bitering.stacked .ring { width: 168px; height: 168px; }
-  .hero-side { padding-top: 10px; padding-bottom: 0; gap: 8px; align-items: center; }
-  .bite-corner { width: 120px; height: 120px; right: -6px; }
-  .herostats { margin-top: 12px; padding-top: 10px; }
-  .herostat { padding: 0 8px; }
-  .herostat .hlabel { font-size: 8.5px; white-space: nowrap; letter-spacing: 0.12em; }
-  .herostat .hsub { display: none; }
-  .herocta { margin-top: 14px; }
-  .herocta .btn.primary { flex: none; }
-  /* decorative microcopy yields the fold to the bite centerpiece */
-  .crumbwords { display: none; }
-  /* structured stat strip instead of ragged wrap (long usd conversion hidden) */
-  .hero-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
-  .strip-usd { display: none; }
 }
-/* ≤360px: the header row sheds the connect button (the hero CTA below
-   carries it) so logo + toggle stay on ONE line at 320px */
+/* ≤360px: tighter shell so masthead row 2 (connect + live) still fits 320 */
 @media (max-width: 360px) {
-  .header .btn.primary { display: none; }
   .shell { padding: 0 12px 70px; }
 }
 

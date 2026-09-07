@@ -1,5 +1,6 @@
+import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
-import { usePoll } from "../hooks/usePoll";
+import { usePoll, type PollState } from "../hooks/usePoll";
 import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
@@ -40,140 +41,132 @@ function fmtSlotTime(ms: number | null): string {
   return ms >= 1000 ? `~${(ms / 1000).toFixed(2)}s` : `~${Math.round(ms)}ms`;
 }
 
+/* ------------------------------------------------------------------
+   v5 POSTER-PURIFY: one shared poll feeds the hero AND section 03,
+   so the first viewport can stay a pure poster (no widgets) while
+   every datum still has a home below the fold.
+------------------------------------------------------------------ */
+const StatsCtx = createContext<PollState<AllStats> | null>(null);
+
+export function StatsProvider({ children }: { children: ReactNode }) {
+  const poll = usePoll<AllStats>(fetchAll, 30_000);
+  return <StatsCtx.Provider value={poll}>{children}</StatsCtx.Provider>;
+}
+
+function useStats(): PollState<AllStats> {
+  const ctx = useContext(StatsCtx);
+  if (!ctx) throw new Error("useStats must be used inside <StatsProvider>");
+  return ctx;
+}
+
+/**
+ * Poster fit for the GIANT price: measure the string at 100px and scale
+ * it to fill its column exactly — the Swiss way. Caps per breakpoint via
+ * --price-cap (150px desktop / 96px mobile), floors at 24px, and refits
+ * on font-load + container resize so no live value can ever overflow.
+ */
+function useFitPrice(text: string) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    const col = el?.parentElement;
+    if (!el || !col) return;
+    let raf = 0;
+    const fit = () => {
+      const cap = parseFloat(getComputedStyle(el).getPropertyValue("--price-cap")) || 150;
+      el.style.fontSize = "100px";
+      const w = el.scrollWidth || 1;
+      const size = Math.max(24, Math.min(cap, (col.clientWidth / w) * 100 * 0.99));
+      el.style.fontSize = `${size}px`;
+    };
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    };
+    schedule();
+    document.fonts?.ready.then(schedule).catch(() => {});
+    const ro = new ResizeObserver(schedule);
+    ro.observe(col);
+    return () => {
+      ro.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [text]);
+  return ref;
+}
+
+/**
+ * THE HERO — the poster front page (v5 POSTER-PURIFY).
+ * Masthead lives in the Header; this viewport carries ONLY:
+ * the giant COOK price + poster-weight delta, the bitten ember ring
+ * centerpiece, and a thin fold-edge stat strip. Everything else
+ * (wallet, charts, feed, swap, console) lives in the numbered
+ * sections below the fold.
+ */
 export function StatTiles() {
-  const { data, error, refresh } = usePoll(fetchAll, 30_000);
+  const { data, error, refresh } = useStats();
+  // hook order is sacred: the fit hook runs on every render, ref or no ref
+  const priceText = data ? `$${Number(data.price.data.price.usd).toPrecision(4)}` : "";
+  const fitRef = useFitPrice(priceText);
 
   if (error && !data)
     return (
-      <div className="hero">
+      <div className="hero hero-boot">
         <ErrorBox message={error} onRetry={refresh} />
-        <div className="herocta">
-          <button
-            className="btn primary"
-            onClick={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))}
-          >
-            Connect wallet →
-          </button>
-        </div>
       </div>
     );
   if (!data)
     return (
-      <div className="hero">
-        <div className="hero-top">
-          <span className="livebadge"><span className="dot warn" /> Connecting</span>
-        </div>
-        <div className="thinking"><i /><i /><i /> <span style={{ marginLeft: 6 }}>lighting the oven — reading chain state</span></div>
+      <div className="hero hero-boot">
+        <p className="bootcaps">Lighting the oven</p>
+        <div className="thinking"><i /><i /><i /> <span style={{ marginLeft: 6 }}>reading chain state</span></div>
       </div>
     );
 
-  const { stats, price, daily, supply, slotMs } = data;
+  const { stats, price, bridge, supply, slotMs } = data;
   const chg = price.data.price.change24h;
-  const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
-  const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
-  const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
-  const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   const up = chg >= 0;
+  const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   // centerpiece ring: share of circulating supply bridged from Solana —
-  // a core chain story that lives mid-scale (reference: 68.4% ring);
-  // falls back to epoch progress while the bridge indexer warms up
-  const bridgedPct = data.bridge?.totalBridged && supply.circulating > 0
-    ? Math.min(100, (data.bridge.totalBridged / supply.circulating) * 100)
+  // honest AND reference-scale loud; falls back to epoch progress while
+  // the bridge indexer warms up
+  const bridgedPct = bridge?.totalBridged && supply.circulating > 0
+    ? Math.min(100, (bridge.totalBridged / supply.circulating) * 100)
     : null;
   const ringPct = bridgedPct ?? epochPct;
 
   return (
     <div className="hero">
-      <div className="hero-top">
-        <span className="hero-eyebrow">
-          <span className="hero-no" aria-hidden="true">01</span>
-          <span className="rule-dash" aria-hidden="true" />
-          Network pulse
-          <span className="sq" aria-hidden="true" />
-        </span>
-        <span className="hero-topright">
-          <span className="livebadge">
-            <span className="dot" /> Live · Mainnet
-          </span>
-        </span>
-      </div>
-
       <div className="hero-grid">
         <div className="hero-main">
-          {/* the poster's GIANT display numeral (reference-approved.png).
-              4 significant digits — display rounding; the exact price is
-              in the aria-label and everywhere fmtUsd appears. */}
-          <p className="giantprice" aria-label={`COOK price ${fmtUsd(price.data.price.usd)}`}>
-            {`$${Number(price.data.price.usd).toPrecision(4)}`}
+          {/* the poster's ONE giant display numeral. 4 significant digits —
+              display rounding; the exact price is in the aria-label and
+              everywhere fmtUsd appears. Fit-to-column, cap 150px. */}
+          <p className="giantprice" ref={fitRef} aria-label={`COOK price ${fmtUsd(price.data.price.usd)}`}>
+            {priceText}
           </p>
           <div className="pricemeta">
-            {/* THE ember moment: solid chip, hard ink offset (reference) */}
-            <span className="chip-ember">
-              {up ? "▲" : "▼"} {pct(chg)} <em>/ 24H</em>
+            {/* poster-weight delta companion: type, not a chip */}
+            <span className={`delta-poster ${up ? "" : "down"}`}>
+              {up ? "▲" : "▼"} {pct(chg)}
+              <em>/ 24H</em>
             </span>
-            <span className="pair">COOK / USDC — Cookiescan pair</span>
-          </div>
-
-          {/* judging frame (AM-5): one-line value proposition */}
-          <h1 className="valueprop">
-            The oven-fresh cockpit for Cookie Chain. Live analytics, wallet &amp; swaps on a
-            sub-second chain
-            <span className="hidelong"> — every transfer traced crumb by crumb to the tray.</span>
-          </h1>
-
-          <div className="sparkblock">
-            <div className="sparkcap">
-              <span>Sparkline · fees, 10 days</span>
-              <span className="data">
-                LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
-              </span>
-            </div>
-            {feesSeries.length > 2 && <Sparkline points={feesSeries} height={64} />}
-          </div>
-
-          <div className="herostats">
-            <div className="herostat">
-              <span className="hlabel">Throughput</span>
-              <span className="hvalue">
-                {fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}
-                <span className="unit">TPS</span>
-              </span>
-            </div>
-            <div className="herostat">
-              <span className="hlabel">Block time</span>
-              <span className="hvalue">{fmtSlotTime(slotMs)}</span>
-            </div>
-            <div className="herostat">
-              <span className="hlabel">Finality</span>
-              <span className="hvalue">
-                3<span className="unit">TICKS</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="herocta">
-            <button
-              className="btn primary"
-              onClick={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))}
-            >
-              Connect wallet →
-            </button>
-            <span className="crumbwords">Processed · Confirmed · Finalized</span>
+            <span className="pair">COOK / USDC — MAINNET PAIR</span>
           </div>
         </div>
 
-        {/* RIGHT COLUMN — the bitten donut, graphic centerpiece (reference).
-            AM-3: notch cut from the track, value prints in the center. */}
+        {/* THE BITE RING — graphic centerpiece (reference-approved.png).
+            AM-3: one scallop notch from the track, value prints in the center. */}
         <aside className="hero-side">
           <span className="bite-corner" aria-hidden="true" />
           <BiteRing
             percent={ringPct}
-            size={252}
+            size={380}
             layout="stacked"
             big={ringPct.toFixed(1)}
             unit="%"
             label={bridgedPct != null ? "of supply bridged" : "of epoch elapsed"}
-            sub={`epoch ${stats.epoch ?? "—"} · ${epochPct.toFixed(1)}% through${data.bridge?.totalBridged ? ` · ${fmtCompact(data.bridge.totalBridged)} COOK via Hyperlane` : ""}`}
+            sub={`epoch ${stats.epoch ?? "—"} · ${epochPct.toFixed(1)}% through${bridge?.totalBridged ? ` · ${fmtCompact(bridge.totalBridged)} COOK via Hyperlane` : ""}`}
             bakeline={
               <>
                 Exactly <b>{ringPct.toFixed(1)}%</b> baked
@@ -181,6 +174,26 @@ export function StatTiles() {
             }
           />
         </aside>
+      </div>
+
+      {/* thin fold-edge stat strip — the only other thing in viewport 01 */}
+      <div className="hero-strip">
+        <span className="hstrip">
+          <span className="hlabel">Throughput</span>
+          <b>{fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}<span className="unit">TPS</span></b>
+        </span>
+        <span className="hstrip">
+          <span className="hlabel">Block time</span>
+          <b>{fmtSlotTime(slotMs)}</b>
+        </span>
+        <span className="hstrip">
+          <span className="hlabel">Bridged</span>
+          <b>{bridge?.totalBridged ? fmtCompact(bridge.totalBridged) : "—"}<span className="unit">COOK</span></b>
+        </span>
+        <span className="hstrip">
+          <span className="hlabel">Height</span>
+          <b>{fmtNum(stats.blockHeight, 0)}</b>
+        </span>
       </div>
 
       {/* vertical marginalia on the page edge (decorative) */}
@@ -192,28 +205,49 @@ export function StatTiles() {
 }
 
 /**
- * Network facts microline — lives at the top of section 03 (analytics
- * semantics) so the hero keeps the reference's clean poster pacing.
- * Polls its own light set: chain stats + supply + bridge totals.
+ * Network facts microline — section 03 opener. Consumes the shared
+ * StatsProvider poll (no second fetch); carries the finality story
+ * that used to crowd the hero.
  */
 export function NetworkFacts() {
-  const stats = usePoll(fetchChainStats, 30_000);
-  const supply = usePoll(async () => {
-    const r = await rpc<{ value: { circulating: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]);
-    return { circulating: r.value.circulating / 1e9 };
-  }, 30_000);
-  const bridge = usePoll(fetchBridgeStats, 120_000);
-  if (!stats.data) return null;
+  const { data, loading } = useStats();
+  if (!data) return null;
+  const { stats, supply, bridge } = data;
   return (
     <div className="factsline">
-      <span><b>{stats.data.baseFee}</b> base fee</span>
-      {supply.data && <span><b>{fmtCompact(supply.data.circulating)}</b> COOK circulating</span>}
-      <span><b>{stats.data.validators}</b> validators</span>
-      <span><b>{fmtCompact(stats.data.tokensLaunched)}</b> tokens · {fmtNum(stats.data.programsLaunched, 0)} programs</span>
-      {bridge.data?.totalBridged ? (
-        <span className="bridgeline"><b>{fmtCompact(bridge.data.totalBridged)} COOK</b> bridged from Solana · {fmtNum(bridge.data.totalTransfers, 0)} transfers · 1:1 Hyperlane</span>
+      <span><b>{stats.baseFee}</b> base fee</span>
+      <span><b>3</b> ticks to cement</span>
+      <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
+      <span><b>{stats.validators}</b> validators</span>
+      <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>
+      {bridge?.totalBridged ? (
+        <span className="bridgeline"><b>{fmtCompact(bridge.totalBridged)} COOK</b> bridged from Solana · {fmtNum(bridge.totalTransfers, 0)} transfers · 1:1 Hyperlane</span>
       ) : null}
-      {stats.loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
+      {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
+    </div>
+  );
+}
+
+/**
+ * Sparkline deck (fees, 10 days) — lives in section 03 analytics now;
+ * the poster hero stays pure. Shares the StatsProvider poll.
+ */
+export function SparkDeck() {
+  const { data } = useStats();
+  if (!data) return null;
+  const feesSeries = data.daily.days.slice(-10).map((d) => d.feesCook);
+  if (feesSeries.length < 3) return null;
+  const feesLow = Math.min(...feesSeries);
+  const feesNow = feesSeries[feesSeries.length - 1];
+  return (
+    <div className="sparkblock">
+      <div className="sparkcap">
+        <span>Sparkline · fees, 10 days</span>
+        <span className="data">
+          LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
+        </span>
+      </div>
+      <Sparkline points={feesSeries} height={64} />
     </div>
   );
 }
