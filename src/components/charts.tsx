@@ -305,8 +305,10 @@ export function BiteRing({
   // place the notch inside the exposed TRACK (AM-3: bite the track, never
   // the fill endpoint/current value) — centered when the track allows,
   // else ≥18° past the fill end; never wrapping across the 0° seam.
+  // Near-full rings have no usable track: no bite (AM-3 keeps the law).
   const endAngle = (p / 100) * 360;
   const trackDeg = (100 - p) * 3.6;
+  const hasTrack = trackDeg >= 26 && p > 2;
   const biteAngle = endAngle + Math.max(trackDeg / 2, 18);
   const rad = ((biteAngle - 90) * Math.PI) / 180;
   const bcx = c + Math.cos(rad) * centerRad;
@@ -328,16 +330,19 @@ export function BiteRing({
         <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
           <rect x="0" y="0" width={size} height={size} fill="#fff" />
           {/* ONE bite (AM-3), scalloped edge like the reference's cookie
-              bite: main circle + merged satellites, region ≈ 40° of arc */}
-          <g fill="#000">
-            <circle cx={bcx} cy={bcy} r={br} />
-            {[-12, 12].map((a) => {
-              const srad = ((biteAngle + a - 90) * Math.PI) / 180;
-              const sx = c + Math.cos(srad) * (centerRad + br * 0.3);
-              const sy = c + Math.sin(srad) * (centerRad + br * 0.3);
-              return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
-            })}
-          </g>
+              bite: main circle + merged satellites, region ≈ 40° of arc.
+              No exposed track → no bite (never the fill endpoint). */}
+          {hasTrack && (
+            <g fill="#000">
+              <circle cx={bcx} cy={bcy} r={br} />
+              {[-12, 12].map((a) => {
+                const srad = ((biteAngle + a - 90) * Math.PI) / 180;
+                const sx = c + Math.cos(srad) * (centerRad + br * 0.3);
+                const sy = c + Math.sin(srad) * (centerRad + br * 0.3);
+                return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
+              })}
+            </g>
+          )}
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { WalletCtx, useWalletInternal } from "./hooks/useWallet";
 import { Header } from "./components/Header";
-import { StatTiles } from "./components/StatTiles";
+import { StatTiles, NetworkFacts } from "./components/StatTiles";
 import { NetworkPanel } from "./components/NetworkPanel";
 import { MarketsPanel } from "./components/MarketsPanel";
 import { ActivityFeed } from "./components/ActivityFeed";
@@ -33,6 +33,7 @@ export default function App() {
         </Section>
 
         <Section no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
+          <NetworkFacts />
           <NetworkPanel />
           <div style={{ height: 18 }} />
           <MarketsPanel />

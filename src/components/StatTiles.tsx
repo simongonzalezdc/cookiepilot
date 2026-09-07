@@ -10,7 +10,7 @@ interface AllStats {
   price: CookPrice;
   daily: DailyAnalytics;
   bridge: BridgeStats | null;
-  supply: { circulating: number };
+  supply: { circulating: number; total: number };
   slotMs: number | null;
 }
 
@@ -20,7 +20,7 @@ async function fetchAll(): Promise<AllStats> {
     fetchCookPrice(),
     fetchDailyAnalytics(),
     fetchBridgeStats().catch(() => null),
-    rpc<{ value: { circulating: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]),
+    rpc<{ value: { circulating: number; total: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]),
     // block time → the finality story, straight from validator perf samples
     rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [1]).catch(() => null),
   ]);
@@ -30,7 +30,7 @@ async function fetchAll(): Promise<AllStats> {
     price,
     daily,
     bridge: bridge ?? null,
-    supply: { circulating: supply.value.circulating / 1e9 },
+    supply: { circulating: supply.value.circulating / 1e9, total: supply.value.total / 1e9 },
     slotMs,
   };
 }
@@ -41,7 +41,7 @@ function fmtSlotTime(ms: number | null): string {
 }
 
 export function StatTiles() {
-  const { data, error, loading, refresh } = usePoll(fetchAll, 30_000);
+  const { data, error, refresh } = usePoll(fetchAll, 30_000);
 
   if (error && !data)
     return (
@@ -69,13 +69,19 @@ export function StatTiles() {
 
   const { stats, price, daily, supply, slotMs } = data;
   const chg = price.data.price.change24h;
-  const lastDay = daily.days.at(-1);
   const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
   const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
   const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   const subSec = slotMs != null && slotMs < 1000;
   const up = chg >= 0;
+  // centerpiece ring: share of circulating supply bridged from Solana —
+  // a core chain story that lives mid-scale (reference: 68.4% ring);
+  // falls back to epoch progress while the bridge indexer warms up
+  const bridgedPct = data.bridge?.totalBridged && supply.circulating > 0
+    ? Math.min(100, (data.bridge.totalBridged / supply.circulating) * 100)
+    : null;
+  const ringPct = bridgedPct ?? epochPct;
 
   return (
     <div className="hero">
@@ -92,6 +98,8 @@ export function StatTiles() {
           </span>
           <span className="hero-slot">
             {stats.epoch != null ? `epoch ${stats.epoch}` : ""}
+            {stats.epochInfo ? ` · ${((stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100).toFixed(1)}% through` : ""}
+            {stats.liveTps != null ? ` · ${fmtNum(stats.liveTps, 1)} TPS` : ""}
             {slotMs != null ? ` · block ${fmtSlotTime(slotMs)}` : ""}
             <span className="hidecap"> · refreshes automatically</span>
           </span>
@@ -168,31 +176,20 @@ export function StatTiles() {
         <aside className="hero-side">
           <span className="bite-corner" aria-hidden="true" />
           <BiteRing
-            percent={epochPct}
+            percent={ringPct}
             size={252}
             layout="stacked"
-            big={epochPct.toFixed(1)}
+            big={ringPct.toFixed(1)}
             unit="%"
-            label={stats.epoch != null ? `of epoch ${fmtNum(stats.epoch, 0)}` : "of epoch —"}
-            sub={lastDay ? `through · ${fmtNum(lastDay.txns, 0)} txns yesterday` : "slot progress"}
+            label={bridgedPct != null ? "of supply bridged" : "of epoch elapsed"}
+            sub={`epoch ${stats.epoch ?? "—"} · ${epochPct.toFixed(1)}% through${data.bridge?.totalBridged ? ` · ${fmtCompact(data.bridge.totalBridged)} COOK via Hyperlane` : ""}`}
             bakeline={
               <>
-                Exactly <b>{epochPct.toFixed(1)}%</b> baked
+                Exactly <b>{ringPct.toFixed(1)}%</b> baked
               </>
             }
           />
         </aside>
-      </div>
-
-      {/* one quiet microline of network facts + bridge context — keeps the
-          data, yields the poster pacing (verdict: no heavy bottom strip) */}
-      <div className="hero-strip">
-        <span><b>{stats.baseFee}</b> base fee <span className="strip-usd">· ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span></span>
-        <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
-        <span><b>{stats.validators}</b> validators</span>
-        <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>
-        <BridgeNote />
-        {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
       </div>
 
       {/* vertical marginalia on the page edge (decorative) */}
@@ -203,12 +200,29 @@ export function StatTiles() {
   );
 }
 
-function BridgeNote() {
-  const { data } = usePoll(fetchBridgeStats, 120_000);
-  if (!data?.totalBridged) return null;
+/**
+ * Network facts microline — lives at the top of section 03 (analytics
+ * semantics) so the hero keeps the reference's clean poster pacing.
+ * Polls its own light set: chain stats + supply + bridge totals.
+ */
+export function NetworkFacts() {
+  const stats = usePoll(fetchChainStats, 30_000);
+  const supply = usePoll(async () => {
+    const r = await rpc<{ value: { circulating: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]);
+    return { circulating: r.value.circulating / 1e9 };
+  }, 30_000);
+  const bridge = usePoll(fetchBridgeStats, 120_000);
+  if (!stats.data) return null;
   return (
-    <span className="bridgeline">
-      <b>{fmtCompact(data.totalBridged)} COOK</b> bridged from Solana · {fmtNum(data.totalTransfers, 0)} transfers · 1:1 Hyperlane
-    </span>
+    <div className="factsline">
+      <span><b>{stats.data.baseFee}</b> base fee</span>
+      {supply.data && <span><b>{fmtCompact(supply.data.circulating)}</b> COOK circulating</span>}
+      <span><b>{stats.data.validators}</b> validators</span>
+      <span><b>{fmtCompact(stats.data.tokensLaunched)}</b> tokens · {fmtNum(stats.data.programsLaunched, 0)} programs</span>
+      {bridge.data?.totalBridged ? (
+        <span className="bridgeline"><b>{fmtCompact(bridge.data.totalBridged)} COOK</b> bridged from Solana · {fmtNum(bridge.data.totalTransfers, 0)} transfers · 1:1 Hyperlane</span>
+      ) : null}
+      {stats.loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
+    </div>
   );
 }
