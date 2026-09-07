@@ -259,9 +259,12 @@ export function BiteRing({
   const stroke = 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
-  // bite size: ~11% of ring bbox chord, depth ≤ 8px (meter rule)
-  const br = size * 0.07;
-  const depth = Math.min(6, size * 0.04);
+  // bite size: ~11% of ring bbox chord, capped so the cut depth on the outer
+  // edge stays ≤ 8px (meter rule)
+  const br = Math.min(size * 0.07, stroke / 2 + 4.5);
+  // the bite circle must cross the FULL band (outer edge to inner edge) or a
+  // sliver of ring shows through the notch — anchor it just past the inner edge.
+  const centerRad = r - stroke / 2 + br - 1;
   // place the notch inside the exposed TRACK (AM-3: bite the track, never
   // the fill endpoint/current value) — centered when the track allows,
   // else ≥18° past the fill end; never wrapping across the 0° seam.
@@ -269,8 +272,8 @@ export function BiteRing({
   const trackDeg = (100 - p) * 3.6;
   const biteAngle = endAngle + Math.max(trackDeg / 2, 18);
   const rad = ((biteAngle - 90) * Math.PI) / 180;
-  const bcx = c + Math.cos(rad) * (r + br - depth);
-  const bcy = c + Math.sin(rad) * (r + br - depth);
+  const bcx = c + Math.cos(rad) * centerRad;
+  const bcy = c + Math.sin(rad) * centerRad;
   return (
     <div className="bitering">
       <svg className="ring" width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label}: ${big}${unit ?? ""}`}>
