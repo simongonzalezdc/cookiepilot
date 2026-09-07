@@ -395,8 +395,8 @@ button { font-family: inherit; }
 .bridgenote {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   position: relative;
-  margin-top: 14px; padding: 10px 16px;
-  background: var(--surface-sunken);
+  margin-top: 14px; padding: 12px 16px;
+  background: var(--surface-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius-field);
   color: var(--ink); font-size: 13px;

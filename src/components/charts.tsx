@@ -298,15 +298,14 @@ export function BiteRing({
             strokeLinecap="round"
           />
         </g>
-        {/* crumbs — a bite makes crumbs. Three dots scattering tangentially
-            from the notch make the signature read as a cookie bite (not a
-            gauge gap) in a still screenshot; crumb motif, zero motion. */}
+        {/* crumbs — a bite makes crumbs. Two particles hugging the notch's
+            edge (not orbiting debris) make the signature read as a cookie
+            bite in a still screenshot; crumb motif, zero motion. */}
         {(() => {
           const outer = r + stroke / 2;
           const crumbs = [
-            { a: biteAngle + 20, orad: outer + 4, rr: 2.1, o: 0.8 },
-            { a: biteAngle + 33, orad: outer + 1.5, rr: 1.5, o: 0.6 },
-            { a: biteAngle + 10, orad: outer + 7.5, rr: 1.1, o: 0.45 },
+            { a: biteAngle + 9, orad: outer + 2.5, rr: 1.8, o: 0.85 },
+            { a: biteAngle + 19, orad: outer + 3.5, rr: 1.2, o: 0.6 },
           ];
           return crumbs.map((cr, i) => {
             const rad2 = ((cr.a - 90) * Math.PI) / 180;
