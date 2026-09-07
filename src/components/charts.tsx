@@ -259,8 +259,8 @@ export function BiteRing({
   const stroke = 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
-  // bite size: chord at the AM-3 meter bound — cut depth exactly ≤ 8px
-  const br = Math.min(size * 0.075, stroke / 2 + 4.5);
+  // bite size: chord exactly at the AM-3 bound — 14% of plot bbox, ≤8px depth
+  const br = size * 0.07;
   // the bite circle must cross the FULL band (outer edge to inner edge) or a
   // sliver of ring shows through the notch — anchor it just past the inner edge.
   const centerRad = r - stroke / 2 + br - 1;
