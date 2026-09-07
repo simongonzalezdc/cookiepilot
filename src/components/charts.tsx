@@ -285,6 +285,9 @@ export function BiteRing({
           </mask>
         </defs>
         <g mask={`url(#ringbite${mid})`}>
+          {/* the cookie: ink ring (chocolate on vanilla / cream glaze on
+              cocoa) — ember is reserved for the LIVE pulse, so the Bite
+              signature itself is a literal bitten cookie */}
           <circle cx={c} cy={c} r={r} fill="none" style={{ stroke: "var(--line-ctl)" }} strokeWidth={stroke} />
           <circle
             cx={c}
@@ -294,7 +297,7 @@ export function BiteRing({
             pathLength={100}
             strokeDasharray={`${p} ${100 - p}`}
             transform={`rotate(-90 ${c} ${c})`}
-            style={{ stroke: "var(--ember)" }}
+            style={{ stroke: "var(--ink)" }}
             strokeWidth={stroke}
             strokeLinecap="round"
           />
