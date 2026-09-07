@@ -17,8 +17,16 @@ export function AskPanel() {
   const [busy, setBusy] = useState(false);
   const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const bottom = useRef<HTMLDivElement>(null);
+  const mounted = useRef(false);
 
+  // Keep the latest exchange in view — but never on mount (page must land on
+  // the hero, and scrolling the window on mount yanked the first paint off it),
+  // and never scrolling the page itself, only the answer list.
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     bottom.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [exchanges, busy]);
 

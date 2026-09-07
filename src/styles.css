@@ -198,13 +198,15 @@ button { font-family: inherit; }
   white-space: nowrap;
   box-shadow: var(--shadow-card);
 }
+/* live-state dots: ember IS the live/pulse token (--accent-live);
+   connecting is neutral ink-dim, offline is jam. Mint stays confirm-only. */
 .dot {
-  width: 8px; height: 8px; border-radius: 50%; background: var(--mint);
-  box-shadow: 0 0 0 3px rgba(30, 138, 96, 0.14);
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ember);
+  box-shadow: 0 0 0 3px rgba(232, 93, 47, 0.16);
   animation: breathe 2.4s ease-in-out infinite;
 }
 .dot.off { background: var(--jam); box-shadow: 0 0 0 3px rgba(192, 58, 43, 0.14); animation: none; }
-.dot.warn { background: var(--ember); box-shadow: 0 0 0 3px rgba(232, 93, 47, 0.14); }
+.dot.warn { background: var(--ink-dim); box-shadow: 0 0 0 3px rgba(107, 84, 67, 0.14); animation: none; }
 .header .spacer { flex: 1; }
 
 /* theme toggle — top-right of the first viewport, aria-pressed (AM-5) */
@@ -288,15 +290,18 @@ button { font-family: inherit; }
   overflow: hidden;
   box-shadow: var(--shadow-card);
 }
-.hero::before {
-  content: "";
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--ember), var(--mint-bright));
-  opacity: 0.9;
-}
+/* No decorative top-bar: Linear-restraint (spec refusals ban neon accents);
+   the card's hairline + warm shadow carry depth on their own. */
 .hero-top {
   display: flex; align-items: baseline; gap: 8px 18px; flex-wrap: wrap;
   position: relative; margin-bottom: 8px;
+}
+/* station index "01" — keeps the numbered section rhythm (01 pulse-hero)
+   continuous with 02…05 (structure contract + Crumb Trail stations) */
+.hero-no {
+  font-size: 12px; font-weight: 700;
+  color: var(--ember-text); letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
 }
 .valueprop {
   margin: 0;
@@ -309,9 +314,9 @@ button { font-family: inherit; }
 .livebadge {
   display: inline-flex; align-items: center; gap: 9px;
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--mint-text);
-  background: var(--wash-mint);
-  border: 1px solid var(--mint);
+  color: var(--ember-text);
+  background: var(--wash-ember);
+  border: 1px solid color-mix(in srgb, var(--ember) 36%, transparent);
   padding: 5px 13px; border-radius: var(--radius-ctl);
   white-space: nowrap;
 }
@@ -330,7 +335,7 @@ button { font-family: inherit; }
   font-size: 10.5px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.13em; color: var(--ink-dim);
 }
-.hstat .hlabel svg { width: 15px; height: 15px; color: var(--ember-text); }
+.hstat .hlabel svg { width: 15px; height: 15px; color: var(--ink-dim); }
 .hvalue {
   font-size: clamp(24px, 2.1vw, 32px); font-weight: 700; letter-spacing: -0.01em;
   line-height: 1.12; color: var(--ink);
@@ -387,9 +392,10 @@ button { font-family: inherit; }
 .bridgenote {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   margin-top: 14px; padding: 12px 18px;
-  background: var(--wash-ember);
-  border: 1px solid var(--ember);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
   color: var(--ink); font-size: 13px;
 }
 .bridgenote b { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -435,7 +441,15 @@ button { font-family: inherit; }
   .hvalue { font-size: 22px; }
   .hero-slot { margin-left: 0; width: 100%; }
   .shell { padding: 0 14px 70px; }
+  /* AM-5: theme toggle stays top-right on mobile — one control row
+     (logo · · · connect, toggle), live pill reflows to its own row. */
   .header { flex-wrap: wrap; row-gap: 10px; }
+  .logo { order: 0; }
+  .header .spacer { order: 1; }
+  .header .btn.primary, .header .wallet-chip { order: 2; }
+  .header .btn.primary { padding: 7px 14px; font-size: 13px; }
+  .themetoggle { order: 2; }
+  .netpill { order: 3; width: 100%; justify-content: center; }
   .bitering { justify-content: flex-start; }
 }
 

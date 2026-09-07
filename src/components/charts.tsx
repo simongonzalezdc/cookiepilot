@@ -169,12 +169,12 @@ export function Sparkline({ points, height = 46, color = "var(--ember)" }: { poi
       <svg width="100%" height={height} viewBox={`0 0 ${w} ${height}`} style={{ display: "block" }} aria-hidden="true">
         <defs>
           <linearGradient id={`sg${gid}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.26 }} />
+            <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.14 }} />
             <stop offset="100%" style={{ stopColor: color, stopOpacity: 0 }} />
           </linearGradient>
         </defs>
         <path d={area} style={{ fill: `url(#sg${gid})` }} />
-        <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="1.75" strokeLinecap="round" />
+        <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     </div>
   );
@@ -259,8 +259,8 @@ export function BiteRing({
   const stroke = 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
-  // bite size: ~13% of ring bbox chord, depth ≤ 8px (meter rule)
-  const br = size * 0.08;
+  // bite size: ~11% of ring bbox chord, depth ≤ 8px (meter rule)
+  const br = size * 0.07;
   const depth = Math.min(6, size * 0.04);
   // place the notch ≥45° away from the fill endpoint (never cross current value)
   const endAngle = (p / 100) * 360;

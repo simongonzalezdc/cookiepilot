@@ -70,6 +70,7 @@ export function StatTiles() {
   return (
     <div className="hero">
       <div className="hero-top">
+        <span className="hero-no" aria-hidden="true">01</span>
         <span className="livebadge">
           <span className="dot" /> Live · Cookie Chain
         </span>
@@ -129,9 +130,9 @@ export function StatTiles() {
           <BiteRing
             percent={epochPct}
             big={epochPct.toFixed(0)}
-            unit="% through"
-            label={`Epoch ${stats.epoch ?? "—"}`}
-            sub={lastDay ? `${fmtNum(lastDay.txns, 0)} txns yesterday` : "slot progress"}
+            unit="%"
+            label={`Epoch ${stats.epoch ?? "—"} · progress`}
+            sub={lastDay ? `through · ${fmtNum(lastDay.txns, 0)} txns yesterday` : "slot progress"}
           />
         </div>
       </div>
