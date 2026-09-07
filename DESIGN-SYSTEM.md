@@ -63,3 +63,26 @@ Every iteration in the visual ralph loop MUST consult and apply the installed ta
 - Surface: micro-motion · data-viz · art-direction
 - Verification: a11y-pass · cognitive-a11y · deslop-ui (against THIS spec) · humanize-copy
 Working discipline per pass: fix verdict failures THROUGH these skills' lenses (e.g., type fixes via web-typography rules, token fixes via color-system, state coverage via component-states/empty-states), and name in your commit/summary which skills you applied.
+
+---
+
+# v4 — POSTER EXECUTION LAYER (visual-ralph v4, reference-approved.png = binding visual authority; 2026-09-07)
+
+The CEO picked the Swiss Poster editorial reference from the gallery. v4 rebuilds the execution layer on top of the v2/v3 token + contracts base (all AM-1..5 amendments, refusals, contrast law still binding).
+
+## What the reference locked in
+- **Poster anatomy:** unboxed flat-paper hero (no cards in 01), ink editorial rules (`--rule` = ink 34%), masthead double rule, registration crosses at content corners, vertical marginalia (COOKIEPILOT · LIVE NETWORK STATE · date), giant numbered section heads (clamp 40→76px, 900, ink numerals, terse titles: 02 — WALLET).
+- **Display type:** M PLUS Rounded 1c 800/900 (self-hosted latin woff2, same family as v2 amendment AM-2). Hero price = 4 significant digits (display rounding; exact value in aria-label + lower rows), fluid `clamp(24px, 17.5cqw, 132px)` container-query sizing — poster scale, zero overflow at any width incl. 400% zoom.
+- **Texture (mandate):** feTurbulence paper grain on the whole page (`--grain-opacity` 0.07 light / 0.085 dark); halftone dot fills under the sparkline + quarter-disc behind the ring; halftone punch on BarChart bars. NOT flat fills.
+- **Ember moments:** delta chip = solid ember with hard ink offset (text INK on ember, 4.79:1 AA); CTA = ink pill with hard 4px ember offset, caps; the bitten ring centerpiece = ember fill on token track (`--ring-track`: dough mix in light / warm tan --line-ctl in dark).
+- **The Bite centerpiece (v4 metric decision):** the ring shows **share of circulating supply bridged from Solana** (56.5% at capture) — honest AND reference-scale loud; epoch progress lives in the ring's sub line. Near-full rings get NO bite (AM-3: track only, never the fill endpoint). Bite = one notch, edge-anchored, ≤14% chord bound.
+- **Reference copy adopted verbatim where true:** masthead "OVEN-FRESH L2 · ISSUE 07", stat trio THROUGHPUT / BLOCK TIME / FINALITY (3 ticks, cement ≈ computed from live slot ms), PROCESSED · CONFIRMED · FINALIZED crumb microline, terse WALLET section title.
+- **Header:** logo + pipe + masthead line · MAINNET LIVE pill (dot carries live/offline) · dual sun|moon toggle — right-cluster grid per reference. Connect moved OUT of the header into the hero CTA (present in all hero states). No backdrop blur anywhere (refusal #2 enforced).
+
+## Gate results folded in (tastecheck-cookiepilot-0907)
+- BLOCKER fixed: all `.tbl` tables wrapped in `.tblwrap` (overflow-x auto); acceptance probe scrollWidth === innerWidth at 320/390/1024/1440 + 400%-zoom sim — PASS (org-hq ralph-loop/v4/probe.mjs).
+- 320px header single-row (connect sheds ≤360px; hero CTA carries connect); `.txrow .sig` overflow-wrap anywhere.
+- Kept clean: contrast 38/38 both themes, console-zero, tnum verified, bite geometry compliant.
+
+## Loop outcome (v4, 8 iterations)
+Baseline 42 → 68 light / 71 dark / 71 mobile (gemini fidelity to reference). Plateau 67–71 over iters 6–8 → ESCALATION per stop rules: residual gap is structural (honest live data vs comp copy; dual-theme; single-column mobile mandated by AM-5). CEO call needed: accept as SHIP or pin pixel-target frames. Log: org-hq docs/cfo-corpus/expansion/ralph-loop/{loop.log, v4/}.
