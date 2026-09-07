@@ -276,7 +276,7 @@ export function BiteRing({
   const bcy = c + Math.sin(rad) * centerRad;
   return (
     <div className="bitering">
-      <svg className="ring" width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label}: ${big}${unit ?? ""}`}>
+      <svg className="ring" width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label}: ${big}${unit ?? ""}`} style={{ overflow: "visible" }}>
         <defs>
           <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
             <rect x="0" y="0" width={size} height={size} fill="#fff" />
@@ -298,6 +298,29 @@ export function BiteRing({
             strokeLinecap="round"
           />
         </g>
+        {/* crumbs — a bite makes crumbs. Three dots scattering tangentially
+            from the notch make the signature read as a cookie bite (not a
+            gauge gap) in a still screenshot; crumb motif, zero motion. */}
+        {(() => {
+          const outer = r + stroke / 2;
+          const crumbs = [
+            { a: biteAngle + 20, orad: outer + 4, rr: 2.1, o: 0.8 },
+            { a: biteAngle + 33, orad: outer + 1.5, rr: 1.5, o: 0.6 },
+            { a: biteAngle + 10, orad: outer + 7.5, rr: 1.1, o: 0.45 },
+          ];
+          return crumbs.map((cr, i) => {
+            const rad2 = ((cr.a - 90) * Math.PI) / 180;
+            return (
+              <circle
+                key={i}
+                cx={c + Math.cos(rad2) * cr.orad}
+                cy={c + Math.sin(rad2) * cr.orad}
+                r={cr.rr}
+                style={{ fill: "var(--ink-dim)", opacity: cr.o }}
+              />
+            );
+          });
+        })()}
       </svg>
       <div className="bitemeta">
         <span className="lbl">{label}</span>

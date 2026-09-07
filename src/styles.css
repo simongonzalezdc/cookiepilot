@@ -397,7 +397,7 @@ button { font-family: inherit; }
   position: relative;
   margin-top: 14px; padding: 10px 16px;
   background: var(--surface-sunken);
-  border: none;
+  border: 1px solid var(--line);
   border-radius: var(--radius-field);
   color: var(--ink); font-size: 13px;
 }
@@ -457,7 +457,10 @@ button { font-family: inherit; }
   /* one live status on mobile: the hero LIVE badge carries it; the header
      slot pill would be a redundant second status strip (AM-5 judging frame) */
   .netpill { display: none; }
-  .bitering { justify-content: flex-start; }
+  .hero-grid { gap: 22px; }
+  .bitering { justify-content: flex-start; margin-top: 10px; }
+  /* structured stat strip instead of ragged wrap */
+  .hero-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
 }
 
 /* ============================================================
