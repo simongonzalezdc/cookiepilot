@@ -60,7 +60,7 @@ export function StatTiles() {
       </div>
     );
 
-  const { stats, price, daily, bridge, supply, slotMs } = data;
+  const { stats, price, daily, supply, slotMs } = data;
   const chg = price.data.price.change24h;
   const lastDay = daily.days.at(-1);
   const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
@@ -143,9 +143,6 @@ export function StatTiles() {
         <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
         <span><b>{stats.validators}</b> validators</span>
         <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>
-        {bridge?.totalBridged != null && (
-          <span><b>{fmtCompact(bridge.totalBridged)}</b> bridged from Solana</span>
-        )}
         {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
       </div>
 
