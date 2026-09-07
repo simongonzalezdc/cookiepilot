@@ -460,7 +460,7 @@ button { font-family: inherit; }
   .hero-grid { gap: 22px; }
   .bitering { justify-content: flex-start; margin-top: 10px; }
   /* structured stat strip instead of ragged wrap */
-  .hero-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+  .hero-strip { display: grid; grid-template-columns: 1fr; gap: 8px; }
 }
 
 /* ============================================================

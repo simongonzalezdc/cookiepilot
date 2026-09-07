@@ -92,7 +92,7 @@ export function StatTiles() {
             <span className="hvalue">{fmtUsd(price.data.price.usd)}</span>
             <span className="hsub">
               <span className={`chg ${chg >= 0 ? "up" : "down"}`}>{pct(chg)}</span>
-              24h · Cookiescan
+              <span style={{ whiteSpace: "nowrap" }}>24h · Cookiescan</span>
             </span>
           </div>
 
@@ -104,7 +104,7 @@ export function StatTiles() {
 
           <div className="hstat">
             <span className="hlabel"><IconClock size={15} /> Block time</span>
-            <span className="hvalue" style={subSec ? { color: "var(--mint-text)" } : undefined}>{fmtSlotTime(slotMs)}</span>
+            <span className="hvalue">{fmtSlotTime(slotMs)}</span>
             <span className="hsub">finality in the sub-second club</span>
           </div>
 

@@ -281,6 +281,14 @@ export function BiteRing({
           <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
             <rect x="0" y="0" width={size} height={size} fill="#fff" />
             <circle cx={bcx} cy={bcy} r={br} fill="#000" />
+            {/* scallop nicks — the bite's ragged cookie edge, cut INTO the
+                band (never floating debris): two small arcs trailing the
+                main notch make the signature read as a real bite. */}
+            {[12, 21].map((da, i) => {
+              const nr = i === 0 ? 2.2 : 1.4;
+              const rad3 = ((biteAngle + da - 90) * Math.PI) / 180;
+              return <circle key={da} cx={c + Math.cos(rad3) * r} cy={c + Math.sin(rad3) * r} r={nr} fill="#000" />;
+            })}
           </mask>
         </defs>
         <g mask={`url(#ringbite${mid})`}>
@@ -298,28 +306,6 @@ export function BiteRing({
             strokeLinecap="round"
           />
         </g>
-        {/* crumbs — a bite makes crumbs. Two particles hugging the notch's
-            edge (not orbiting debris) make the signature read as a cookie
-            bite in a still screenshot; crumb motif, zero motion. */}
-        {(() => {
-          const outer = r + stroke / 2;
-          const crumbs = [
-            { a: biteAngle + 9, orad: outer + 2.5, rr: 1.8, o: 0.85 },
-            { a: biteAngle + 19, orad: outer + 3.5, rr: 1.2, o: 0.6 },
-          ];
-          return crumbs.map((cr, i) => {
-            const rad2 = ((cr.a - 90) * Math.PI) / 180;
-            return (
-              <circle
-                key={i}
-                cx={c + Math.cos(rad2) * cr.orad}
-                cy={c + Math.sin(rad2) * cr.orad}
-                r={cr.rr}
-                style={{ fill: "var(--ink-dim)", opacity: cr.o }}
-              />
-            );
-          });
-        })()}
       </svg>
       <div className="bitemeta">
         <span className="lbl">{label}</span>
