@@ -115,14 +115,14 @@ function AnswerView({ a, onChip }: { a: NLAnswer; onChip: (chip: string) => void
       <div className="atitle">{a.title}</div>
       {a.body && <div className="abody">{a.body}</div>}
       {a.headers && a.rows && (
-        <table className="tbl" style={{ margin: "6px 0" }}>
+        <div className="tblwrap"><table className="tbl" style={{ margin: "6px 0" }}>
           <thead><tr>{a.headers.map((h) => <th key={h}>{h}</th>)}</tr></thead>
           <tbody>
             {a.rows.map((r, i) => (
               <tr key={i}>{r.map((c, j) => <td key={j} className={j === 0 ? "" : "num"}>{c}</td>)}</tr>
             ))}
           </tbody>
-        </table>
+        </table></div>
       )}
       {a.cards && (
         <div className="acards">

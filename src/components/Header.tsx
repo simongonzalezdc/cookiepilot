@@ -103,7 +103,7 @@ export function Header() {
         <div className="logo">
           <span className="cookie"><CookieMark size={24} /></span>
           <span>
-            CookiePilot <span className="sub">· Cookie Chain cockpit</span>
+            CookiePilot <span className="sub">· oven-fresh L2 cockpit</span>
           </span>
         </div>
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>

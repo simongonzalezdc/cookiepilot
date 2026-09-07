@@ -28,6 +28,28 @@
   font-display: swap;
   src: url("/fonts/mplus-700.woff2") format("woff2");
 }
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/mplus-800.woff2") format("woff2");
+}
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/mplus-900.woff2") format("woff2");
+}
+
+/* ============================================================
+   v4 POSTER TEXTURE KIT (reference-approved.png is the authority)
+   - paper grain: feTurbulence noise overlaid on the whole page
+   - halftone: CSS dot matrix (--halftone ink) for chart fills
+     and the bite centerpiece backdrop
+   - editorial rules: ink-based strong rules (--rule) + hairlines
+   ============================================================ */
 
 /* ============================================================
    AM-1 TOKEN SHEET — semantic, both themes, contrast-verified
@@ -72,6 +94,14 @@
   --shadow-pop: 0 16px 40px rgba(43, 26, 18, 0.14);
   --hairline: 1px solid var(--line);
 
+  /* v4 poster kit */
+  --rule: color-mix(in srgb, var(--ink) 34%, transparent);   /* editorial rules */
+  --rule-soft: color-mix(in srgb, var(--ink) 18%, transparent);
+  --halftone: color-mix(in srgb, var(--ink) 55%, transparent); /* dot matrix */
+  --shadow-ember: 4px 4px 0 0 var(--ember);                    /* print offset */
+  --shadow-ink: 3px 3px 0 0 var(--ink);                        /* chip offset */
+  --grain-opacity: 0.055;
+
   /* motion tokens (AM-4): interaction vs ambient, both reduced-motion aware */
   --dur-hit: 180ms;          /* interaction */
   --dur-ambient: 600ms;      /* oven ambient 500–700ms window */
@@ -113,6 +143,14 @@
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
   --shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.55);
 
+  /* v4 poster kit — dark paper gets lighter rules + cream halftone */
+  --rule: color-mix(in srgb, var(--ink) 38%, transparent);
+  --rule-soft: color-mix(in srgb, var(--ink) 20%, transparent);
+  --halftone: color-mix(in srgb, var(--ink) 45%, transparent);
+  --shadow-ember: 4px 4px 0 0 var(--ember);
+  --shadow-ink: 3px 3px 0 0 var(--ember); /* on cocoa, ink offsets vanish — ember carries the print offset */
+  --grain-opacity: 0.07;
+
   --focus-ring: #ff8a5c;
 
   color-scheme: dark;
@@ -123,16 +161,28 @@
 html, body { margin: 0; padding: 0; }
 html { background: var(--surface); }
 body {
-  background:
-    radial-gradient(1100px 460px at 50% -160px, rgba(232, 93, 47, 0.05), transparent 65%),
-    var(--surface);
+  background: var(--surface);
   color: var(--ink);
   font-family: "M PLUS Rounded 1c", ui-rounded, "SF Pro Rounded", "Nunito", "Segoe UI", system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
+/* PAPER GRAIN — fractal-noise overlay across the whole page (v4 texture
+   mandate). Decorative only: pointer-events none, sits above content. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+@media (prefers-reduced-motion: reduce) { body::after { position: absolute; } }
 a { color: var(--ember-text); text-decoration: none; transition: color var(--dur-hit) var(--ease-out); }
 a:hover { color: var(--ember); }
 button { font-family: inherit; }
@@ -144,7 +194,23 @@ button { font-family: inherit; }
 ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 5px; border: 2px solid var(--surface); }
 ::-webkit-scrollbar-thumb:hover { background: var(--line-ctl); }
 
-.shell { max-width: 1220px; margin: 0 auto; padding: 0 24px 90px; }
+.shell { max-width: 1220px; margin: 0 auto; padding: 0 40px 90px; position: relative; }
+/* print registration crosses at the content corners (decorative) */
+.shell::before,
+.shell::after {
+  content: "+";
+  position: absolute;
+  top: 4px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--rule);
+  pointer-events: none;
+  user-select: none;
+}
+.shell::before { left: 8px; }
+.shell::after { right: 8px; }
+@media (max-width: 900px) { .shell::before, .shell::after { display: none; } }
 
 /* ---------- type utilities ---------- */
 .data, .mono {
@@ -163,40 +229,39 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
-   HEADER — judging frame: name · live state · connect · THEME
-   toggle top-right (AM-5)
+   HEADER — masthead on flat paper (reference: no glass, a strong
+   double rule under the strip; fixes the blur-panel refusal)
    ============================================================ */
 .header {
-  display: flex; align-items: center; gap: 14px;
-  padding: 18px 0 14px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 0 14px;
   position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: var(--surface);
+  border-bottom: 2px solid var(--ink);
+  box-shadow: 0 5px 0 -4px var(--ink); /* second line of the double rule */
 }
-@supports (backdrop-filter: blur(10px)) {
-  .header {
-    background: color-mix(in srgb, var(--surface) 72%, transparent);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
-}
-.logo { display: flex; align-items: center; gap: 11px; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+.logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 19px; letter-spacing: -0.01em; }
 .logo .cookie {
   display: grid; place-items: center;
   width: 38px; height: 38px;
-  background: var(--ember);
+  background: var(--ink);
   border-radius: 12px;
-  color: #fff8ef;
-  box-shadow: var(--shadow-card);
+  color: var(--surface);
+  box-shadow: var(--shadow-ember);
 }
-.logo .sub { color: var(--ink-dim); font-weight: 500; font-size: 12.5px; letter-spacing: 0; }
+.logo .sub {
+  color: var(--ink-dim); font-weight: 700; font-size: 10.5px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
 .netpill {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--surface-raised);
-  border: 1px solid var(--line);
-  padding: 6px 14px; border-radius: var(--radius-ctl); font-size: 12.5px; color: var(--ink-dim);
+  border: 1.5px solid var(--ink);
+  padding: 7px 16px; border-radius: var(--radius-ctl); font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  box-shadow: var(--shadow-card);
 }
 /* live-state dots: ember IS the live/pulse token (--accent-live);
    connecting is neutral ink-dim, offline is jam. Mint stays confirm-only. */
@@ -238,15 +303,19 @@ button { font-family: inherit; }
 .btn:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); box-shadow: var(--shadow-card); }
 .btn:active { transform: translateY(0); }
 .btn.primary {
-  /* inverse-ink primary: chocolate pill on vanilla / cream pill on cocoa.
-     Ember is the LIVE/pulse signature, not a static button fill — this
-     keeps one loud accent job (spec: accent-live semantics + restraint). */
+  /* the reference's print button: ink pill, hard ember offset shadow,
+     loud caps — the CTA is an ember moment, not a gradient */
   background: var(--ink);
   border: 1px solid transparent; color: var(--surface);
-  font-weight: 700;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), var(--shadow-card);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 12.5px;
+  padding: 10px 20px;
+  box-shadow: var(--shadow-ember);
 }
-.btn.primary:hover { color: var(--surface); filter: brightness(1.12); border-color: transparent; }
+.btn.primary:hover { color: var(--surface); filter: none; border-color: transparent; transform: translate(1px, 1px); box-shadow: 3px 3px 0 0 var(--ember); }
+.btn.primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 var(--ember); }
 .btn.ghost { background: transparent; border-color: transparent; }
 .btn.ghost:hover { color: var(--ember-text); border-color: var(--line); box-shadow: none; }
 .btn.small { padding: 5px 13px; font-size: 12.5px; }
@@ -281,108 +350,196 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
-   HERO — pulse. Judging frame: value prop + live state + one
-   legible Bite meter (AM-5)
+   HERO — the poster front page (reference-approved.png).
+   Unboxed editorial: flat paper, strong rules, GIANT display
+   numerals, ember chip with hard ink offset, halftone sparkline,
+   the bitten donut as graphic centerpiece on the right with
+   vertical marginalia on the page edge.
    ============================================================ */
 .hero {
   position: relative;
-  background: var(--surface-raised);
-  border: var(--hairline);
-  border-radius: var(--radius-card);
-  padding: 26px 30px 24px;
-  overflow: hidden;
-  box-shadow: var(--shadow-card);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 26px;
+  box-shadow: none;
 }
-/* No decorative top-bar: Linear-restraint (spec refusals ban neon accents);
-   the card's hairline + warm shadow carry depth on their own. */
 .hero-top {
-  display: flex; align-items: baseline; gap: 8px 18px; flex-wrap: wrap;
-  position: relative; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap;
+  position: relative;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
 }
-/* station index "01" — keeps the numbered section rhythm (01 pulse-hero)
-   continuous with 02…05 (structure contract + Crumb Trail stations) */
-.hero-no {
-  font-size: 12px; font-weight: 700;
-  color: var(--ember-text); letter-spacing: 0.08em;
-  font-variant-numeric: tabular-nums;
-}
-.valueprop {
-  margin: 0;
-  font-size: clamp(21px, 2.2vw, 24px);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+/* eyebrow: "01 — NETWORK PULSE ▪" in loud caps */
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--ink);
 }
-.valueprop .accent { color: var(--ember-text); }
+.hero-eyebrow .hero-no { color: var(--ember-text); letter-spacing: 0.08em; }
+.hero-eyebrow .rule-dash { width: 26px; height: 2px; background: var(--ink); opacity: 0.75; }
+.hero-eyebrow .sq { width: 9px; height: 9px; background: var(--ember); flex: none; }
+.hero-topright { margin-left: auto; display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .livebadge {
   display: inline-flex; align-items: center; gap: 9px;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--ember-text);
-  background: var(--wash-ember);
-  border: 1px solid color-mix(in srgb, var(--ember) 36%, transparent);
-  padding: 5px 13px; border-radius: var(--radius-ctl);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink);
+  background: var(--surface-raised);
+  border: 1.5px solid var(--ink);
+  padding: 6px 14px; border-radius: var(--radius-ctl);
   white-space: nowrap;
 }
-.hero-slot { margin-left: auto; color: var(--ink-dim); font-size: 12px; font-variant-numeric: tabular-nums; }
+.hero-slot { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; letter-spacing: 0.04em; }
 
 .hero-grid {
   position: relative;
-  display: grid; grid-template-columns: 1fr auto; gap: 18px 34px;
-  align-items: center;
-  margin-top: 14px;
+  display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  gap: 0 44px;
+  align-items: stretch;
 }
-.hstats { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 22px 26px; }
-.hstat { display: flex; flex-direction: column; gap: 4px; min-width: 0; position: relative; }
-.hstat .hlabel {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.13em; color: var(--ink-dim);
-}
-.hstat .hlabel svg { width: 15px; height: 15px; color: var(--ink-dim); }
-.hvalue {
-  font-size: clamp(24px, 2.1vw, 32px); font-weight: 700; letter-spacing: -0.01em;
-  line-height: 1.12; color: var(--ink);
+.hero-main { padding: 22px 0 26px; min-width: 0; }
+
+/* the GIANT price — poster display numeral, ink on paper.
+   Container-query fluid sizing: scales with the COLUMN so the
+   12-glyph price never overflows (incl. 400% zoom), poster-scale
+   (≈100px) on desktop columns. vw fallback for old engines. */
+.hero-main { container-type: inline-size; }
+.giantprice {
+  margin: 16px 0 0 -0.04em;
+  font-size: clamp(24px, 10.4vw, 104px);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.hvalue .unit { font-size: 15px; font-weight: 500; color: var(--ink-dim); margin-left: 4px; }
-.hsub { color: var(--ink-dim); font-size: 12px; font-variant-numeric: tabular-nums; }
-.hsub .up { color: var(--mint-text); }
-.hsub .down { color: var(--jam-text); }
-.chg {
-  display: inline-block; font-size: 11.5px; font-weight: 700;
-  margin-right: 6px;
-  font-variant-numeric: tabular-nums; vertical-align: 2px;
+@supports (width: 1cqw) {
+  .giantprice { font-size: clamp(24px, 14.4cqw, 104px); }
 }
-/* delta direction: positive = ink (no alarm color for the default case),
-   negative = jam-text. The +/- sign carries the state (never color alone). */
-.chg.up { color: var(--ink); }
-.chg.down { color: var(--jam-text); }
-.hspark { margin-top: 7px; opacity: 0.95; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
-.hspark-cap {
-  display: block; margin-top: 3px;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+.pricemeta {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 16px;
+}
+/* the ember moment: solid ember chip, hard ink offset shadow.
+   Text is INK on ember (4.79:1 — AA); white would be 3.4:1. */
+.chip-ember {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--ember);
+  color: var(--ink);
+  font-size: 13.5px; font-weight: 800;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  padding: 7px 13px;
+  box-shadow: var(--shadow-ink);
+}
+.chip-ember em { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: 0.14em; }
+.pair {
+  font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--ink-dim);
 }
-.hero-strip {
-  position: relative;
-  display: flex; flex-wrap: wrap; gap: 10px 28px;
-  margin-top: 22px; padding-top: 18px;
-  border-top: 1px solid var(--line);
-  font-size: 13px; color: var(--ink-dim);
+/* value proposition as the standfirst paragraph under the price */
+.valueprop {
+  margin: 18px 0 0;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+  color: var(--ink);
+  max-width: 56ch;
 }
-.hero-strip b {
-  color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums;
-  font-size: 14px; margin-right: 5px;
-}
-.hero-strip .sep { color: var(--line-ctl); }
+.valueprop .accent { color: var(--ember-text); font-weight: 700; }
 
-/* ---- The Bite ring meter (AM-3) ---- */
-.bitering { display: flex; align-items: center; gap: 16px; padding: 4px 6px; }
+/* sparkline block: caps caption row + halftone-filled chart */
+.sparkblock { margin-top: 22px; border-top: 1px solid var(--rule); padding-top: 12px; }
+.sparkcap {
+  display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.sparkcap b { color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+
+/* 3-stat strip with hairline vertical separators — big numerals */
+.herostats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-top: 22px;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+}
+.herostat { padding: 0 22px; border-left: 1px solid var(--rule); min-width: 0; }
+.herostat:first-child { padding-left: 0; border-left: none; }
+.herostat .hlabel {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--ink-dim);
+}
+.herostat .hlabel svg { width: 14px; height: 14px; }
+.herostat .hvalue {
+  display: block;
+  font-size: clamp(26px, 2.6vw, 38px); font-weight: 800; letter-spacing: -0.02em;
+  line-height: 1.1; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.herostat .hvalue .unit { font-size: 13px; font-weight: 700; color: var(--ink-dim); margin-left: 4px; letter-spacing: 0.08em; }
+.herostat .hsub { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; }
+
+/* hero CTA row: the print button + crumb-trail microcopy */
+.herocta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+.crumbwords {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* RIGHT COLUMN — the bitten donut centerpiece */
+.hero-side {
+  position: relative;
+  border-left: 1px solid var(--rule);
+  padding: 26px 6px 26px 34px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+  overflow: visible;
+}
+/* halftone quarter-disc backdrop behind the ring's top-right (reference) */
+.bite-corner {
+  position: absolute;
+  top: -6px; right: -18px;
+  width: 190px; height: 190px;
+  border-radius: 50%;
+  background-image: radial-gradient(var(--halftone) 1.15px, transparent 1.45px);
+  background-size: 10px 10px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero-side .bitemeta { position: relative; }
+.bitemeta .bakeline {
+  font-size: 13px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink);
+}
+.bitemeta .bakeline b { color: var(--ember-text); font-variant-numeric: tabular-nums; }
+.bitemeta .bakesub { font-size: 12px; color: var(--ink-dim); margin-top: 3px; font-variant-numeric: tabular-nums; }
+
+/* vertical marginalia on the page edge (decorative, wide screens) */
+.marginalia {
+  position: absolute;
+  right: -34px; top: 40px;
+  writing-mode: vertical-rl;
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.34em; text-transform: uppercase;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (max-width: 1280px) { .marginalia { display: none; } }
+
+/* ---- The Bite ring meter (AM-3) — centerpiece size ---- */
+.bitering { display: flex; align-items: center; gap: 16px; padding: 0; position: relative; }
+.bitering.stacked { flex-direction: column; align-items: flex-start; gap: 14px; }
 .bitering .ring { display: block; }
 .bitering .bitemeta { display: flex; flex-direction: column; gap: 2px; min-width: 130px; }
 .bitering .bitemeta .big {
-  font-size: 30px; font-weight: 700; letter-spacing: 0;
+  font-size: 30px; font-weight: 800; letter-spacing: 0;
   font-variant-numeric: tabular-nums; line-height: 1.1; color: var(--ink);
 }
 .bitering .bitemeta .big .unit { font-size: 14px; color: var(--ink-dim); font-weight: 500; }
@@ -391,6 +548,9 @@ button { font-family: inherit; }
   letter-spacing: 0.13em; color: var(--ink-dim);
 }
 .bitering .bitemeta .sub { font-size: 12px; color: var(--ink-dim); font-variant-numeric: tabular-nums; }
+/* ring center label (stacked layout renders inside the SVG) */
+.bite-center-big { font-weight: 800; fill: var(--ink); }
+.bite-center-cap { font-weight: 700; fill: var(--ink-dim); letter-spacing: 2px; }
 
 /* bitten bar value tag (printed beside every bitten element — AM-3) */
 .bite-tag {
@@ -398,39 +558,64 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- bridge note (pill callout inside the hero card) ---------- */
+/* strip under the hero — caps microdata row */
+.hero-strip {
+  position: relative;
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  margin-top: 4px; padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.hero-strip b {
+  color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums;
+  font-size: 12.5px; margin-right: 5px; letter-spacing: 0.04em;
+}
+.hero-strip .sep { color: var(--rule); }
+
+/* ---------- bridge note (editorial hairline row) ---------- */
 .bridgenote {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   position: relative;
-  margin-top: 14px; padding: 10px 18px;
+  margin-top: 14px; padding: 12px 18px;
   background: var(--surface-raised);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-ctl);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
   color: var(--ink); font-size: 13px;
 }
 .bridgenote b { color: var(--ink); font-variant-numeric: tabular-nums; }
 .bridgenote .icon { color: var(--ember-text); display: inline-flex; }
 
 /* ============================================================
-   SECTIONS
+   SECTIONS — giant numbered poster heads ("02 — WALLET")
    ============================================================ */
-.sect { margin-top: 52px; scroll-margin-top: 84px; }
+.sect { margin-top: 64px; scroll-margin-top: 84px; }
 .sect-head {
-  display: flex; align-items: baseline; gap: 12px;
-  margin-bottom: 16px; padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
+  display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
+  margin-bottom: 18px; padding-bottom: 6px;
+  border-bottom: 2px solid var(--ink);
 }
 .sect-no {
-  font-size: 12px; font-weight: 700;
-  color: var(--ember-text); letter-spacing: 0.08em;
+  font-size: clamp(40px, 5.6vw, 76px);
+  font-weight: 900; line-height: 0.95;
+  color: var(--ember-text); letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
+.sect-no::after { content: "—"; color: var(--ink); margin-left: 14px; font-weight: 800; }
 .sect-head h2 {
-  display: inline-flex; align-items: center; gap: 9px;
-  margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em;
+  display: inline-flex; align-items: baseline; gap: 9px;
+  margin: 0;
+  font-size: clamp(40px, 5.6vw, 76px);
+  font-weight: 900; line-height: 0.95; letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
-.sect-head h2 svg { width: 20px; height: 20px; color: var(--ember-text); }
-.sect-hint { color: var(--ink-dim); font-size: 12.5px; font-weight: 400; }
+.sect-head h2 svg { display: none; } /* poster heads are pure type; icons live on cards */
+.sect-hint {
+  color: var(--ink-dim); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  margin-left: auto;
+}
 .sect-head .right { margin-left: auto; }
 
 /* ---------- layout ---------- */
@@ -441,53 +626,87 @@ button { font-family: inherit; }
 @media (max-width: 1000px) {
   .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
   .grid.cols-3 { grid-template-columns: 1fr; }
-  .hstats { grid-template-columns: repeat(2, 1fr); }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-side { border-left: none; border-top: 1px solid var(--rule); padding: 26px 0 6px; align-items: center; }
+  .hero-side .bitemeta { align-items: center; text-align: center; }
+  .sect-hint { margin-left: 0; width: 100%; }
 }
 @media (max-width: 640px) {
   .grid.cols-4, .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
-  .hero { padding: 20px 18px; }
-  .hero-grid { grid-template-columns: 1fr; }
-  .hstats { grid-template-columns: 1fr 1fr; gap: 16px; }
-  .hvalue { font-size: 22px; }
-  .hero-slot { margin-left: 0; width: 100%; }
-  .shell { padding: 0 14px 70px; }
+  .shell { padding: 0 16px 70px; }
+  .pricemeta { gap: 10px; margin-top: 12px; }
+  .herostats { grid-template-columns: repeat(3, 1fr); gap: 0 10px; }
+  .herostat { padding: 0 10px; }
+  .herostat:first-child { padding-left: 0; }
+  .herostat .hvalue { font-size: 17px; white-space: nowrap; }
+  .herostat .hvalue .unit { display: inline; margin-left: 2px; }
+  .herocta .btn.primary { flex: 1; justify-content: center; text-align: center; }
   /* AM-5: theme toggle stays top-right on mobile — one control row
-     (logo · · · connect, toggle); live pill reflows to its own row.
-     Brand sub + pill padding compact so all three controls fit 320–390px. */
-  .header { flex-wrap: wrap; row-gap: 10px; gap: 10px; }
-  .logo { order: 0; }
+     (logo · · · connect, toggle); compact caps keep all three on one line */
+  .header { flex-wrap: wrap; row-gap: 10px; gap: 8px; border-bottom-width: 2px; }
+  .logo { order: 0; font-size: 16.5px; gap: 9px; }
+  .logo .cookie { width: 32px; height: 32px; border-radius: 10px; }
   .logo .sub { display: none; }
   .header .spacer { order: 1; }
   .header .btn.primary, .header .wallet-chip { order: 2; }
-  .header .btn.primary { padding: 7px 12px; font-size: 12.5px; }
-  .themetoggle { order: 2; width: 36px; height: 36px; }
+  .header .btn.primary { padding: 7px 11px; font-size: 10px; letter-spacing: 0.07em; box-shadow: 2.5px 2.5px 0 0 var(--ember); }
+  .themetoggle { order: 2; width: 34px; height: 34px; }
   /* one live status on mobile: the hero LIVE badge carries it; the header
      slot pill would be a redundant second status strip (AM-5 judging frame) */
   .netpill { display: none; }
-  .hero-grid { gap: 22px; }
-  .bitering { justify-content: flex-start; margin-top: 10px; }
+  .hero-topright { margin-left: 0; width: 100%; justify-content: space-between; }
+  .hero-slot { max-width: 48%; text-align: right; }
+  .hidecap { display: none; }
+  .hero-main { padding-top: 10px; }
+  .valueprop { font-size: 14px; margin-top: 10px; }
+  .hidelong { display: none; }
+  .sparkblock { margin-top: 12px; padding-top: 8px; }
+  .sparkcap { gap: 8px; margin-bottom: 2px; }
+  .sparkcap span:first-child { max-width: 52%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sparkcap .data { text-align: right; }
+  .sparkblock svg { height: 46px; }
+  /* donut scales down so the bite centerpiece fits the 844px fold (AM-5) */
+  .bitering.stacked .ring { width: 168px; height: 168px; }
+  .hero-side { padding-top: 10px; padding-bottom: 0; gap: 8px; align-items: center; }
+  .bite-corner { width: 120px; height: 120px; right: -6px; }
+  .herostats { margin-top: 12px; padding-top: 10px; }
+  .herostat { padding: 0 8px; }
+  .herostat .hlabel { font-size: 8.5px; white-space: nowrap; letter-spacing: 0.12em; }
+  .herostat .hsub { display: none; }
+  .herocta { margin-top: 14px; }
+  .herocta .btn.primary { flex: none; }
+  /* decorative microcopy yields the fold to the bite centerpiece */
+  .crumbwords { display: none; }
   /* structured stat strip instead of ragged wrap (long usd conversion hidden) */
   .hero-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
   .strip-usd { display: none; }
 }
+/* ≤360px: the header row sheds the connect button (the hero CTA below
+   carries it) so logo + toggle stay on ONE line at 320px */
+@media (max-width: 360px) {
+  .header .btn.primary { display: none; }
+  .shell { padding: 0 12px 70px; }
+}
 
 /* ============================================================
-   CARDS — radius 20, they breathe (airy premium)
+   CARDS — editorial paper panels: sharp corners, ink hairline,
+   flat (reference: the poster carries depth with rules, not blur)
    ============================================================ */
 .card {
   background: var(--surface-raised);
-  border: var(--hairline);
-  border-radius: var(--radius-card);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
   padding: 22px 24px;
   min-width: 0;
-  box-shadow: var(--shadow-card);
+  box-shadow: none;
   transition: border-color var(--dur-hit) var(--ease-out);
 }
-.card:hover { border-color: var(--line-ctl); }
+.card:hover { border-color: var(--ink); }
 .card h3 {
-  margin: 0 0 16px; font-size: 12px; font-weight: 700;
-  color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.12em;
+  margin: 0 0 16px; font-size: 11px; font-weight: 800;
+  color: var(--ink); text-transform: uppercase; letter-spacing: 0.18em;
   display: flex; align-items: center; gap: 8px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--rule-soft);
 }
 .card h3 svg { width: 16px; height: 16px; color: var(--ember-text); flex: none; }
 .card h3 .right {
@@ -512,6 +731,9 @@ button { font-family: inherit; }
 /* ============================================================
    TABLES
    ============================================================ */
+/* tastecheck gate: tables must never widen the page — scroll in place
+   (acceptance: scrollWidth === innerWidth at 320/390 and 400% zoom) */
+.tblwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .tbl th {
   text-align: left; color: var(--ink-dim); font-weight: 700; font-size: 10.5px;
@@ -614,7 +836,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 }
 .txrow .bad { color: var(--jam-text); background: var(--wash-jam); }
 .txrow .ok svg, .txrow .bad svg { width: 13px; height: 13px; }
-.txrow .sig { font-size: 12.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.txrow .sig { font-size: 12.5px; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; min-width: 0; }
 .txrow .sig:hover { color: var(--ember-text); }
 .txrow .meta { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; }
 .txrow .t { color: var(--ink-dim); font-size: 11.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }

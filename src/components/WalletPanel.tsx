@@ -99,7 +99,7 @@ function TokensCard({ address, balance }: { address: string; balance: number | n
           />
         )}
         {rows.length > 0 && (
-          <table className="tbl">
+          <div className="tblwrap"><table className="tbl">
             <thead><tr><th>Token</th><th className="r">Amount</th><th className="r">Value</th></tr></thead>
             <tbody>
               {rows.map((r) => (
@@ -113,7 +113,7 @@ function TokensCard({ address, balance }: { address: string; balance: number | n
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         )}
       </div>
     </div>

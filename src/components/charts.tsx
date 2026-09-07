@@ -12,7 +12,7 @@
  *  - exact value printed beside every bitten element;
  *  - max two bitten elements per viewport.
  */
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 function useWidth<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
@@ -108,6 +108,10 @@ export function BarChart({
             <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.95 }} />
             <stop offset="100%" style={{ stopColor: color, stopOpacity: 0.35 }} />
           </linearGradient>
+          {/* halftone overlay: paper-colored dots over the bars (v4 texture) */}
+          <pattern id={`ht${gid}`} width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="1.2" cy="1.2" r="0.9" style={{ fill: "var(--surface-raised)" }} opacity="0.5" />
+          </pattern>
           {bite && (
             <BiteMask id={`bm${mid}`} w={w} h={height} cx={bite.cx} cy={bite.top - geo.r + geo.depth} r={geo.r} />
           )}
@@ -118,19 +122,31 @@ export function BarChart({
           const y = plotH - h;
           const bitten = bite?.i === i;
           return (
-            <rect
-              key={i}
-              className="bar-rect"
-              x={x}
-              y={y}
-              width={barW}
-              height={h}
-              rx={Math.min(2.5, barW / 3)}
-              mask={bitten ? `url(#bm${mid})` : undefined}
-              style={{ fill: `url(#bg${gid})`, opacity: 0.92 }}
-            >
-              <title>{`${d.label}: ${format ? format(d.value) : d.value}`}</title>
-            </rect>
+            <g key={i}>
+              <rect
+                className="bar-rect"
+                x={x}
+                y={y}
+                width={barW}
+                height={h}
+                rx={Math.min(2.5, barW / 3)}
+                mask={bitten ? `url(#bm${mid})` : undefined}
+                style={{ fill: `url(#bg${gid})`, opacity: 0.92 }}
+              >
+                <title>{`${d.label}: ${format ? format(d.value) : d.value}`}</title>
+              </rect>
+              {/* halftone punch (decorative, never intercepts hover) */}
+              <rect
+                x={x}
+                y={y}
+                width={barW}
+                height={h}
+                rx={Math.min(2.5, barW / 3)}
+                fill={`url(#ht${gid})`}
+                pointerEvents="none"
+                mask={bitten ? `url(#bm${mid})` : undefined}
+              />
+            </g>
           );
         })}
         {/* exact value printed beside the bitten element (AM-3) */}
@@ -154,7 +170,17 @@ export function BarChart({
   );
 }
 
-export function Sparkline({ points, height = 46, color = "var(--ember)" }: { points: number[]; height?: number; color?: string }) {
+export function Sparkline({
+  points,
+  height = 46,
+  color = "var(--ink)",
+  dotColor = "var(--ember)",
+}: {
+  points: number[];
+  height?: number;
+  color?: string;
+  dotColor?: string;
+}) {
   const [ref, w] = useWidth<HTMLDivElement>();
   const gid = useId().replace(/[^a-zA-Z0-9]/g, "");
   if (points.length < 2 || w < 20) return <div ref={ref} style={{ height, display: "block" }} />;
@@ -164,17 +190,20 @@ export function Sparkline({ points, height = 46, color = "var(--ember)" }: { poi
   const pts = points.map((p, i) => [(i / (points.length - 1)) * w, height - 4 - ((p - min) / span) * (height - 8)] as const);
   const path = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
   const area = `${path} L${w},${height} L0,${height} Z`;
+  const last = pts[pts.length - 1];
   return (
     <div ref={ref}>
       <svg width="100%" height={height} viewBox={`0 0 ${w} ${height}`} style={{ display: "block" }} aria-hidden="true">
         <defs>
-          <linearGradient id={`sg${gid}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" style={{ stopColor: color, stopOpacity: 0.14 }} />
-            <stop offset="100%" style={{ stopColor: color, stopOpacity: 0 }} />
-          </linearGradient>
+          {/* halftone dot matrix under the line (v4 texture mandate) */}
+          <pattern id={`hd${gid}`} width="8" height="8" patternUnits="userSpaceOnUse">
+            <circle cx="1.4" cy="1.4" r="1.05" style={{ fill: "var(--halftone)" }} />
+          </pattern>
         </defs>
-        <path d={area} style={{ fill: `url(#sg${gid})` }} />
-        <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="1.5" strokeLinecap="round" />
+        <path d={area} fill={`url(#hd${gid})`} opacity={0.55} />
+        <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* the pulse: ember end-dot marks NOW */}
+        <circle cx={last[0] - 2} cy={last[1]} r="3.6" style={{ fill: dotColor }} />
       </svg>
     </div>
   );
@@ -235,9 +264,12 @@ export function HBarList({
 }
 
 /**
- * The Bite ring — hero meter. Bite is cut from the ring body
- * (the track), offset ≥45° from the fill endpoint so the notch never
- * touches the current value; exact value printed beside (AM-3).
+ * The Bite ring — hero meter AND the poster's graphic centerpiece
+ * (reference-approved.png). Ember ring with ONE bite cut from the
+ * track (offset ≥45° from the fill endpoint so the notch never
+ * touches the current value); the exact value prints in the ring
+ * center (AM-3). layout="stacked" = reference composition: big ring,
+ * value inside, "exactly N% baked" line below.
  */
 export function BiteRing({
   percent,
@@ -246,6 +278,8 @@ export function BiteRing({
   unit,
   label,
   sub,
+  layout = "inline",
+  bakeline,
 }: {
   percent: number;
   size?: number;
@@ -253,10 +287,14 @@ export function BiteRing({
   unit?: string;
   label: string;
   sub?: string;
+  /** "inline" = ring + side meta (legacy), "stacked" = reference centerpiece */
+  layout?: "inline" | "stacked";
+  /** stacked: caps line under the ring, e.g. "EXACTLY 68.4% BAKED" */
+  bakeline?: ReactNode;
 }) {
   const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const p = Math.max(0, Math.min(100, percent));
-  const stroke = 13;
+  const stroke = layout === "stacked" ? Math.round(size * 0.105) : 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
   // bite size: chord exactly at the AM-3 bound — 14% of plot bbox, ≤8px depth
@@ -273,35 +311,93 @@ export function BiteRing({
   const rad = ((biteAngle - 90) * Math.PI) / 180;
   const bcx = c + Math.cos(rad) * centerRad;
   const bcy = c + Math.sin(rad) * centerRad;
+  const centerFont = Math.round(size * 0.2);
+  const capFont = Math.max(9, Math.round(size * 0.045));
+
+  const ringSvg = (
+    <svg
+      className="ring"
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      role="img"
+      aria-label={`${label}: ${big}${unit ?? ""}`}
+      style={{ overflow: "visible" }}
+    >
+      <defs>
+        <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
+          <rect x="0" y="0" width={size} height={size} fill="#fff" />
+          {/* ONE clean bite (AM-3: one notch max) crossing the full band */}
+          <circle cx={bcx} cy={bcy} r={br} fill="#000" />
+        </mask>
+      </defs>
+      <g mask={`url(#ringbite${mid})`}>
+        {/* track: warm wash of the ember (reference: beige remainder) */}
+        <circle
+          cx={c}
+          cy={c}
+          r={r}
+          fill="none"
+          style={{ stroke: "color-mix(in srgb, var(--ember) 22%, var(--surface))" }}
+          strokeWidth={stroke}
+        />
+        {/* the fill: EMBER — per the approved reference, the donut is the
+            loud accent (accent-live semantics: epoch progress is live state) */}
+        <circle
+          cx={c}
+          cy={c}
+          r={r}
+          fill="none"
+          pathLength={100}
+          strokeDasharray={`${p} ${100 - p}`}
+          transform={`rotate(-90 ${c} ${c})`}
+          style={{ stroke: "var(--ember)" }}
+          strokeWidth={stroke}
+        />
+      </g>
+      {layout === "stacked" && (
+        <g>
+          <text
+            x={c}
+            y={c + centerFont * 0.18}
+            textAnchor="middle"
+            className="bite-center-big"
+            fontSize={centerFont}
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {`${big}${unit ?? ""}`}
+          </text>
+          <text
+            x={c}
+            y={c + centerFont * 0.72}
+            textAnchor="middle"
+            className="bite-center-cap"
+            fontSize={capFont}
+          >
+            {label.toUpperCase()}
+          </text>
+        </g>
+      )}
+    </svg>
+  );
+
+  if (layout === "stacked") {
+    return (
+      <div className="bitering stacked">
+        {ringSvg}
+        {(bakeline || sub) && (
+          <div className="bitemeta">
+            {bakeline && <span className="bakeline">{bakeline}</span>}
+            {sub && <span className="bakesub">{sub}</span>}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="bitering">
-      <svg className="ring" width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`${label}: ${big}${unit ?? ""}`} style={{ overflow: "visible" }}>
-        <defs>
-          <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
-            <rect x="0" y="0" width={size} height={size} fill="#fff" />
-            {/* ONE clean bite (AM-3: one notch max) crossing the full band */}
-            <circle cx={bcx} cy={bcy} r={br} fill="#000" />
-          </mask>
-        </defs>
-        <g mask={`url(#ringbite${mid})`}>
-          {/* the cookie: ink ring (chocolate on vanilla / cream glaze on
-              cocoa) — ember is reserved for the LIVE pulse, so the Bite
-              signature itself is a literal bitten cookie */}
-          <circle cx={c} cy={c} r={r} fill="none" style={{ stroke: "var(--line-ctl)" }} strokeWidth={stroke} />
-          <circle
-            cx={c}
-            cy={c}
-            r={r}
-            fill="none"
-            pathLength={100}
-            strokeDasharray={`${p} ${100 - p}`}
-            transform={`rotate(-90 ${c} ${c})`}
-            style={{ stroke: "var(--ink)" }}
-            strokeWidth={stroke}
-            strokeLinecap="round"
-          />
-        </g>
-      </svg>
+      {ringSvg}
       <div className="bitemeta">
         <span className="lbl">{label}</span>
         <span className="big">

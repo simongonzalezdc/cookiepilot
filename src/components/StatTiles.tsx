@@ -3,7 +3,7 @@ import { usePoll } from "../hooks/usePoll";
 import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
-import { IconBlocks, IconClock, IconCoin, IconPulse } from "./icons";
+import { IconBlocks, IconClock, IconPulse } from "./icons";
 import { rpc } from "../lib/rpc";
 
 interface AllStats {
@@ -64,78 +64,115 @@ export function StatTiles() {
   const chg = price.data.price.change24h;
   const lastDay = daily.days.at(-1);
   const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
+  const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
+  const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   const subSec = slotMs != null && slotMs < 1000;
+  const up = chg >= 0;
 
   return (
     <div className="hero">
       <div className="hero-top">
-        <span className="hero-no" aria-hidden="true">01</span>
-        <span className="livebadge">
-          <span className="dot" /> Live · Cookie Chain
+        <span className="hero-eyebrow">
+          <span className="hero-no" aria-hidden="true">01</span>
+          <span className="rule-dash" aria-hidden="true" />
+          Network pulse
+          <span className="sq" aria-hidden="true" />
         </span>
-        <span className="hero-slot">
-          {stats.epoch != null ? `epoch ${stats.epoch}` : ""}
-          {slotMs != null ? ` · block ${fmtSlotTime(slotMs)}` : ""} · refreshes automatically
+        <span className="hero-topright">
+          <span className="livebadge">
+            <span className="dot" /> Live · Mainnet
+          </span>
+          <span className="hero-slot">
+            {stats.epoch != null ? `epoch ${stats.epoch}` : ""}
+            {slotMs != null ? ` · block ${fmtSlotTime(slotMs)}` : ""}
+            <span className="hidecap"> · refreshes automatically</span>
+          </span>
         </span>
       </div>
 
-      {/* judging frame (AM-5): one-line value proposition */}
-      <h1 className="valueprop">
-        Live analytics, wallet &amp; swaps on a <span className="accent">sub-second chain</span>.
-      </h1>
-
       <div className="hero-grid">
-        <div className="hstats">
-          <div className="hstat">
-            <span className="hlabel"><IconCoin size={15} /> COOK price</span>
-            <span className="hvalue">{fmtUsd(price.data.price.usd)}</span>
-            <span className="hsub">
-              <span className={`chg ${chg >= 0 ? "up" : "down"}`}>{pct(chg)}</span>
-              <span style={{ whiteSpace: "nowrap" }}>24h · Cookiescan</span>
+        <div className="hero-main">
+          {/* the poster's GIANT display numeral (reference-approved.png) */}
+          <p className="giantprice" aria-label={`COOK price ${fmtUsd(price.data.price.usd)}`}>
+            {fmtUsd(price.data.price.usd)}
+          </p>
+          <div className="pricemeta">
+            {/* THE ember moment: solid chip, hard ink offset (reference) */}
+            <span className="chip-ember">
+              {up ? "▲" : "▼"} {pct(chg)} <em>/ 24H</em>
             </span>
+            <span className="pair">COOK / USDC — Cookiescan pair</span>
           </div>
 
-          <div className="hstat">
-            <span className="hlabel"><IconPulse size={15} /> Live TPS</span>
-            <span className="hvalue">{fmtNum(stats.liveTps ?? stats.tps, 1)}</span>
-            <span className="hsub">{subSec ? "sub-second blocks" : "network throughput"}</span>
-          </div>
+          {/* judging frame (AM-5): one-line value proposition */}
+          <h1 className="valueprop">
+            The oven-fresh cockpit for Cookie Chain. Live analytics, wallet &amp; swaps on a{" "}
+            <span className="accent">sub-second chain</span>
+            <span className="hidelong"> — every transfer traced crumb by crumb to the tray.</span>
+          </h1>
 
-          <div className="hstat">
-            <span className="hlabel"><IconClock size={15} /> Block time</span>
-            <span className="hvalue">{fmtSlotTime(slotMs)}</span>
-            <span className="hsub">finality in the sub-second club</span>
-          </div>
-
-          <div className="hstat">
-            <span className="hlabel"><IconBlocks size={15} /> Transactions</span>
-            <span className="hvalue">{fmtCompact(Number(stats.totalTransactions))}</span>
-            <span className="hsub">
-              {fmtNum(stats.txns24h, 0)} in 24h
-              {lastDay ? ` · ${fmtNum(lastDay.activeWallets, 0)} wallets yesterday` : ""}
-            </span>
-            {feesSeries.length > 2 && (
-              <span className="hspark">
-                <Sparkline points={feesSeries} height={22} color="var(--mint)" />
-                <span className="hspark-cap">fees · last 10 days</span>
+          <div className="sparkblock">
+            <div className="sparkcap">
+              <span>Sparkline · fees, 10 days</span>
+              <span className="data">
+                LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
               </span>
-            )}
+            </div>
+            {feesSeries.length > 2 && <Sparkline points={feesSeries} height={64} />}
+          </div>
+
+          <div className="herostats">
+            <div className="herostat">
+              <span className="hlabel"><IconPulse size={14} /> Throughput</span>
+              <span className="hvalue">
+                {fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}
+                <span className="unit">TPS</span>
+              </span>
+              <span className="hsub">{subSec ? "sub-second blocks" : "network throughput"}</span>
+            </div>
+            <div className="herostat">
+              <span className="hlabel"><IconClock size={14} /> Block time</span>
+              <span className="hvalue">{fmtSlotTime(slotMs)}</span>
+              <span className="hsub">finality in the sub-second club</span>
+            </div>
+            <div className="herostat">
+              <span className="hlabel"><IconBlocks size={14} /> 24h txns</span>
+              <span className="hvalue">{fmtNum(stats.txns24h, 0)}</span>
+              <span className="hsub">{fmtCompact(Number(stats.totalTransactions))} lifetime</span>
+            </div>
+          </div>
+
+          <div className="herocta">
+            <button
+              className="btn primary"
+              onClick={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))}
+            >
+              Connect wallet →
+            </button>
+            <span className="crumbwords">Processed · Confirmed · Finalized</span>
           </div>
         </div>
 
-        {/* AM-3 + AM-5: the one legible Bite element of the first viewport.
-            The ring's notch is cut from the track, offset from the fill
-            endpoint; the exact value is printed beside it. */}
-        <div className="bitering-wrap">
+        {/* RIGHT COLUMN — the bitten donut, graphic centerpiece (reference).
+            AM-3: notch cut from the track, value prints in the center. */}
+        <aside className="hero-side">
+          <span className="bite-corner" aria-hidden="true" />
           <BiteRing
             percent={epochPct}
-            big={epochPct.toFixed(0)}
+            size={252}
+            layout="stacked"
+            big={epochPct.toFixed(1)}
             unit="%"
-            label={`Epoch ${stats.epoch ?? "—"} · progress`}
+            label={stats.epoch != null ? `of epoch ${fmtNum(stats.epoch, 0)}` : "of epoch —"}
             sub={lastDay ? `through · ${fmtNum(lastDay.txns, 0)} txns yesterday` : "slot progress"}
+            bakeline={
+              <>
+                Exactly <b>{epochPct.toFixed(1)}%</b> baked
+              </>
+            }
           />
-        </div>
+        </aside>
       </div>
 
       <div className="hero-strip">
@@ -146,9 +183,13 @@ export function StatTiles() {
         {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
       </div>
 
-      {/* bridge context lives inside the hero card (no orphan pill between
-          sections 01 and 02 — unified card rhythm) */}
+      {/* bridge context lives inside the hero (unified editorial rhythm) */}
       <BridgeNote />
+
+      {/* vertical marginalia on the page edge (decorative) */}
+      <span className="marginalia" aria-hidden="true">
+        CookiePilot · live network state · {new Date().toLocaleDateString("en-GB").replaceAll("/", ".")}
+      </span>
     </div>
   );
 }

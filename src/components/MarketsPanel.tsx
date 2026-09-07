@@ -52,7 +52,7 @@ export function MarketsPanel() {
         ) : pools.length === 0 ? (
           <EmptyState icon={<IconSwap size={24} />} title="No pools indexed yet" body="Cookieswap reports zero markets right now — refresh in a moment." />
         ) : (
-          <table className="tbl">
+          <div className="tblwrap"><table className="tbl">
             <thead>
               <tr>
                 <th>Pair</th><th>Venue</th><th className="r">Price (USD)</th><th className="r">Liquidity</th><th className="r">24h</th>
@@ -78,7 +78,7 @@ export function MarketsPanel() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         ))}
 
       {tab === "tokens" &&
@@ -87,7 +87,7 @@ export function MarketsPanel() {
         ) : tokens.length === 0 ? (
           <EmptyState icon={<IconCoin size={24} />} title="No tokens with market cap indexed" />
         ) : (
-          <table className="tbl">
+          <div className="tblwrap"><table className="tbl">
             <thead>
               <tr>
                 <th>Token</th><th className="r">Price</th><th className="r">24h</th><th className="r">Mkt cap</th><th className="r">Liquidity</th><th className="r">Holders</th>
@@ -109,7 +109,7 @@ export function MarketsPanel() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         ))}
       <div className="dim" style={{ fontSize: 11, marginTop: 8 }}>
         Pools: Cookiescan venue feed (Cookiebox DAMM/CLMM, Cookieswap, Raydium…) · Tokens: Cookiescan registry ({fmtNum(registry.data?.length ?? 0, 0)} tokens)
