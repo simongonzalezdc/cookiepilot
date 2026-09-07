@@ -337,17 +337,20 @@ export function BiteRing({
           {hasTrack && (
             <g fill="#000">
               <circle cx={bcx} cy={bcy} r={br} />
-              {[-16, 16].map((a) => {
+              {[-12, 12].map((a) => {
                 const srad = ((biteAngle + a - 90) * Math.PI) / 180;
                 const sx = c + Math.cos(srad) * centerRad;
                 const sy = c + Math.sin(srad) * centerRad;
-                return <circle key={a} cx={sx} cy={sy} r={br * 0.62} />;
+                return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
               })}
             </g>
           )}
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>
+        {/* clean center: paper disc under the value so backdrop halftone
+            never fights the center label (reference keeps a clean hollow) */}
+        <circle cx={c} cy={c} r={Math.max(0, r - stroke / 2 + 1)} style={{ fill: "var(--surface)" }} />
         {/* track: warm wash of the ember (reference: beige remainder) */}
         <circle
           cx={c}
