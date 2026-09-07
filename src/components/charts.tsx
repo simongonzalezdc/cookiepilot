@@ -280,15 +280,8 @@ export function BiteRing({
         <defs>
           <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
             <rect x="0" y="0" width={size} height={size} fill="#fff" />
+            {/* ONE clean bite (AM-3: one notch max) crossing the full band */}
             <circle cx={bcx} cy={bcy} r={br} fill="#000" />
-            {/* scallop nicks — the bite's ragged cookie edge, cut INTO the
-                band (never floating debris): two small arcs trailing the
-                main notch make the signature read as a real bite. */}
-            {[12, 21].map((da, i) => {
-              const nr = i === 0 ? 2.2 : 1.4;
-              const rad3 = ((biteAngle + da - 90) * Math.PI) / 180;
-              return <circle key={da} cx={c + Math.cos(rad3) * r} cy={c + Math.sin(rad3) * r} r={nr} fill="#000" />;
-            })}
           </mask>
         </defs>
         <g mask={`url(#ringbite${mid})`}>

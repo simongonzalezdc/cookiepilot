@@ -356,7 +356,7 @@ button { font-family: inherit; }
 }
 .chg.up { color: var(--mint-text); background: var(--wash-mint); }
 .chg.down { color: var(--jam-text); background: var(--wash-jam); }
-.hspark { margin-top: 7px; opacity: 0.95; }
+.hspark { margin-top: 7px; opacity: 0.95; border-bottom: 1px solid var(--line); padding-bottom: 1px; }
 .hero-strip {
   position: relative;
   display: flex; flex-wrap: wrap; gap: 8px 30px;
