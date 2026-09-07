@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { WalletCtx, useWalletInternal } from "./hooks/useWallet";
 import { Header } from "./components/Header";
-import { StatTiles, NetworkFacts, SparkDeck, StatsProvider } from "./components/StatTiles";
+import { StatTiles, NetworkFacts, StatsProvider } from "./components/StatTiles";
 import { NetworkPanel } from "./components/NetworkPanel";
 import { MarketsPanel } from "./components/MarketsPanel";
 import { ActivityFeed } from "./components/ActivityFeed";
@@ -32,23 +32,12 @@ export default function App() {
           <Header />
           <StatTiles />
 
-          {/* poster deck — the one-line value proposition opens the paper below the fold */}
-          <div className="deck">
-            <h1 className="valueprop">
-              The oven-fresh cockpit for Cookie Chain. Live analytics, wallet &amp; swaps on a
-              sub-second chain
-              <span className="hidelong"> — every transfer traced crumb by crumb to the tray.</span>
-            </h1>
-            <span className="crumbwords">Processed · Confirmed · Finalized</span>
-          </div>
-
           <Section no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
             <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
           </Section>
 
           <Section no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
             <NetworkFacts />
-            <SparkDeck />
             <NetworkPanel />
             <div style={{ height: 18 }} />
             <MarketsPanel />

@@ -94,8 +94,9 @@ Baseline 42 → 68 light / 71 dark / 71 mobile (gemini fidelity to reference). P
 v4's escalation diagnosis: the app made a dashboard wear poster clothes with all widgets still visible. v5 is the structural fix, applied decisively in one pass:
 
 - **Viewport 01 = poster only.** Contents: masthead (logo · pipe · OVEN-FRESH L2 · ISSUE 07) with connect pill + MAINNET LIVE pill + theme toggle; the ONE giant COOK price (fit-to-column JS sizing, 700-weight tabular, cap 150px desktop / 96px mobile); the ▲% 24H delta as a poster-weight TYPE companion (ember-text, no chip); the bitten ember ring centerpiece (solid dough track light / warm tan dark, scallop notch, ~380px); a thin fold-edge stat strip (THROUGHPUT TPS · BLOCK TIME · BRIDGED · HEIGHT as small tabular entries on the fold edge). NOTHING else.
-- **AM-5 amendment (CEO):** the one-line value proposition now opens the BELOW-FOLD paper as a poster deck (`.deck`), immediately before section 02; product name, live state, bite chart and top-right toggle stay in the first viewport. Recorded as an intentional deviation from AM-5's "value prop in first viewport" letter.
-- **Everything else below the fold:** sparkline (fees 10d) + network facts + finality ("3 ticks to cement") moved into 03 — Analytics; one shared StatsProvider poll feeds hero + section 03 (no extra requests).
+- **AM-5 (updated by v5):** the value proposition lives IN the first viewport as the poster standfirst under the price (reference copy, live block time). The h1 stays the page's value prop.
+- **Everything else below the fold:** network facts + finality ("3 ticks to cement") live in 03 — Analytics; one shared StatsProvider poll feeds hero + section 03 (no extra requests).
+- **Fold composition:** hero ends with the stat strip (THROUGHPUT TPS · BLOCK TIME · BRIDGED · HEIGHT); the giant "02 — WALLET" section head peeks at the fold like the reference.
 - **Texture intact:** page-wide grain bumped (0.085 light / 0.10 dark), halftone quarter-disc enlarged behind the ring, print rules + double rules between sections.
 - **Overflow law:** the fit-to-column price cannot overflow at any live value; tblwrap probe acceptance (scrollWidth === innerWidth at 320/390/400%) must keep passing.
 .

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
 import { usePoll, type PollState } from "../hooks/usePoll";
+import { useWallet } from "../hooks/useWallet";
 import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
@@ -42,9 +43,8 @@ function fmtSlotTime(ms: number | null): string {
 }
 
 /* ------------------------------------------------------------------
-   v5 POSTER-PURIFY: one shared poll feeds the hero AND section 03,
-   so the first viewport can stay a pure poster (no widgets) while
-   every datum still has a home below the fold.
+   v5: one shared poll feeds the hero AND section 03, so the first
+   viewport stays a pure poster while every datum has a home.
 ------------------------------------------------------------------ */
 const StatsCtx = createContext<PollState<AllStats> | null>(null);
 
@@ -96,18 +96,19 @@ function useFitPrice(text: string) {
 }
 
 /**
- * THE HERO — the poster front page (v5 POSTER-PURIFY).
- * Masthead lives in the Header; this viewport carries ONLY:
- * the giant COOK price + poster-weight delta, the bitten ember ring
- * centerpiece, and a thin fold-edge stat strip. Everything else
- * (wallet, charts, feed, swap, console) lives in the numbered
- * sections below the fold.
+ * THE HERO — the poster front page (v5, reference-approved.png anatomy).
+ * Editorial pacing like the reference: eyebrow → giant COOK price →
+ * ember delta chip → standfirst (live block time) → halftone sparkline →
+ * the CTA row — with the bitten ember ring as the right-column centerpiece
+ * and a thin fold-edge stat strip. NO dashboard widgets: wallet, markets,
+ * feed, swap and console all live in the numbered sections below.
  */
 export function StatTiles() {
   const { data, error, refresh } = useStats();
   // hook order is sacred: the fit hook runs on every render, ref or no ref
   const priceText = data ? `$${Number(data.price.data.price.usd).toPrecision(4)}` : "";
   const fitRef = useFitPrice(priceText);
+  const wallet = useWallet();
 
   if (error && !data)
     return (
@@ -123,7 +124,7 @@ export function StatTiles() {
       </div>
     );
 
-  const { stats, price, bridge, supply, slotMs } = data;
+  const { stats, price, daily, bridge, supply, slotMs } = data;
   const chg = price.data.price.change24h;
   const up = chg >= 0;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
@@ -134,11 +135,22 @@ export function StatTiles() {
     ? Math.min(100, (bridge.totalBridged / supply.circulating) * 100)
     : null;
   const ringPct = bridgedPct ?? epochPct;
+  const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
+  const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
+  const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
 
   return (
     <div className="hero">
       <div className="hero-grid">
         <div className="hero-main">
+          {/* reference eyebrow: "01 — NETWORK PULSE ▪" in loud caps */}
+          <span className="hero-eyebrow">
+            <span className="hero-no" aria-hidden="true">01</span>
+            <span className="rule-dash" aria-hidden="true" />
+            Network pulse
+            <span className="sq" aria-hidden="true" />
+          </span>
+
           {/* the poster's ONE giant display numeral. 4 significant digits —
               display rounding; the exact price is in the aria-label and
               everywhere fmtUsd appears. Fit-to-column, cap 150px. */}
@@ -146,13 +158,18 @@ export function StatTiles() {
             {priceText}
           </p>
           <div className="pricemeta">
-            {/* poster-weight delta companion: type, not a chip */}
-            <span className={`delta-poster ${up ? "" : "down"}`}>
-              {up ? "▲" : "▼"} {pct(chg)}
-              <em>/ 24H</em>
+            {/* the ember moment: solid chip, hard ink offset (reference) */}
+            <span className="chip-ember">
+              {up ? "▲" : "▼"} {pct(chg)} <em>/ 24H</em>
             </span>
             <span className="pair">COOK / USDC — MAINNET PAIR</span>
           </div>
+
+          {/* standfirst: the reference's editorial copy, with live block time */}
+          <h1 className="valueprop">
+            The oven-fresh L2. Blocks in {fmtSlotTime(slotMs)}. Finality in three bites — every
+            transfer traced crumb by crumb to the tray.
+          </h1>
         </div>
 
         {/* THE BITE RING — graphic centerpiece (reference-approved.png).
@@ -174,9 +191,35 @@ export function StatTiles() {
             }
           />
         </aside>
+
+        {/* halftone sparkline — reference row 2 (fees, honest 10-day series) */}
+        <div className="hero-spark">
+          <div className="sparkblock">
+            <div className="sparkcap">
+              <span>Sparkline · fees, 10 days</span>
+              <span className="data">
+                LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
+              </span>
+            </div>
+            {feesSeries.length > 2 && <Sparkline points={feesSeries} height={64} />}
+          </div>
+        </div>
+
+        {/* CTA row: the print button + crumb-trail microcopy (reference) */}
+        <div className="hero-cta-row">
+          {!wallet.address && (
+            <button
+              className="btn primary"
+              onClick={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))}
+            >
+              Connect wallet →
+            </button>
+          )}
+          <span className="crumbwords">Processed · Confirmed · Finalized</span>
+        </div>
       </div>
 
-      {/* thin fold-edge stat strip — the only other thing in viewport 01 */}
+      {/* thin fold-edge stat strip — small tabular entries along the bottom */}
       <div className="hero-strip">
         <span className="hstrip">
           <span className="hlabel">Throughput</span>
@@ -206,8 +249,7 @@ export function StatTiles() {
 
 /**
  * Network facts microline — section 03 opener. Consumes the shared
- * StatsProvider poll (no second fetch); carries the finality story
- * that used to crowd the hero.
+ * StatsProvider poll (no second fetch); carries the finality story.
  */
 export function NetworkFacts() {
   const { data, loading } = useStats();
@@ -224,30 +266,6 @@ export function NetworkFacts() {
         <span className="bridgeline"><b>{fmtCompact(bridge.totalBridged)} COOK</b> bridged from Solana · {fmtNum(bridge.totalTransfers, 0)} transfers · 1:1 Hyperlane</span>
       ) : null}
       {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
-    </div>
-  );
-}
-
-/**
- * Sparkline deck (fees, 10 days) — lives in section 03 analytics now;
- * the poster hero stays pure. Shares the StatsProvider poll.
- */
-export function SparkDeck() {
-  const { data } = useStats();
-  if (!data) return null;
-  const feesSeries = data.daily.days.slice(-10).map((d) => d.feesCook);
-  if (feesSeries.length < 3) return null;
-  const feesLow = Math.min(...feesSeries);
-  const feesNow = feesSeries[feesSeries.length - 1];
-  return (
-    <div className="sparkblock">
-      <div className="sparkcap">
-        <span>Sparkline · fees, 10 days</span>
-        <span className="data">
-          LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
-        </span>
-      </div>
-      <Sparkline points={feesSeries} height={64} />
     </div>
   );
 }
