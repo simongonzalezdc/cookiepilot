@@ -118,6 +118,7 @@ export function StatTiles() {
             {feesSeries.length > 2 && (
               <span className="hspark">
                 <Sparkline points={feesSeries} height={22} color="var(--mint)" />
+                <span className="hspark-cap">fees · last 10 days</span>
               </span>
             )}
           </div>
@@ -138,7 +139,7 @@ export function StatTiles() {
       </div>
 
       <div className="hero-strip">
-        <span><b>{stats.baseFee}</b> base fee <span className="sep">·</span> ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span>
+        <span><b>{stats.baseFee}</b> base fee <span className="strip-usd">· ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span></span>
         <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
         <span><b>{stats.validators}</b> validators</span>
         <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>

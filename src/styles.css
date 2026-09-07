@@ -356,7 +356,12 @@ button { font-family: inherit; }
 }
 .chg.up { color: var(--mint-text); }
 .chg.down { color: var(--jam-text); }
-.hspark { margin-top: 7px; opacity: 0.95; border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+.hspark { margin-top: 7px; opacity: 0.95; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+.hspark-cap {
+  display: block; margin-top: 3px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-dim);
+}
 .hero-strip {
   position: relative;
   display: flex; flex-wrap: wrap; gap: 10px 28px;
@@ -459,8 +464,9 @@ button { font-family: inherit; }
   .netpill { display: none; }
   .hero-grid { gap: 22px; }
   .bitering { justify-content: flex-start; margin-top: 10px; }
-  /* structured stat strip instead of ragged wrap */
-  .hero-strip { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  /* structured stat strip instead of ragged wrap (long usd conversion hidden) */
+  .hero-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+  .strip-usd { display: none; }
 }
 
 /* ============================================================
@@ -717,6 +723,11 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
    STATES — designed, not defaulted
    ============================================================ */
 .empty { text-align: center; padding: 24px 18px; color: var(--ink-dim); font-size: 13.5px; }
+/* compact horizontal variant — kills dead card space in the first viewport */
+.empty.compact { display: flex; align-items: center; gap: 16px; text-align: left; padding: 16px 18px; }
+.empty.compact .icon { margin: 0; flex: none; width: 42px; height: 42px; }
+.empty.compact .ecopy { min-width: 0; flex: 1; }
+.empty.compact .eaction { flex: none; }
 .empty .icon {
   width: 46px; height: 46px; margin: 0 auto 10px;
   display: grid; place-items: center;

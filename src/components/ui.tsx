@@ -1,7 +1,19 @@
 import { ReactNode, useState } from "react";
 import { IconCheck, IconCopy, IconCrumbs } from "./icons";
 
-export function EmptyState({ icon, title, body, action }: { icon?: ReactNode; title: string; body?: ReactNode; action?: ReactNode }) {
+export function EmptyState({ icon, title, body, action, compact }: { icon?: ReactNode; title: string; body?: ReactNode; action?: ReactNode; compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="empty compact">
+        <div className="icon" aria-hidden>{icon ?? <IconCrumbs size={24} />}</div>
+        <div className="ecopy">
+          <div className="title">{title}</div>
+          {body && <div>{body}</div>}
+        </div>
+        {action && <div className="eaction">{action}</div>}
+      </div>
+    );
+  }
   return (
     <div className="empty">
       <div className="icon" aria-hidden>{icon ?? <IconCrumbs size={24} />}</div>

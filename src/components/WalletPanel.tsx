@@ -18,6 +18,7 @@ export function WalletPanel({ onWantConnect }: { onWantConnect: () => void }) {
       <div className="card">
         <h3>Your wallet</h3>
         <EmptyState
+          compact
           icon={<IconWallet size={24} />}
           title="No wallet connected"
           body="Connect Nightly (recommended on Cookie Chain) or any standard SVM wallet to see balances, tokens, NFTs and your history."
