@@ -3,7 +3,6 @@ import { usePoll } from "../hooks/usePoll";
 import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
-import { IconBlocks, IconClock, IconPulse } from "./icons";
 import { rpc } from "../lib/rpc";
 
 interface AllStats {
@@ -48,6 +47,14 @@ export function StatTiles() {
     return (
       <div className="hero">
         <ErrorBox message={error} onRetry={refresh} />
+        <div className="herocta">
+          <button
+            className="btn primary"
+            onClick={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))}
+          >
+            Connect wallet →
+          </button>
+        </div>
       </div>
     );
   if (!data)
@@ -93,9 +100,11 @@ export function StatTiles() {
 
       <div className="hero-grid">
         <div className="hero-main">
-          {/* the poster's GIANT display numeral (reference-approved.png) */}
+          {/* the poster's GIANT display numeral (reference-approved.png).
+              4 significant digits — display rounding; the exact price is
+              in the aria-label and everywhere fmtUsd appears. */}
           <p className="giantprice" aria-label={`COOK price ${fmtUsd(price.data.price.usd)}`}>
-            {fmtUsd(price.data.price.usd)}
+            {`$${Number(price.data.price.usd).toPrecision(4)}`}
           </p>
           <div className="pricemeta">
             {/* THE ember moment: solid chip, hard ink offset (reference) */}
@@ -107,8 +116,8 @@ export function StatTiles() {
 
           {/* judging frame (AM-5): one-line value proposition */}
           <h1 className="valueprop">
-            The oven-fresh cockpit for Cookie Chain. Live analytics, wallet &amp; swaps on a{" "}
-            <span className="accent">sub-second chain</span>
+            The oven-fresh cockpit for Cookie Chain. Live analytics, wallet &amp; swaps on a
+            sub-second chain
             <span className="hidelong"> — every transfer traced crumb by crumb to the tray.</span>
           </h1>
 
@@ -124,7 +133,7 @@ export function StatTiles() {
 
           <div className="herostats">
             <div className="herostat">
-              <span className="hlabel"><IconPulse size={14} /> Throughput</span>
+              <span className="hlabel">Throughput</span>
               <span className="hvalue">
                 {fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}
                 <span className="unit">TPS</span>
@@ -132,12 +141,12 @@ export function StatTiles() {
               <span className="hsub">{subSec ? "sub-second blocks" : "network throughput"}</span>
             </div>
             <div className="herostat">
-              <span className="hlabel"><IconClock size={14} /> Block time</span>
+              <span className="hlabel">Block time</span>
               <span className="hvalue">{fmtSlotTime(slotMs)}</span>
               <span className="hsub">finality in the sub-second club</span>
             </div>
             <div className="herostat">
-              <span className="hlabel"><IconBlocks size={14} /> 24h txns</span>
+              <span className="hlabel">24h txns</span>
               <span className="hvalue">{fmtNum(stats.txns24h, 0)}</span>
               <span className="hsub">{fmtCompact(Number(stats.totalTransactions))} lifetime</span>
             </div>
@@ -175,16 +184,16 @@ export function StatTiles() {
         </aside>
       </div>
 
+      {/* one quiet microline of network facts + bridge context — keeps the
+          data, yields the poster pacing (verdict: no heavy bottom strip) */}
       <div className="hero-strip">
         <span><b>{stats.baseFee}</b> base fee <span className="strip-usd">· ≈ {fmtUsd(Number(stats.baseFee) * (price.data.price.usd || 0))}</span></span>
         <span><b>{fmtCompact(supply.circulating)}</b> COOK circulating</span>
         <span><b>{stats.validators}</b> validators</span>
         <span><b>{fmtCompact(stats.tokensLaunched)}</b> tokens · {fmtNum(stats.programsLaunched, 0)} programs</span>
+        <BridgeNote />
         {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
       </div>
-
-      {/* bridge context lives inside the hero (unified editorial rhythm) */}
-      <BridgeNote />
 
       {/* vertical marginalia on the page edge (decorative) */}
       <span className="marginalia" aria-hidden="true">
@@ -198,12 +207,8 @@ function BridgeNote() {
   const { data } = usePoll(fetchBridgeStats, 120_000);
   if (!data?.totalBridged) return null;
   return (
-    <div className="bridgenote">
-      <span className="icon" aria-hidden><IconBlocks size={16} /></span>
-      <span>
-        <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
-        {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.
-      </span>
-    </div>
+    <span className="bridgeline">
+      <b>{fmtCompact(data.totalBridged)} COOK</b> bridged from Solana · {fmtNum(data.totalTransfers, 0)} transfers · 1:1 Hyperlane
+    </span>
   );
 }

@@ -294,7 +294,7 @@ export function BiteRing({
 }) {
   const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const p = Math.max(0, Math.min(100, percent));
-  const stroke = layout === "stacked" ? Math.round(size * 0.105) : 13;
+  const stroke = layout === "stacked" ? Math.round(size * 0.125) : 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
   // bite size: chord exactly at the AM-3 bound — 14% of plot bbox, ≤8px depth
@@ -327,8 +327,17 @@ export function BiteRing({
       <defs>
         <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
           <rect x="0" y="0" width={size} height={size} fill="#fff" />
-          {/* ONE clean bite (AM-3: one notch max) crossing the full band */}
-          <circle cx={bcx} cy={bcy} r={br} fill="#000" />
+          {/* ONE bite (AM-3), scalloped edge like the reference's cookie
+              bite: main circle + merged satellites, region ≈ 40° of arc */}
+          <g fill="#000">
+            <circle cx={bcx} cy={bcy} r={br} />
+            {[-12, 12].map((a) => {
+              const srad = ((biteAngle + a - 90) * Math.PI) / 180;
+              const sx = c + Math.cos(srad) * (centerRad + br * 0.3);
+              const sy = c + Math.sin(srad) * (centerRad + br * 0.3);
+              return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
+            })}
+          </g>
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>
@@ -338,7 +347,7 @@ export function BiteRing({
           cy={c}
           r={r}
           fill="none"
-          style={{ stroke: "color-mix(in srgb, var(--ember) 22%, var(--surface))" }}
+          style={{ stroke: "color-mix(in srgb, var(--ember) 38%, var(--surface))" }}
           strokeWidth={stroke}
         />
         {/* the fill: EMBER — per the approved reference, the donut is the

@@ -57,7 +57,10 @@ function ThemeToggle() {
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       title={dark ? "Switch to light (vanilla)" : "Switch to dark (cocoa)"}
     >
-      {dark ? <IconSun size={20} /> : <IconMoon size={20} />}
+      {/* reference masthead pill: sun + moon pair, active theme at full ink */}
+      <IconSun size={16} className={dark ? "on" : "off"} />
+      <span className="tt-sep" aria-hidden="true" />
+      <IconMoon size={16} className={dark ? "off" : "on"} />
     </button>
   );
 }
@@ -108,7 +111,14 @@ export function Header() {
         </div>
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
           <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
-          {net.error ? "RPC offline" : `slot ${nowSlot ? fmtNum(nowSlot, 0) : "…"} · ${tpsRef.current} TPS`}
+          {net.error ? (
+            "RPC offline"
+          ) : (
+            <>
+              Mainnet live
+              <span className="netpill-data">· slot {nowSlot ? fmtNum(nowSlot, 0) : "…"} · {tpsRef.current} TPS</span>
+            </>
+          )}
         </span>
         <div className="spacer" />
         {w.address ? (
@@ -132,12 +142,9 @@ export function Header() {
             </span>
             <button className="btn small ghost" onClick={() => void w.disconnect()}>Disconnect</button>
           </span>
-        ) : (
-          <button className="btn primary" onClick={() => setModal(true)}>
-            {w.connecting ? "Connecting…" : "Connect wallet"}
-          </button>
-        )}
-        {/* judging frame (AM-5): theme toggle sits top-right, aria-pressed, persisted */}
+        ) : null}
+        {/* Reference masthead: logo · tagline · ONE live pill · toggle.
+            Connect lives on the hero CTA (editorial restraint here). */}
         <ThemeToggle />
       </header>
       {modal && <WalletModal onClose={() => setModal(false)} />}
