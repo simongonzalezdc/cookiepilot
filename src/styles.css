@@ -238,12 +238,15 @@ button { font-family: inherit; }
 .btn:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); box-shadow: var(--shadow-card); }
 .btn:active { transform: translateY(0); }
 .btn.primary {
-  background: var(--ember);
-  border: 1px solid rgba(43, 26, 18, 0.2); color: #241100;  /* 5.2:1 ember vs dark choc text */
+  /* inverse-ink primary: chocolate pill on vanilla / cream pill on cocoa.
+     Ember is the LIVE/pulse signature, not a static button fill — this
+     keeps one loud accent job (spec: accent-live semantics + restraint). */
+  background: var(--ink);
+  border: 1px solid transparent; color: var(--surface);
   font-weight: 700;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), var(--shadow-card);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), var(--shadow-card);
 }
-.btn.primary:hover { color: #241100; filter: brightness(1.05); border-color: rgba(43, 26, 18, 0.35); }
+.btn.primary:hover { color: var(--surface); filter: brightness(1.12); border-color: transparent; }
 .btn.ghost { background: transparent; border-color: transparent; }
 .btn.ghost:hover { color: var(--ember-text); border-color: var(--line); box-shadow: none; }
 .btn.small { padding: 5px 13px; font-size: 12.5px; }
@@ -273,8 +276,8 @@ button { font-family: inherit; }
 }
 .seg button:hover { color: var(--ink); }
 .seg button.on {
-  background: var(--ember); color: #241100;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  background: var(--ink); color: var(--surface);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 /* ============================================================
@@ -388,14 +391,14 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- bridge note ---------- */
+/* ---------- bridge note (inset row inside the hero card) ---------- */
 .bridgenote {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  margin-top: 14px; padding: 12px 18px;
-  background: var(--surface-raised);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  position: relative;
+  margin-top: 14px; padding: 10px 16px;
+  background: var(--surface-sunken);
+  border: none;
+  border-radius: var(--radius-field);
   color: var(--ink); font-size: 13px;
 }
 .bridgenote b { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -442,13 +445,15 @@ button { font-family: inherit; }
   .hero-slot { margin-left: 0; width: 100%; }
   .shell { padding: 0 14px 70px; }
   /* AM-5: theme toggle stays top-right on mobile — one control row
-     (logo · · · connect, toggle), live pill reflows to its own row. */
-  .header { flex-wrap: wrap; row-gap: 10px; }
+     (logo · · · connect, toggle); live pill reflows to its own row.
+     Brand sub + pill padding compact so all three controls fit 320–390px. */
+  .header { flex-wrap: wrap; row-gap: 10px; gap: 10px; }
   .logo { order: 0; }
+  .logo .sub { display: none; }
   .header .spacer { order: 1; }
   .header .btn.primary, .header .wallet-chip { order: 2; }
-  .header .btn.primary { padding: 7px 14px; font-size: 13px; }
-  .themetoggle { order: 2; }
+  .header .btn.primary { padding: 7px 12px; font-size: 12.5px; }
+  .themetoggle { order: 2; width: 36px; height: 36px; }
   .netpill { order: 3; width: 100%; justify-content: center; }
   .bitering { justify-content: flex-start; }
 }

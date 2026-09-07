@@ -11,15 +11,12 @@ import { SwapPanel } from "./components/SwapPanel";
 import { AskPanel } from "./components/AskPanel";
 import { Section } from "./components/ui";
 import { CHAIN } from "./lib/config";
-import { fetchBridgeStats, BridgeStats } from "./lib/api";
-import { usePoll } from "./hooks/usePoll";
-import { fmtCompact, fmtNum } from "./lib/format";
 import { CookieMark, IconChart, IconLink, IconOven, IconSwap, IconWallet } from "./components/icons";
 
 /**
  * v2 structure (DESIGN-SYSTEM build contract):
- * 01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail)
- * → 05 swap + NL console. First viewport = judging frame.
+ * 01 pulse-hero (with bridge context) → 02 wallet → 03 analytics
+ * → 04 live feed (Crumb Trail) → 05 swap + NL console. First viewport = judging frame.
  */
 export default function App() {
   const wallet = useWalletInternal();
@@ -30,7 +27,6 @@ export default function App() {
       <div className="shell">
         <Header />
         <StatTiles />
-        <BridgeNote />
 
         <Section no="02" title="Your wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
           <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
@@ -71,19 +67,5 @@ export default function App() {
         </footer>
       </div>
     </WalletCtx.Provider>
-  );
-}
-
-function BridgeNote() {
-  const { data } = usePoll<BridgeStats>(fetchBridgeStats, 120_000);
-  if (!data?.totalBridged) return null;
-  return (
-    <div className="bridgenote">
-      <span className="icon" aria-hidden><IconLink size={16} /></span>
-      <span>
-        <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
-        {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.
-      </span>
-    </div>
   );
 }

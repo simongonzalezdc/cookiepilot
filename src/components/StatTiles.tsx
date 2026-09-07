@@ -147,6 +147,24 @@ export function StatTiles() {
         )}
         {loading && <span className="data" style={{ color: "var(--ember-text)", opacity: 0.8 }}>refreshing…</span>}
       </div>
+
+      {/* bridge context lives inside the hero card (no orphan pill between
+          sections 01 and 02 — unified card rhythm) */}
+      <BridgeNote />
+    </div>
+  );
+}
+
+function BridgeNote() {
+  const { data } = usePoll(fetchBridgeStats, 120_000);
+  if (!data?.totalBridged) return null;
+  return (
+    <div className="bridgenote">
+      <span className="icon" aria-hidden><IconBlocks size={16} /></span>
+      <span>
+        <strong>{fmtCompact(data.totalBridged)} COOK</strong> bridged from Solana across{" "}
+        {fmtNum(data.totalTransfers, 0)} transfers — 1:1 via the Hyperlane warp route. Last transfer: {data.lastTransferDate}.
+      </span>
     </div>
   );
 }

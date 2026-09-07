@@ -262,9 +262,12 @@ export function BiteRing({
   // bite size: ~11% of ring bbox chord, depth ≤ 8px (meter rule)
   const br = size * 0.07;
   const depth = Math.min(6, size * 0.04);
-  // place the notch ≥45° away from the fill endpoint (never cross current value)
+  // place the notch inside the exposed TRACK (AM-3: bite the track, never
+  // the fill endpoint/current value) — centered when the track allows,
+  // else ≥18° past the fill end; never wrapping across the 0° seam.
   const endAngle = (p / 100) * 360;
-  const biteAngle = endAngle + 48;
+  const trackDeg = (100 - p) * 3.6;
+  const biteAngle = endAngle + Math.max(trackDeg / 2, 18);
   const rad = ((biteAngle - 90) * Math.PI) / 180;
   const bcx = c + Math.cos(rad) * (r + br - depth);
   const bcy = c + Math.sin(rad) * (r + br - depth);
