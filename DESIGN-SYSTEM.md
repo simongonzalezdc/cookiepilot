@@ -120,7 +120,7 @@ Swiss grid + modular rhythm · cream/ink/ember palette · MAINNET LIVE pulse pil
 Clever-copy captions as data labels ("EXACTLY 54.5% BAKED") — wordplay stays in marketing lines, never on a datum · hero-scale sparkline that is neither actionable nor decorative · vertical rotated marginalia column · section headlines bleeding off the fold.
 
 ## THE HERO FORK — CEO ruling required before the next full pass (renders to be presented side-by-side)
-- **Option A — recast the number, keep the gesture (default if no word):** the giant price stays THE poster number but renders in value-preserving poster notation: `0.0826¢` with exact USD in the meta line, or `$0.0₄826` sub-zero form; delta chip obeys the glyph law below. Reference anatomy intact.
+- **Option A — recast the number, keep the gesture (default if no word):** the giant price stays THE poster number but renders in value-preserving poster notation: `0.00826¢` (= $0.0000826) with exact USD in the meta line, or `$0.0₄826` sub-zero form (implemented — the exact form; the sub-zero notation was verified value-correct); delta chip obeys the glyph law below. Reference anatomy intact.
 - **Option B — network-health hero:** giant element becomes the epoch/finality ring (live ms-to-cement as the big number: `~458ms` — a number Cookie Chain is actually proud of), KPI matrix beside it; price demoted to an equal-weight chip next to MAINNET LIVE.
 
 ## Unconditional v6 fixes (both branches; first implementation pass)

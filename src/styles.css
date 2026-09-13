@@ -1167,6 +1167,8 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .spark-lab {
   font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
   fill: var(--ink-dim); font-variant-numeric: tabular-nums;
+  /* v6.1: legibility guard — the label may sit near the line; halo keeps it readable */
+  paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round;
 }
 .spark-lab .spark-val { fill: var(--ink); font-weight: 800; }
 

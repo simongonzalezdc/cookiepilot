@@ -216,7 +216,6 @@ export function Sparkline({
   const path = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
   const area = `${path} L${w},${baseY} L0,${baseY} Z`;
   const last = pts[pts.length - 1];
-  const nowAbove = last[1] > padT + 12;
   return (
     <div ref={ref}>
       <svg
@@ -237,9 +236,9 @@ export function Sparkline({
         {/* labeled baseline (honesty floor): the floor of the plot, always ruled */}
         <line x1="0" y1={baseY + 0.5} x2={w} y2={baseY + 0.5} style={{ stroke: "var(--line-ctl)", strokeWidth: 1 }} />
         <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        {/* the pulse: ember end-dot + NOW label marks the current value */}
+        {/* the pulse: ember end-dot marks the current value; NOW label parks top-right (v6.1) */}
         <circle cx={last[0] - 2} cy={last[1]} r="3.6" style={{ fill: dotColor }} />
-        <text className="spark-lab" x={last[0] - 6} y={nowAbove ? last[1] - 8 : last[1] + 14} textAnchor="end">
+        <text className="spark-lab" x={w - 1} y={padT - 4} textAnchor="end">
           NOW <tspan className="spark-val">{fmt(points[points.length - 1])}{unit ? ` ${unit}` : ""}</tspan>
         </text>
         <text className="spark-lab" x="1" y={padT - 4}>
