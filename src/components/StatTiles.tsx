@@ -161,9 +161,11 @@ export function StatTiles() {
           </p>
           <div className="pricemeta">
             {/* the ember moment: solid chip, hard ink offset (reference).
-                v6 glyph law: no arrow at flat ±0.005%. */}
-            <span className="chip-ember">
-              {glyph ? `${glyph} ` : ""}{pct(chg)} <em>/ 24H</em>
+              v6 glyph law: no arrow at flat ±0.005%. v6.2 panel fix: at
+              flat the chip goes NEUTRAL (hairline, ink-dim, "flat"
+              wording) — a flat delta is a live state, not a dead ember. */}
+            <span className={glyph ? "chip-ember" : "chip-flat"}>
+              {glyph ? `${glyph} ` : ""}{pct(chg)}{glyph ? "" : " · flat"} <em>/ 24H</em>
             </span>
             <span className="pair">COOK / USDC — MAINNET PAIR</span>
           </div>
@@ -235,6 +237,12 @@ export function StatTiles() {
 
       {/* thin fold-edge stat strip — small tabular entries along the bottom */}
       <div className="hero-strip">
+        {/* v6.2 SECONDARY crumb zone — crumbs along the fold-edge
+            hairline (restraint law: bite cluster + this one = the two
+            per viewport; confined to the band above the first label) */}
+        <span className="crumbline" aria-hidden="true">
+          <i /><i /><i /><i /><i /><i /><i /><i />
+        </span>
         <span className="hstrip">
           <span className="hlabel">Throughput</span>
           <b>{fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}<span className="unit">TPS</span></b>

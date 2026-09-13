@@ -155,3 +155,30 @@ Every dimension of the original interview + later forks now carries an answer. P
 | hosting | CEO question 2026-09-13, answer owed | Netlify was the $0 contest default; edge-proxy rewrites are portable (netlify.toml/vercel.json/_redirects). Recommendation staged for CEO: Cloudflare Pages or self-host on org VPS; cutover only on his word | CEO asked "why Netlify" — answered in session report |
 
 Panel transcripts: org-hq `docs/COOKIEPILOT-PANEL-2026-09-13/` (to be written with the session report). Gate unchanged: CEO's eyes outrank every seat.
+
+---
+
+# v6.2 — TEXTURE EXECUTION (CEO directive 2026-09-13, panel restraint recipe applied; implemented same day)
+
+Implements the `texture` + `flat_delta` rows above. Hand-rolled SVG/CSS only, zero new deps, fully static (nothing moves at any motion preference; composes WITH the v4 grain + halftone layers, replaces none).
+
+## What shipped
+- **Crumb cluster AT the bite** (ring centerpiece, `charts.tsx`): 9 seeded candidates, keep-outs discard deterministically → 5–7 render live. Irregular 6-vertex polygons + a few rounded ellipses, 2.6–5.5 viewBox units (≈2–4.5px rendered desktop). Gravity-sagged around the notch (crumbs fall, they don't orbit). Palette = existing tokens: dough `--ring-track`, amber `--ember`, cocoa speck `color-mix(ink 30%)`. Quiet end: dough .55 / amber .4 opacity.
+- **ONE secondary crumb zone** (restraint law: ≤2 clusters/viewport): 8 hand-placed irregular crumbs along the fold-edge stat-strip hairline, confined to the 14px padding band (`crumbline`, `StatTiles.tsx`) — geometrically incapable of touching a label or numeral (gate-measured: 0 overlaps, max crumb bottom 6.5px above the first label line).
+- **Crackle surface on the ring's dough track**: 4–10 short branching strokes (9 live), wobbled tangents + one offshoot each, `vector-effect="non-scaling-stroke"` = true 1px at every ring size. Ink 12% light / cream 9% dark (pulled to the quiet end of the 22/16 spec). Painted UNDER the ember fill, so the live arc always reads clean; the bite mask cuts crackle at the notch — crackle meets the bite.
+- **Determinism law**: one mulberry32 PRNG, FIXED seeds — placement never re-rolls across renders, themes, or captures.
+- **Baking-paper mottle** (the optional layer, shipped): two low-alpha radial washes (`--wash-ember` 50% upper-right, `--surface-sunken` 42% lower-left) behind the hero at z −1.
+- **Flat-delta chip** (`flat_delta` row): at ±0.005% the chip renders the neutral twin `.chip-flat` — hairline `--rule` outline, ink-dim text, "+0.00% · flat / 24H", no offset, no directional color. Live delta was flat at capture time, so all five captures show it.
+- **Battery fixes (small, in scope)**: dark-theme `chip-ember` text cream→cocoa (2.9:1 → 5.28:1); swap form inputs got programmatic label associations (htmlFor/id + one aria-label); `<main>` landmark added (banner + footer outside).
+
+## Measured deviations from the panel's literal numbers (documented, evidence in the gate)
+- Panel crumb alpha 4–7% / crackle 3–5% measure ≈1–4 RGB units on this warm palette — below perceptibility (the full-page grain alone is 8.5% noise). Shipped the minimum strengths that register on BOTH themes; pixel-probe evidence: 436 changed px (0.047% of the hero viewport) light / 395 (0.042%) dark, mean Δ ≈ 73/77 of 765, max Δ 189/183. Tuning knobs are the two opacity blocks in `styles.css` v6.2 section.
+
+## Gate evidence (v6.2 run, docs/v6-captures-texture/gate-report.json)
+- Contrast 16 pairs × 2 themes, ALL ≥4.5:1 incl. mottle worst-case (light ink-dim 6.04, dark 9.69; ink on ember chip 4.8 light / 5.28 dark after fix).
+- Overflow probe PASS at 320/390/1024/1440. The 80px "400% of 320" v4-era sim FAILS (sw 299) — **pre-existing on v6.1 base** (proven by base-commit run: `.giantprice` min-content at the 24px floor with the 11-char honest price); repair needs the hero-fork notation decision, held for the CEO.
+- Console zero on all loads (5 captures + 8 probe loads); reduced-motion: zero running animations, textures + static stations intact; keyboard trace clean, theme toggle `aria-pressed` flips and re-themes; error state renders `errbox` + Retry under full API abort; tnum verified on all data elements.
+- gate-audit.js cold-load: 0 fail / 6 warn (pill CTAs = CEO-committed control radius; uniform-grid warns = the poster section cadence + the feed being a list — documented decisions, kept).
+- a11y-audit.js: INPUT-label fails FIXED; 41 TAP TARGET fails remain — all below-fold feed/market microtext links, pre-existing, belong to staged item 7 (below-fold densification).
+
+Skills applied: art-direction, data-viz, micro-motion (static-equivalent law), color-system, theming, web-typography, component-states, form-ux, empty-states, a11y-pass, cognitive-a11y, deslop-ui, humanize-copy, responsive-layout, spacing-system (verified unchanged), tastecheck-pass (gate).

@@ -37,6 +37,171 @@ function biteFromChord(chord: number) {
   return { r, depth };
 }
 
+/* ------------------------------------------------------------------
+   v6.2 COOKIE TEXTURE KIT (CEO order 2026-09-13: "actual cookie
+   crumbles… crackling cookie texture"). Hand-rolled SVG only, zero
+   deps, fully STATIC — nothing animates, so prefers-reduced-motion
+   is irrelevant to these layers (they compose with grain+halftone).
+   Determinism law: every crumb and crackle stroke comes from one
+   seeded mulberry32 PRNG with a FIXED seed — placement never
+   re-rolls between renders, themes, or captures.
+------------------------------------------------------------------- */
+
+/** mulberry32 — tiny deterministic seeded PRNG (no deps). */
+function mulberry32(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+interface Crumb {
+  x: number;
+  y: number;
+  /** 2.6–5.5 viewBox units → ~2–4.5px at the hero ring's rendered scale */
+  s: number;
+  rot: number;
+  kind: "angular" | "round"; // a mix — crumbs are not uniform circles
+  tone: 0 | 1 | 2; // dough / amber / ink tint (classes carry theme tokens)
+  points?: string;
+  rx?: number;
+  ry?: number;
+}
+
+/**
+ * CRUMB CLUSTER AT THE BITE — the bitten cookie sheds. Particles sit
+ * in/around the notch mouth with gravity sag (crumbs fall, they don't
+ * orbit), clinging to the dough track just past the wound. Hard laws,
+ * enforced per particle:
+ *  - never on the ember fill (the live arc is the datum, not a surface)
+ *  - never inside the center-label keep-out (d ≥ 118 from ring center)
+ *  - never outside the viewBox (crumbs may not spill onto neighboring
+ *    text — the bakeline below, the price column left)
+ *  - no cluster without a bite (hasTrack gates the caller)
+ */
+function crumbsAtBite(
+  size: number,
+  bcx: number,
+  bcy: number,
+  fillEndAngle: number,
+  rOuter: number,
+): Crumb[] {
+  const rnd = mulberry32(0xc0fee); // fixed seed — placement never re-rolls
+  const c = size / 2;
+  const crumbs: Crumb[] = [];
+  for (let i = 0; i < 9; i++) {
+    // shed cloud around the notch mouth: mostly falling, a couple kicked
+    // up; dx biased inward — the notch rides the viewBox edge on live data
+    const dx = (rnd() - 0.38) * 42;
+    const dy = (rnd() < 0.82 ? 1 : -0.45) * (4 + rnd() * 30);
+    const x = bcx + dx;
+    const y = bcy + dy;
+    // keep-out checks — discard (deterministically) rather than nudge
+    const vx = x - c;
+    const vy = y - c;
+    const d = Math.hypot(vx, vy);
+    if (d < 118) continue; // center label zone
+    if (x < 7 || x > size - 7 || y < 7 || y > size - 7) continue; // viewBox
+    const ang = ((Math.atan2(vy, vx) * 180) / Math.PI + 90 + 360) % 360; // from top
+    const onBand = d > rOuter - 50 && d < rOuter + 3;
+    const onFill = onBand && ang <= fillEndAngle + 2;
+    if (onFill) continue;
+    const s = 2.6 + rnd() * 2.9;
+    const kind: Crumb["kind"] = i % 3 === 1 ? "round" : "angular";
+    const crumb: Crumb = {
+      x,
+      y,
+      s,
+      rot: Math.round(rnd() * 360),
+      kind,
+      tone: (i % 3) as 0 | 1 | 2,
+    };
+    if (kind === "angular") {
+      // 6-vertex irregular blob — an angular crumb, not a circle
+      const pts: string[] = [];
+      for (let v = 0; v < 6; v++) {
+        const va = (v / 6) * Math.PI * 2 + rnd() * 0.55;
+        const vr = s * (0.62 + rnd() * 0.38);
+        pts.push(`${(Math.cos(va) * vr).toFixed(1)},${(Math.sin(va) * vr).toFixed(1)}`);
+      }
+      crumb.points = pts.join(" ");
+    } else {
+      crumb.rx = +(s * (0.75 + rnd() * 0.3)).toFixed(1);
+      crumb.ry = +(s * (0.58 + rnd() * 0.3)).toFixed(1);
+    }
+    crumbs.push(crumb);
+  }
+  return crumbs;
+}
+
+/**
+ * CRACKLE SURFACE — thin irregular shortbread/gingerbread crack lines
+ * on the ring's exposed dough track (the fill paints AFTER, so any
+ * stroke drifting toward the live arc is covered — the datum stays
+ * clean). 4–10 short branching strokes (6–10 at the live track size),
+ * organic (wobbled tangents, one offshoot each), 1px via
+ * non-scaling-stroke so they read as hairline crackle at every ring
+ * size, both themes.
+ */
+function crackleOnTrack(
+  size: number,
+  r: number,
+  stroke: number,
+  endAngle: number,
+  trackDeg: number,
+): string[] {
+  const rnd = mulberry32(0x5b0a7); // "shortbread" — fixed seed
+  const c = size / 2;
+  // arc window: inset from the fill endpoint and the 0° seam
+  const insetA = Math.min(10, trackDeg * 0.2);
+  const insetB = Math.min(6, trackDeg * 0.15);
+  const a0 = endAngle + insetA;
+  const span = Math.max(6, trackDeg - insetA - insetB);
+  const n = Math.max(4, Math.min(10, Math.round(span / 16)));
+  const cracks: string[] = [];
+  const at = (deg: number, rad2: number) => {
+    const t = ((deg - 90) * Math.PI) / 180;
+    return [c + Math.cos(t) * rad2, c + Math.sin(t) * rad2] as const;
+  };
+  for (let i = 0; i < n; i++) {
+    const deg = a0 + (n === 1 ? span / 2 : (i / (n - 1)) * span) + (rnd() - 0.5) * (span / n) * 0.9;
+    const rr = r + (rnd() - 0.5) * (stroke - 12); // inside the band, off its edges
+    const [sx, sy] = at(deg, rr);
+    // crack direction: roughly tangent to the arc, either way, then wobbles
+    let dir = ((deg - 90) * Math.PI) / 180 + Math.PI / 2 + (rnd() < 0.5 ? 0 : Math.PI);
+    const len = 9 + rnd() * 13;
+    const segs = 3;
+    let px = sx;
+    let py = sy;
+    let bx = 0;
+    let by = 0;
+    const parts = [`M${px.toFixed(1)} ${py.toFixed(1)}`];
+    for (let v = 0; v < segs; v++) {
+      dir += (rnd() - 0.5) * 0.9; // organic wobble — never a straight rule
+      const step = len / segs;
+      px += Math.cos(dir) * step;
+      py += Math.sin(dir) * step;
+      if (v === 1) {
+        bx = px;
+        by = py; // branch grows off the middle joint
+      }
+      parts.push(`L${px.toFixed(1)} ${py.toFixed(1)}`);
+    }
+    // one short offshoot
+    const bdir = dir + (rnd() < 0.5 ? 1 : -1) * (0.7 + rnd() * 0.6);
+    const blen = 4 + rnd() * 4;
+    parts.push(
+      `M${bx.toFixed(1)} ${by.toFixed(1)}`,
+      `L${(bx + Math.cos(bdir) * blen).toFixed(1)} ${(by + Math.sin(bdir) * blen).toFixed(1)}`,
+    );
+    cracks.push(parts.join(""));
+  }
+  return cracks;
+}
+
 interface BiteMaskProps {
   id: string;
   w: number;
@@ -363,6 +528,13 @@ export function BiteRing({
   const bcy = c + Math.sin(rad) * centerRad;
   const centerFont = Math.round(size * 0.2);
   const capFont = Math.max(9, Math.round(size * 0.045));
+  // v6.2 cookie texture (stacked centerpiece only — restraint law):
+  // crumbs at the bite + crackle on the dough track. Seeded, static.
+  const rOuter = r + stroke / 2;
+  const crumbs =
+    layout === "stacked" && hasTrack ? crumbsAtBite(size, bcx, bcy, endAngle, rOuter) : [];
+  const cracks =
+    layout === "stacked" && hasTrack ? crackleOnTrack(size, r, stroke, endAngle, trackDeg) : [];
 
   const ringSvg = (
     <svg
@@ -407,6 +579,16 @@ export function BiteRing({
           style={{ stroke: "var(--ring-track)" }}
           strokeWidth={stroke}
         />
+        {/* v6.2 CRACKLE — shortbread crack lines on the dough track,
+            UNDER the fill paint order: any stroke wandering toward the
+            live arc is covered, so the datum always reads clean */}
+        {cracks.length > 0 && (
+          <g className="crackle" aria-hidden="true">
+            {cracks.map((d, i) => (
+              <path key={i} d={d} vectorEffect="non-scaling-stroke" />
+            ))}
+          </g>
+        )}
         {/* the fill: EMBER — per the approved reference, the donut is the
             loud accent (accent-live semantics: epoch progress is live state) */}
         <circle
@@ -421,6 +603,30 @@ export function BiteRing({
           strokeWidth={stroke}
         />
       </g>
+      {/* v6.2 CRUMBS — the bitten cookie sheds at the notch. Unmasked
+          (shed material floats free of the cookie), decorative only. */}
+      {crumbs.length > 0 && (
+        <g className="crumbs" aria-hidden="true">
+          {crumbs.map((cr, i) =>
+            cr.kind === "angular" ? (
+              <polygon
+                key={i}
+                className={`crumb tone-${cr.tone}`}
+                points={cr.points}
+                transform={`translate(${cr.x.toFixed(1)} ${cr.y.toFixed(1)}) rotate(${cr.rot})`}
+              />
+            ) : (
+              <ellipse
+                key={i}
+                className={`crumb tone-${cr.tone}`}
+                rx={cr.rx}
+                ry={cr.ry}
+                transform={`translate(${cr.x.toFixed(1)} ${cr.y.toFixed(1)}) rotate(${cr.rot})`}
+              />
+            ),
+          )}
+        </g>
+      )}
       {layout === "stacked" && (
         <g>
           <text

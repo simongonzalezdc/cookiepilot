@@ -40,9 +40,10 @@ function TokenSelect({ value, onChange }: { value: TokenOpt; onChange: (t: Token
   return (
     <div>
       <div className="field" style={{ marginBottom: 6 }}>
-        <label>{value.label}</label>
+        <label htmlFor="swap-value-q">{value.label}</label>
         <div style={{ display: "flex", gap: 6 }}>
           <input
+            id="swap-value-q"
             value={q}
             placeholder="Search by symbol (COOK, bCOOK, COOKHOUSE…)"
             onChange={(e) => setQ(e.target.value)}
@@ -157,12 +158,12 @@ export function SwapPanel() {
           )}
           <div className="row2">
             <div className="field">
-              <label>Amount in</label>
-              <input value={amount} inputMode="decimal" onChange={(e) => setAmount(e.target.value)} />
+              <label htmlFor="swap-amount">Amount in</label>
+              <input id="swap-amount" value={amount} inputMode="decimal" onChange={(e) => setAmount(e.target.value)} />
             </div>
             <div className="field">
-              <label>Slippage</label>
-              <select value={slip} onChange={(e) => setSlip(Number(e.target.value))}>
+              <label htmlFor="swap-slip">Slippage</label>
+              <select id="swap-slip" value={slip} onChange={(e) => setSlip(Number(e.target.value))}>
                 <option value={100}>1%</option>
                 <option value={500}>5%</option>
                 <option value={1000}>10%</option>
@@ -243,6 +244,7 @@ function OutPick({ onPick }: { onPick: (t: TokenOpt) => void }) {
       <input
         className="mono"
         placeholder="e.g. bCOOK"
+        aria-label="Pick output token by symbol"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && void pick()}

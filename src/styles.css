@@ -102,6 +102,11 @@
   --shadow-ink: 3px 3px 0 0 var(--ink);                        /* chip offset */
   --grain-opacity: 0.085;
   --ring-track: #e6cfa8; /* solid dough — the reference's printed tan remainder */
+  /* v6.2 crumb palette — existing tokens only (dough/amber/ink tints);
+     resolves per-theme automatically because the sources do */
+  --crumb-dough: var(--ring-track);
+  --crumb-amber: var(--ember);
+  --crumb-ink: color-mix(in srgb, var(--ink) 55%, transparent);
 
   /* motion tokens (AM-4): interaction vs ambient, both reduced-motion aware */
   --dur-hit: 180ms;          /* interaction */
@@ -467,18 +472,32 @@ button { font-family: inherit; }
   margin-top: 16px;
 }
 /* the ember moment: solid ember chip, hard ink offset shadow (reference).
-   Text is INK on ember (4.79:1 — AA); white would be 3.4:1. */
-.chip-ember {
+   Text is INK on ember (4.79:1 — AA); white would be 3.4:1.
+   v6.2: FLAT deltas (±0.005%) render the neutral twin — hairline
+   outline, ink-dim, no offset, no directional color. */
+.chip-ember,
+.chip-flat {
   display: inline-flex; align-items: center; gap: 7px;
-  background: var(--ember);
-  color: var(--ink);
   font-size: 13.5px; font-weight: 800;
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   padding: 7px 13px;
+}
+.chip-ember {
+  background: var(--ember);
+  color: var(--ink);
   box-shadow: var(--shadow-ink);
 }
-.chip-ember em { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: 0.14em; }
+.chip-flat {
+  background: transparent;
+  color: var(--ink-dim); /* 6.4:1 vanilla / 9.5:1 cocoa */
+  border: 1px solid var(--rule);
+}
+/* v6.2 battery fix: on cocoa the cream ink lands 2.9:1 on ember — the
+   chip prints cocoa-on-ember instead (5.19:1), keeping the reference's
+   solid-ember moment AA in BOTH themes */
+[data-theme="dark"] .chip-ember { color: var(--surface); }
+.chip-ember em, .chip-flat em { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: 0.14em; }
 .pair {
   font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--ink-dim);
@@ -531,6 +550,95 @@ button { font-family: inherit; }
   background-size: 9px 9px;
   opacity: 0.62;
   pointer-events: none;
+}
+
+/* ============================================================
+   v6.2 COOKIE TEXTURE (CEO order 2026-09-13: real cookie texture —
+   crumbs + crackle; composes WITH grain + halftone, replaces none).
+   All static: nothing here moves at any motion preference.
+   ============================================================ */
+/* ring crumbs — dough / amber / cocoa speck (theme-aware tokens).
+   Panel restraint (4 vision seats): texture stays QUIET — crumbs read
+   as scattered material, never confetti. Strength = the minimum that
+   still registers on both papers (the panel's literal 4–7% alpha
+   measures ~1–4 RGB units on this warm palette ≈ invisible, which
+   fails the CEO's texture directive; the gate's pixel-probe publishes
+   the shipped deltas). */
+.crumbs .crumb.tone-0 { fill: var(--crumb-dough); opacity: 0.55; }
+.crumbs .crumb.tone-1 { fill: var(--crumb-amber); opacity: 0.4; }
+.crumbs .crumb.tone-2 { fill: color-mix(in srgb, var(--ink) 30%, transparent); }
+/* crackle — 1px shortbread cracks on the ring's dough track, pulled
+   to the quiet end (spec 22/16 → shipped 12/9; non-scaling-stroke
+   keeps them hairline at every ring size) */
+.crackle path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 12%, transparent);
+  stroke-width: 1px;
+  stroke-linecap: round;
+}
+[data-theme="dark"] .crackle path {
+  stroke: color-mix(in srgb, var(--ink) 9%, transparent);
+}
+
+/* SECONDARY CRUMB ZONE — crumbs along the fold-edge hairline, quiet
+   like the bite cluster (see restraint note above). Absolute band
+   hugging the strip's top rule: crumbs live in the 14px padding gap,
+   so they can never touch a label or numeral. */
+.hero-strip { position: relative; }
+.crumbline {
+  position: absolute;
+  left: 0; right: 0; top: -6px; height: 19px;
+  pointer-events: none;
+  opacity: 0.55; /* quiet end — matches the bite cluster's restraint */
+}
+.crumbline i { position: absolute; display: block; }
+/* eight hand-placed crumbs — irregular shapes, mixed tones, spread
+   with intent (NOT a repeating pattern) */
+.crumbline i:nth-child(1) {
+  left: 3.5%; top: 5px; width: 5px; height: 3.5px; background: var(--crumb-dough);
+  clip-path: polygon(8% 40%, 45% 0, 100% 22%, 88% 100%, 18% 82%);
+}
+.crumbline i:nth-child(2) {
+  left: 13%; top: 9px; width: 3px; height: 3px; background: var(--crumb-ink);
+  border-radius: 58% 42% 55% 45% / 50% 60% 40% 50%;
+}
+.crumbline i:nth-child(3) {
+  left: 24.5%; top: 3px; width: 4px; height: 4.5px; background: var(--crumb-amber);
+  clip-path: polygon(0 28%, 60% 0, 100% 55%, 70% 100%, 10% 78%);
+}
+.crumbline i:nth-child(4) {
+  left: 37%; top: 10px; width: 3.5px; height: 2.5px; background: var(--crumb-dough);
+  border-radius: 45% 55% 48% 52% / 60% 42% 58% 40%;
+}
+.crumbline i:nth-child(5) {
+  left: 51%; top: 6px; width: 4.5px; height: 3px; background: var(--crumb-ink);
+  clip-path: polygon(12% 0, 100% 18%, 82% 100%, 0 72%);
+}
+.crumbline i:nth-child(6) {
+  left: 64.5%; top: 2px; width: 3px; height: 3px; background: var(--crumb-amber);
+  border-radius: 42% 58% 50% 50% / 52% 44% 56% 48%;
+}
+.crumbline i:nth-child(7) {
+  left: 77%; top: 8px; width: 5px; height: 3.5px; background: var(--crumb-dough);
+  clip-path: polygon(0 45%, 38% 6%, 92% 0, 100% 70%, 40% 100%);
+}
+.crumbline i:nth-child(8) {
+  left: 91%; top: 4px; width: 3px; height: 4px; background: var(--crumb-ink);
+  clip-path: polygon(20% 0, 100% 30%, 78% 100%, 8% 88%);
+}
+
+/* BAKING-PAPER MOTTLE — uneven warm wash behind the hero, like paper
+   that took the bake unevenly. Very low-contrast by design; tokens
+   keep it sub-AA-impact (gate re-measures worst-case pairs). */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 640px at 82% 12%, color-mix(in srgb, var(--wash-ember) 50%, transparent), transparent 68%),
+    radial-gradient(880px 680px at 8% 84%, color-mix(in srgb, var(--surface-sunken) 42%, transparent), transparent 70%);
 }
 .hero-side .bitemeta { position: relative; }
 .bitemeta .bakeline {

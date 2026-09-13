@@ -30,6 +30,9 @@ export default function App() {
       <StatsProvider>
         <div className="shell">
           <Header />
+          {/* v6.2 a11y-pass fix: main landmark — banner (header) and the
+              page footer stay outside it */}
+          <main>
           <StatTiles />
 
           <Section no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
@@ -55,6 +58,7 @@ export default function App() {
             <div style={{ height: 18 }} />
             <AskPanel />
           </Section>
+          </main>
 
           <footer className="footer">
             <span className="brandmark">
