@@ -22,11 +22,12 @@ export function fmtUsd(n: number | string | null | undefined): string {
   if (v === null) return "—";
   const abs = Math.abs(v);
   if (abs === 0) return "$0";
-  if (abs >= 1) return `$${v.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
-  if (abs >= 0.01) return `$${v.toFixed(4)}`;
+  const sign = v < 0 ? "-" : "";
+  if (abs >= 1) return `${sign}$${abs.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+  if (abs >= 0.01) return `${sign}$${abs.toFixed(4)}`;
   // tiny prices: fixed notation, never exponents (4 significant digits)
   const decimals = Math.min(12, Math.max(4, 4 - Math.floor(Math.log10(abs))));
-  return `$${v.toFixed(decimals).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "")}`;
+  return `${sign}$${abs.toFixed(decimals).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "")}`;
 }
 
 export function fmtCompact(n: number | string | null | undefined): string {
@@ -68,4 +69,24 @@ export function pct(n: number | string | null | undefined, digits = 2): string {
   const v = N(n);
   if (v === null) return "—";
   return `${v >= 0 ? "+" : ""}${v.toFixed(digits)}%`;
+}
+
+/* ------------------------------------------------------------------
+   v6 delta glyph law (DESIGN-SYSTEM.md, HONEST-DATA REPAIR):
+   ▲ only when change > +0.005%, ▼ only when < −0.005%, nothing at
+   flat (±0.005%) — never an up-arrow on +0.00%.
+------------------------------------------------------------------ */
+export const DELTA_EPS_PCT = 0.005;
+
+export function deltaGlyph(n: number | string | null | undefined): "▲" | "▼" | "" {
+  const v = N(n);
+  if (v === null || Math.abs(v) <= DELTA_EPS_PCT) return "";
+  return v > 0 ? "▲" : "▼";
+}
+
+/** Tone class for delta text: honest at flat (no fake green on +0.00%). */
+export function deltaTone(n: number | string | null | undefined): "green" | "red" | "dim" {
+  const v = N(n);
+  if (v === null || Math.abs(v) <= DELTA_EPS_PCT) return "dim";
+  return v > 0 ? "green" : "red";
 }

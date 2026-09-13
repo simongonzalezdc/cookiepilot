@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef, type ReactNode } from "re
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
 import { usePoll, type PollState } from "../hooks/usePoll";
 import { useWallet } from "../hooks/useWallet";
-import { fmtCompact, fmtNum, fmtUsd, pct } from "../lib/format";
+import { fmtCompact, fmtNum, fmtUsd, deltaGlyph, pct } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
 import { rpc } from "../lib/rpc";
@@ -126,7 +126,9 @@ export function StatTiles() {
 
   const { stats, price, daily, bridge, supply, slotMs } = data;
   const chg = price.data.price.change24h;
-  const up = chg >= 0;
+  // v6 delta glyph law: ▲ only > +0.005%, ▼ only < −0.005%, nothing at flat —
+  // never an up-arrow on +0.00% (the live feed has been printing exactly that).
+  const glyph = deltaGlyph(chg);
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   // centerpiece ring: share of circulating supply bridged from Solana —
   // honest AND reference-scale loud; falls back to epoch progress while
@@ -135,9 +137,9 @@ export function StatTiles() {
     ? Math.min(100, (bridge.totalBridged / supply.circulating) * 100)
     : null;
   const ringPct = bridgedPct ?? epochPct;
+  const nativeAmt = bridgedPct != null && bridge?.totalBridged ? supply.circulating - bridge.totalBridged : null;
   const feesSeries = daily.days.slice(-10).map((d) => d.feesCook);
-  const feesLow = feesSeries.length ? Math.min(...feesSeries) : 0;
-  const feesNow = feesSeries.length ? feesSeries[feesSeries.length - 1] : 0;
+  const feesFmt = (n: number) => n.toFixed(2);
 
   return (
     <div className="hero">
@@ -158,9 +160,10 @@ export function StatTiles() {
             {priceText}
           </p>
           <div className="pricemeta">
-            {/* the ember moment: solid chip, hard ink offset (reference) */}
+            {/* the ember moment: solid chip, hard ink offset (reference).
+                v6 glyph law: no arrow at flat ±0.005%. */}
             <span className="chip-ember">
-              {up ? "▲" : "▼"} {pct(chg)} <em>/ 24H</em>
+              {glyph ? `${glyph} ` : ""}{pct(chg)} <em>/ 24H</em>
             </span>
             <span className="pair">COOK / USDC — MAINNET PAIR</span>
           </div>
@@ -173,7 +176,9 @@ export function StatTiles() {
         </div>
 
         {/* THE BITE RING — graphic centerpiece (reference-approved.png).
-            AM-3: one scallop notch from the track, value prints in the center. */}
+            AM-3: one scallop notch from the track, value prints in the center.
+            v6: plain metric label (wordplay dead) + segment labels with COOK
+            amounts — the ring says what its segments ARE. */}
         <aside className="hero-side">
           <span className="bite-corner" aria-hidden="true" />
           <BiteRing
@@ -183,25 +188,34 @@ export function StatTiles() {
             big={ringPct.toFixed(1)}
             unit="%"
             label={bridgedPct != null ? "of supply bridged" : "of epoch elapsed"}
-            sub={`epoch ${stats.epoch ?? "—"} · ${epochPct.toFixed(1)}% through${bridge?.totalBridged ? ` · ${fmtCompact(bridge.totalBridged)} COOK via Hyperlane` : ""}`}
+            sub={`epoch ${stats.epoch ?? "—"} · ${epochPct.toFixed(1)}% through`}
             bakeline={
               <>
-                Exactly <b>{ringPct.toFixed(1)}%</b> baked
+                Bridged from Solana — <b>{ringPct.toFixed(1)}%</b>
               </>
+            }
+            segments={
+              bridgedPct != null && bridge?.totalBridged
+                ? [
+                    { label: "Bridged (Hyperlane)", value: `${fmtCompact(bridge.totalBridged)} COOK`, pct: bridgedPct, color: "var(--ember)" },
+                    { label: "Native", value: nativeAmt != null ? `${fmtCompact(nativeAmt)} COOK` : "—", pct: 100 - bridgedPct, color: "var(--ring-track)" },
+                  ]
+                : undefined
             }
           />
         </aside>
 
-        {/* halftone sparkline — reference row 2 (fees, honest 10-day series) */}
+        {/* halftone sparkline — reference row 2 (fees, honest 10-day series).
+            v6 honesty floor: baseline + MIN/MAX/NOW labels with units live on
+            the chart itself; the caption keeps title + unit only. */}
         <div className="hero-spark">
           <div className="sparkblock">
             <div className="sparkcap">
-              <span>Sparkline · fees, 10 days</span>
-              <span className="data">
-                LOW <b>{fmtNum(feesLow, feesLow < 100 ? 1 : 0)}</b> — NOW <b>{fmtNum(feesNow, feesNow < 100 ? 1 : 0)}</b> COOK
-              </span>
+              <span>Fees · 10 days · COOK</span>
             </div>
-            {feesSeries.length > 2 && <Sparkline points={feesSeries} height={64} />}
+            {feesSeries.length > 2 && (
+              <Sparkline points={feesSeries} height={64} unit="COOK" format={feesFmt} />
+            )}
           </div>
         </div>
 
@@ -237,6 +251,12 @@ export function StatTiles() {
           <span className="hlabel">Height</span>
           <b>{fmtNum(stats.blockHeight, 0)}</b>
         </span>
+      </div>
+      {/* v6 fold edge: hairline + small-caps microline replaces the
+          fold-bleeding giant "02 — WALLET" peek; no headline crops at the fold */}
+      <div className="fold-next" aria-hidden="true">
+        <span className="fn-next">Next</span>
+        <span className="fn-title">02 — Wallet</span>
       </div>
 
       {/* vertical marginalia on the page edge (decorative) */}

@@ -99,6 +99,9 @@ export function BarChart({
       }
     }
   }
+  // v6 honesty floor: the tallest bar carries a printed value (top-N note
+  // joins the axis row below); the bite tag already covers its own bar.
+  const topIdx = data.reduce((best, d, i) => (d.value > data[best].value ? i : best), 0);
 
   return (
     <div className="chartwrap" ref={ref}>
@@ -160,10 +163,22 @@ export function BarChart({
             {`${bite.label} · ${format ? format(bite.value) : bite.value}`}
           </text>
         )}
+        {/* v6: value label on the top bar (skipped when the bite tag covers it) */}
+        {bite?.i !== topIdx && (
+          <text
+            className="bite-tag"
+            x={Math.min(Math.max(topIdx * slot + slot / 2, 34), w - 34)}
+            y={Math.max(plotH - Math.max(2, (data[topIdx].value / max) * (plotH - 2)) - 6, 10)}
+            textAnchor="middle"
+          >
+            {format ? format(data[topIdx].value) : data[topIdx].value}
+          </text>
+        )}
         <line x1="0" y1={plotH + 0.5} x2={w} y2={plotH + 0.5} style={{ stroke: "var(--line)", strokeWidth: 1 }} />
       </svg>
       <div className="chartaxis">
         <span>{data[0]?.label}</span>
+        <span className="axisnote">{data.length} bars · top labeled</span>
         <span>{data[data.length - 1]?.label}</span>
       </div>
     </div>
@@ -175,25 +190,43 @@ export function Sparkline({
   height = 46,
   color = "var(--ink)",
   dotColor = "var(--ember)",
+  unit,
+  format,
 }: {
   points: number[];
   height?: number;
   color?: string;
   dotColor?: string;
+  /** v6 honesty floor: unit printed on the min/max/now labels */
+  unit?: string;
+  format?: (n: number) => string;
 }) {
   const [ref, w] = useWidth<HTMLDivElement>();
   const gid = useId().replace(/[^a-zA-Z0-9]/g, "");
   if (points.length < 2 || w < 20) return <div ref={ref} style={{ height, display: "block" }} />;
+  const fmt = format ?? ((n: number) => String(n));
   const min = Math.min(...points);
   const max = Math.max(...points);
   const span = max - min || 1;
-  const pts = points.map((p, i) => [(i / (points.length - 1)) * w, height - 4 - ((p - min) / span) * (height - 8)] as const);
+  // v6 honesty floor: label gutters — max label above, min label under the baseline
+  const padT = 13;
+  const padB = 14;
+  const baseY = height - padB;
+  const pts = points.map((p, i) => [(i / (points.length - 1)) * w, baseY - ((p - min) / span) * (baseY - padT)] as const);
   const path = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`).join(" ");
-  const area = `${path} L${w},${height} L0,${height} Z`;
+  const area = `${path} L${w},${baseY} L0,${baseY} Z`;
   const last = pts[pts.length - 1];
+  const nowAbove = last[1] > padT + 12;
   return (
     <div ref={ref}>
-      <svg width="100%" height={height} viewBox={`0 0 ${w} ${height}`} style={{ display: "block" }} aria-hidden="true">
+      <svg
+        width="100%"
+        height={height}
+        viewBox={`0 0 ${w} ${height}`}
+        style={{ display: "block" }}
+        role="img"
+        aria-label={`series in ${unit ?? "units"}: min ${fmt(min)}, max ${fmt(max)}, now ${fmt(points[points.length - 1])}`}
+      >
         <defs>
           {/* halftone dot matrix under the line (v4 texture mandate) */}
           <pattern id={`hd${gid}`} width="8" height="8" patternUnits="userSpaceOnUse">
@@ -201,9 +234,20 @@ export function Sparkline({
           </pattern>
         </defs>
         <path d={area} fill={`url(#hd${gid})`} opacity={0.55} />
+        {/* labeled baseline (honesty floor): the floor of the plot, always ruled */}
+        <line x1="0" y1={baseY + 0.5} x2={w} y2={baseY + 0.5} style={{ stroke: "var(--line-ctl)", strokeWidth: 1 }} />
         <path d={path} style={{ fill: "none", stroke: color }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        {/* the pulse: ember end-dot marks NOW */}
+        {/* the pulse: ember end-dot + NOW label marks the current value */}
         <circle cx={last[0] - 2} cy={last[1]} r="3.6" style={{ fill: dotColor }} />
+        <text className="spark-lab" x={last[0] - 6} y={nowAbove ? last[1] - 8 : last[1] + 14} textAnchor="end">
+          NOW <tspan className="spark-val">{fmt(points[points.length - 1])}{unit ? ` ${unit}` : ""}</tspan>
+        </text>
+        <text className="spark-lab" x="1" y={padT - 4}>
+          MAX <tspan className="spark-val">{fmt(max)}{unit ? ` ${unit}` : ""}</tspan>
+        </text>
+        <text className="spark-lab" x="1" y={height - 3}>
+          MIN <tspan className="spark-val">{fmt(min)}{unit ? ` ${unit}` : ""}</tspan>
+        </text>
       </svg>
     </div>
   );
@@ -269,7 +313,8 @@ export function HBarList({
  * track (offset ≥45° from the fill endpoint so the notch never
  * touches the current value); the exact value prints in the ring
  * center (AM-3). layout="stacked" = reference composition: big ring,
- * value inside, "exactly N% baked" line below.
+ * value inside, plain metric label + segment legend below (v6: the
+ * ring states what its segments ARE, with amounts).
  */
 export function BiteRing({
   percent,
@@ -280,6 +325,7 @@ export function BiteRing({
   sub,
   layout = "inline",
   bakeline,
+  segments,
 }: {
   percent: number;
   size?: number;
@@ -289,8 +335,10 @@ export function BiteRing({
   sub?: string;
   /** "inline" = ring + side meta (legacy), "stacked" = reference centerpiece */
   layout?: "inline" | "stacked";
-  /** stacked: caps line under the ring, e.g. "EXACTLY 68.4% BAKED" */
+  /** stacked: plain caps line under the ring (the metric label, no wordplay) */
   bakeline?: ReactNode;
+  /** stacked: per-segment labels with amounts (v6 honesty floor) */
+  segments?: { label: string; value: string; pct: number; color?: string }[];
 }) {
   const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const p = Math.max(0, Math.min(100, percent));
@@ -408,6 +456,20 @@ export function BiteRing({
           <div className="bitemeta">
             {bakeline && <span className="bakeline">{bakeline}</span>}
             {sub && <span className="bakesub">{sub}</span>}
+          </div>
+        )}
+        {/* v6 honesty floor: segment labels with amounts — direct-labeled,
+            color never the only channel (swatch + text + share) */}
+        {segments && segments.length > 0 && (
+          <div className="ringlegend">
+            {segments.map((s) => (
+              <span key={s.label} className="rl-row">
+                <i className="rl-swatch" style={{ background: s.color ?? "var(--ember)" }} aria-hidden="true" />
+                <span className="rl-label">{s.label}</span>
+                <b className="rl-val data">{s.value}</b>
+                <span className="rl-pct data">{s.pct.toFixed(1)}%</span>
+              </span>
+            ))}
           </div>
         )}
       </div>

@@ -2,6 +2,17 @@
   command = "npm run build"
   publish = "dist"
 
+# v6: host CSP — script-src 'self' with NO 'unsafe-inline'. Netlify injects
+# the "Powered by Netlify" HUD script at the edge; per Netlify's docs a CSP
+# that omits 'unsafe-inline' from script-src prevents it from rendering, so
+# hosting chrome stays out of the product UI. The theme boot moved to
+# /theme-boot.js (same-origin) so nothing legit needs inline script.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "script-src 'self'; object-src 'none'; base-uri 'self'"
+    X-Content-Type-Options = "nosniff"
+
 [[redirects]]
   from = "/explorer-api/*"
   to = "https://cookiescan.io/api/:splat"

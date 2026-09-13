@@ -100,7 +100,7 @@ function TokensCard({ address, balance }: { address: string; balance: number | n
         )}
         {rows.length > 0 && (
           <div className="tblwrap"><table className="tbl">
-            <thead><tr><th>Token</th><th className="r">Amount</th><th className="r">Value</th></tr></thead>
+            <thead><tr><th>Token</th><th className="r">Amount</th><th className="r">Value (USD)</th></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.mint}>

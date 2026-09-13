@@ -301,10 +301,12 @@ button { font-family: inherit; }
 }
 .connect-pill:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); }
 
-/* theme toggle — reference masthead pill: sun|moon pair, active at ink */
+/* theme toggle — reference masthead pill: sun|moon pair, active at ink.
+   v6: the 24px AM-5 icon set renders at true size (1.5px round-cap stroke);
+   no more pixelated 16px glyphs. */
 .themetoggle {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  height: 38px; padding: 0 14px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 42px; padding: 0 13px;
   border-radius: var(--radius-ctl);
   background: var(--surface-raised);
   border: 1.5px solid var(--ink);
@@ -314,9 +316,10 @@ button { font-family: inherit; }
     transform var(--dur-hit) var(--ease-out);
 }
 .themetoggle:hover { border-color: var(--ember-text); transform: translateY(-1px); }
+.themetoggle svg { width: 24px; height: 24px; flex: none; }
 .themetoggle svg.on { color: var(--ink); opacity: 1; }
-.themetoggle svg.off { color: var(--ink-dim); opacity: 0.45; }
-.themetoggle .tt-sep { width: 1px; height: 16px; background: var(--rule); }
+.themetoggle svg.off { color: var(--ink-dim); opacity: 0.55; }
+.themetoggle .tt-sep { width: 1px; height: 20px; background: var(--rule); }
 
 /* ---------- buttons (pill controls) ---------- */
 .btn {
@@ -392,6 +395,14 @@ button { font-family: inherit; }
 .hero {
   position: relative;
   padding-top: 18px;
+  /* v6: the hero owns exactly the first viewport — the fold edge lands on
+     the stat strip + microline, so no section headline can crop at the fold */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 74px);
+}
+@supports (height: 1svh) {
+  .hero { min-height: calc(100svh - 74px); }
 }
 /* boot states keep the poster frame, quietly centered */
 .hero-boot {
@@ -591,6 +602,23 @@ button { font-family: inherit; }
   display: grid; grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--rule);
   padding: 14px 0 26px;
+  margin-top: auto; /* pins to the fold edge when the hero owns the viewport */
+}
+/* v6 fold edge: hairline + small-caps microline — the numbered TOC hint
+   that replaces the fold-bleeding giant "02 — WALLET" peek */
+.fold-next {
+  display: flex; align-items: baseline; gap: 12px;
+  border-top: 1px solid var(--rule-soft);
+  padding: 9px 0 18px;
+}
+.fold-next .fn-next {
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.22em; color: var(--ember-text);
+}
+.fold-next .fn-title {
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.22em; color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
 }
 .hstrip {
   display: flex; flex-direction: column; gap: 3px;
@@ -614,12 +642,15 @@ button { font-family: inherit; }
 .bridgeline b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
 /* ============================================================
-   SECTIONS — giant numbered poster heads ("02 — WALLET")
+   SECTIONS — numbered poster heads ("02 — WALLET").
+   v6 scale-down: content leads — the numeral stays a TOC anchor at
+   ≤2× the title and ≤ the content max font (balbig/quoteout 34–38px),
+   not a poster-size chrome element.
    ============================================================ */
 .sect { margin-top: 88px; scroll-margin-top: 84px; }
 .sect-head {
   position: relative;
-  display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap;
+  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
   margin-bottom: 20px; padding-bottom: 12px;
   border-bottom: 2px solid var(--ink);
 }
@@ -631,17 +662,17 @@ button { font-family: inherit; }
   pointer-events: none;
 }
 .sect-no {
-  font-size: clamp(40px, 5.6vw, 76px);
+  font-size: clamp(20px, 2.4vw, 30px);
   font-weight: 900; line-height: 0.95;
   color: var(--ink); letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.sect-no::after { content: "—"; color: var(--ink); margin-left: 14px; font-weight: 800; }
+.sect-no::after { content: "—"; color: var(--ink-dim); margin-left: 10px; font-weight: 800; }
 .sect-head h2 {
   display: inline-flex; align-items: baseline; gap: 9px;
   margin: 0;
-  font-size: clamp(40px, 5.6vw, 76px);
-  font-weight: 900; line-height: 0.95; letter-spacing: -0.03em;
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -676,16 +707,17 @@ button { font-family: inherit; }
   .logo .cookie { width: 32px; height: 32px; border-radius: 10px; }
   .logo .sub { display: none; }
   .header .spacer { order: 1; }
-  .themetoggle { order: 2; width: auto; height: 32px; padding: 0 10px; gap: 6px; }
-  .themetoggle .tt-sep { height: 12px; }
-  .themetoggle svg { width: 14px; height: 14px; }
+  .themetoggle { order: 2; width: auto; height: 38px; padding: 0 11px; gap: 7px; }
+  .themetoggle .tt-sep { height: 14px; }
+  .themetoggle svg { width: 18px; height: 18px; }
   .header .connect-pill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
   .netpill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
   .header .wallet-chip { order: 3; }
-  /* mobile poster: giant number (cap 96px), ring below, strip wraps 2×2.
-     Masthead stacks to two rows (~106px) — subtract that so the strip
-     still lands on the fold edge. */
-  .hero { display: flex; flex-direction: column; min-height: calc(100svh - 108px); padding-top: 6px; }
+  /* mobile poster: giant number (cap 96px), ring below, strip wraps 2×2
+     with hairlines both ways; ring ≤55vw; no rotated marginalia (hidden
+     ≤1024 already). Masthead stacks to two rows (~106px) — subtract that
+     so the strip still lands on the fold edge. */
+  .hero { display: flex; flex-direction: column; min-height: calc(100svh - 106px); padding-top: 6px; }
   .hero-grid {
     grid-template-columns: 1fr;
     grid-template-areas: "main" "side" "spark" "cta";
@@ -698,19 +730,23 @@ button { font-family: inherit; }
   .valueprop { font-size: 14px; margin-top: 10px; }
   .hero-side { padding: 16px 0 4px; align-items: center; }
   .bite-corner { width: 130px; height: 130px; right: -8px; top: 12px; }
-  .bitering.stacked .ring { width: min(62vw, 236px); }
+  /* v6: hero ring ≤ 55% viewport width */
+  .bitering.stacked .ring { width: min(55vw, 236px); }
+  .ringlegend { max-width: min(88vw, 300px); }
   .hero-cta-row .btn.primary { flex: 1; justify-content: center; text-align: center; }
   .hero-strip { margin-top: auto; grid-template-columns: 1fr 1fr; gap: 12px 18px; padding: 12px 0 20px; }
   .hstrip { padding: 0 12px; }
   .hstrip:nth-child(odd) { padding-left: 0; border-left: none; }
+  /* v6: hairline between the 2×2 strip rows */
+  .hstrip:nth-child(n + 3) { border-top: 1px solid var(--rule); padding-top: 10px; }
+  .fold-next { padding-bottom: 14px; }
   .hstrip b { font-size: 14px; }
   .hidecap { display: none; }
   .hidelong { display: none; }
   .sparkblock { margin-top: 14px; padding-top: 8px; }
   .sparkcap { gap: 8px; margin-bottom: 2px; font-size: 9.5px; }
   .sparkcap span:first-child { max-width: 52%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sparkcap .data { text-align: right; }
-  .sparkblock svg { height: 46px; }
+  .sparkblock svg { height: 56px; }
 }
 /* ≤360px: tighter shell so masthead row 2 (connect + live) still fits 320 */
 @media (max-width: 360px) {
@@ -775,6 +811,8 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .tbl tbody tr { transition: background var(--dur-hit) var(--ease-out); }
+/* v6: row zebra at 3% ink — tabular rhythm without heavy ruling */
+.tbl tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--ink) 3%, transparent); }
 .tbl tr:last-child td { border-bottom: none; }
 .tbl tbody tr:hover td { background: var(--wash-ember); }
 .tbl .num { text-align: right; font-size: 13px; }
@@ -1116,12 +1154,29 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
    ============================================================ */
 .chartwrap { margin-top: 4px; }
 .chartaxis {
-  display: flex; justify-content: space-between;
+  display: flex; justify-content: space-between; gap: 10px;
   font-size: 10.5px; color: var(--ink-dim); font-variant-numeric: tabular-nums;
   margin-top: 6px; border-top: 1px solid var(--line); padding-top: 6px;
 }
+/* v6 honesty floor: top-N axis note rides the center of the axis row */
+.chartaxis .axisnote { letter-spacing: 0.08em; text-transform: uppercase; font-size: 9.5px; font-weight: 700; }
 .bar-rect { transition: opacity var(--dur-hit) var(--ease-out); }
 .bar-rect:hover { opacity: 1 !important; }
+
+/* v6 honesty floor: sparkline MIN/MAX/NOW labels (units included) */
+.spark-lab {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  fill: var(--ink-dim); font-variant-numeric: tabular-nums;
+}
+.spark-lab .spark-val { fill: var(--ink); font-weight: 800; }
+
+/* v6 honesty floor: ring segment legend — swatch + label + amount + share */
+.ringlegend { display: flex; flex-direction: column; gap: 7px; width: 100%; max-width: 300px; }
+.rl-row { display: flex; align-items: baseline; gap: 9px; font-size: 12px; min-width: 0; }
+.rl-swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; align-self: center; border: 1px solid var(--rule); }
+.rl-label { color: var(--ink-dim); letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rl-val { color: var(--ink); font-weight: 800; margin-left: auto; white-space: nowrap; }
+.rl-pct { color: var(--ink-dim); font-size: 11.5px; min-width: 4.5ch; text-align: right; }
 
 /* ============================================================
    MOTION — AM-4: interaction 180ms / ambient 600ms.

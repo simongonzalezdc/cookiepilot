@@ -1,7 +1,7 @@
 import { fetchMarkets, PoolMarket, fetchTokenRegistry, RegistryToken } from "../lib/api";
 import { usePoll } from "../hooks/usePoll";
 import { EmptyState, ErrorBox, Loading } from "./ui";
-import { fmtCompact, fmtNum, fmtUsd, pct, shortAddr } from "../lib/format";
+import { fmtCompact, fmtNum, fmtUsd, deltaGlyph, deltaTone, pct, shortAddr } from "../lib/format";
 import { useState } from "react";
 import { IconCoin, IconSwap } from "./icons";
 
@@ -55,7 +55,7 @@ export function MarketsPanel() {
           <div className="tblwrap"><table className="tbl">
             <thead>
               <tr>
-                <th>Pair</th><th>Venue</th><th className="r">Price (USD)</th><th className="r">Liquidity</th><th className="r">24h</th>
+                <th>Pair</th><th>Venue</th><th className="r">Price (USD)</th><th className="r">Liquidity (USD)</th><th className="r">24h %</th>
               </tr>
             </thead>
             <tbody>
@@ -71,8 +71,15 @@ export function MarketsPanel() {
                   <td className="num">{fmtUsd(m.liquidityUsd)}</td>
                   <td className="num">
                     {(() => {
+                      // v6 glyph law: ▲/▼ only past ±0.005%, neutral at flat
                       const c = changeOf(m.baseToken.mint);
-                      return c === undefined ? "—" : <span className={c >= 0 ? "green" : "red"}>{pct(c, 1)}</span>;
+                      if (c === undefined) return "—";
+                      const g = deltaGlyph(c);
+                      return (
+                        <span className={deltaTone(c)}>
+                          {g ? `${g} ` : ""}{pct(c, 1)}
+                        </span>
+                      );
                     })()}
                   </td>
                 </tr>
@@ -90,7 +97,7 @@ export function MarketsPanel() {
           <div className="tblwrap"><table className="tbl">
             <thead>
               <tr>
-                <th>Token</th><th className="r">Price</th><th className="r">24h</th><th className="r">Mkt cap</th><th className="r">Liquidity</th><th className="r">Holders</th>
+                <th>Token</th><th className="r">Price (USD)</th><th className="r">24h %</th><th className="r">Mkt cap (USD)</th><th className="r">Liquidity (USD)</th><th className="r">Holders</th>
               </tr>
             </thead>
             <tbody>
@@ -102,7 +109,17 @@ export function MarketsPanel() {
                     <span className="dim"> {t.metadata?.name}</span>
                   </td>
                   <td className="num">{fmtUsd(t.price?.usd)}</td>
-                  <td className="num"><span className={(t.price?.change24h ?? 0) >= 0 ? "green" : "red"}>{pct(t.price?.change24h, 1)}</span></td>
+                  <td className="num">
+                    {(() => {
+                      // v6 glyph law: ▲/▼ only past ±0.005%, neutral at flat
+                      const g = deltaGlyph(t.price?.change24h);
+                      return (
+                        <span className={deltaTone(t.price?.change24h)}>
+                          {g ? `${g} ` : ""}{pct(t.price?.change24h, 1)}
+                        </span>
+                      );
+                    })()}
+                  </td>
                   <td className="num">{fmtCompact(t.marketData?.marketCap)}</td>
                   <td className="num">{fmtCompact(t.marketData?.liquidity)}</td>
                   <td className="num">{fmtNum(t.marketData?.holderCount ?? 0, 0)}</td>

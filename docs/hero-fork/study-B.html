@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hero fork B — network-health hero</title>
+  <!-- loads the app's REAL token sheet + M PLUS Rounded 1c (vite dev) -->
+  <link rel="stylesheet" href="/src/styles.css" />
+  <style>
+    /* study-only layout: ring becomes the giant element, KPI matrix beside it,
+       price demoted to a small chip in the masthead next to MAINNET LIVE */
+    .heroB-main { min-width: 0; }
+    .heroB-grid {
+      display: grid;
+      grid-template-columns: minmax(420px, 480px) minmax(0, 1fr);
+      gap: 16px 44px;
+      padding: 24px 0 26px;
+      align-items: center;
+      min-width: 0;
+      width: 100%;
+    }
+    .heroB-ring { display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
+    .heroB-ring .ring { width: 100%; max-width: 460px; height: auto; }
+    .pricechip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--surface-raised);
+      border: 1.5px solid var(--ink);
+      padding: 7px 14px; border-radius: var(--radius-ctl);
+      font-size: 11.5px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums;
+    }
+    .pricechip .pc-lab { color: var(--ink-dim); }
+    .kpis {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--rule);
+      margin-top: 18px; padding: 14px 0 4px;
+      gap: 14px 28px; max-width: 560px;
+    }
+    .kpi { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .kpi .klabel {
+      font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--ink-dim); white-space: nowrap;
+    }
+    .kpi b {
+      color: var(--ink); font-weight: 800; font-variant-numeric: tabular-nums;
+      font-size: 16px; line-height: 1.25; letter-spacing: 0.01em; white-space: nowrap;
+    }
+    .kpi b .unit { font-size: 10px; font-weight: 700; color: var(--ink-dim); margin-left: 4px; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="header">
+      <div class="logo">
+        <span class="cookie">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <circle cx="13" cy="13.5" r="9.5" />
+          </svg>
+        </span>
+        <span>CookiePilot <span class="sub">oven-fresh L2 · issue 07</span></span>
+      </div>
+      <div class="spacer"></div>
+      <button class="connect-pill" type="button">Connect wallet</button>
+      <!-- OPTION B: price demoted to an equal-weight chip beside MAINNET LIVE -->
+      <span class="pricechip"><span class="pc-lab">COOK</span>$0.0000826</span>
+      <span class="netpill"><span class="dot" aria-hidden="true"></span>Mainnet live</span>
+      <button class="themetoggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="on" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg>
+        <span class="tt-sep" aria-hidden="true"></span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="off" aria-hidden="true"><path d="M20 13.5A8 8 0 0 1 10.5 4 8 8 0 1 0 20 13.5z"/></svg>
+      </button>
+    </header>
+
+    <div class="hero">
+      <div class="heroB-grid">
+        <!-- OPTION B: the epoch ring becomes the giant element -->
+        <aside class="heroB-ring">
+          <span class="bite-corner" aria-hidden="true"></span>
+          <div class="bitering stacked">
+            <svg class="ring" width="460" height="460" viewBox="0 0 460 460" role="img"
+                 aria-label="epoch 57 elapsed: 78.1%" style="overflow: visible;">
+              <defs>
+                <mask id="ringbiteB" maskUnits="userSpaceOnUse" x="0" y="0" width="460" height="460">
+                  <rect x="0" y="0" width="460" height="460" fill="#fff"></rect>
+                  <g fill="#000">
+                    <circle cx="10.0" cy="198.7" r="32.2"></circle>
+                    <circle cx="8.3" cy="244.8" r="17.7"></circle>
+                    <circle cx="21.2" cy="154.2" r="17.7"></circle>
+                  </g>
+                </mask>
+              </defs>
+              <g mask="url(#ringbiteB)">
+                <circle cx="230" cy="230" r="176" style="fill: var(--surface);"></circle>
+                <circle cx="230" cy="230" r="201" fill="none" style="stroke: var(--ring-track);" stroke-width="54"></circle>
+                <circle cx="230" cy="230" r="201" fill="none" pathLength="100" stroke-dasharray="78.1 21.9"
+                        transform="rotate(-90 230 230)" style="stroke: var(--ember);" stroke-width="54"></circle>
+              </g>
+              <text x="230" y="248" text-anchor="middle" class="bite-center-big" font-size="72"
+                    style="font-variant-numeric: tabular-nums;">~432ms</text>
+              <text x="230" y="292" text-anchor="middle" class="bite-center-cap" font-size="20">PER BLOCK · LIVE</text>
+            </svg>
+            <div class="ringlegend">
+              <span class="rl-row">
+                <i class="rl-swatch" style="background: var(--ember);" aria-hidden="true"></i>
+                <span class="rl-label">Epoch 57 elapsed</span>
+                <b class="rl-val data">337,589 slots</b>
+                <span class="rl-pct data">78.1%</span>
+              </span>
+              <span class="rl-row">
+                <i class="rl-swatch" style="background: var(--ring-track);" aria-hidden="true"></i>
+                <span class="rl-label">Remaining</span>
+                <b class="rl-val data">94,411 slots</b>
+                <span class="rl-pct data">21.9%</span>
+              </span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="heroB-main">
+          <span class="hero-eyebrow">
+            <span class="hero-no" aria-hidden="true">01</span>
+            <span class="rule-dash" aria-hidden="true"></span>
+            Network health
+            <span class="sq" aria-hidden="true"></span>
+          </span>
+
+          <!-- OPTION B: the poster number is one Cookie Chain is proud of —
+               live block time at poster scale -->
+          <p class="giantprice" style="font-size: 118px; white-space: nowrap;" aria-label="block time ~432ms">
+            ~432ms
+          </p>
+          <div class="pricemeta">
+            <span class="pair">BLOCK TIME · SUB-SECOND FINALITY, 3 TICKS TO CEMENT</span>
+          </div>
+
+          <div class="kpis">
+            <span class="kpi"><span class="klabel">Throughput</span><b>9<span class="unit">TPS</span></b></span>
+            <span class="kpi"><span class="klabel">Finality</span><b>3<span class="unit">TICKS</span></b></span>
+            <span class="kpi"><span class="klabel">Height</span><b>24,516,950</b></span>
+            <span class="kpi"><span class="klabel">Txns 24h</span><b>6,981</b></span>
+            <span class="kpi"><span class="klabel">Bridged</span><b>545M<span class="unit">COOK</span></b></span>
+            <span class="kpi"><span class="klabel">Validators</span><b>8</b></span>
+          </div>
+
+          <h1 class="valueprop" style="margin-top: 16px;">
+            The oven-fresh L2. Blocks in ~432ms, cemented in three ticks — every
+            transfer traced crumb by crumb to the tray.
+          </h1>
+
+          <div class="hero-cta-row" style="margin-top: 20px;">
+            <button class="btn primary" type="button">Connect wallet →</button>
+            <span class="crumbwords">Processed · Confirmed · Finalized</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <span class="hstrip"><span class="hlabel">Throughput</span><b>9<span class="unit">TPS</span></b></span>
+        <span class="hstrip"><span class="hlabel">Block time</span><b>~432ms</b></span>
+        <span class="hstrip"><span class="hlabel">Bridged</span><b>545M<span class="unit">COOK</span></b></span>
+        <span class="hstrip"><span class="hlabel">Height</span><b>24,516,950</b></span>
+      </div>
+      <div class="fold-next" aria-hidden="true">
+        <span class="fn-next">Next</span>
+        <span class="fn-title">02 — Wallet</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

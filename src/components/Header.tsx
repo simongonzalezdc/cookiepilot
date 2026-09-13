@@ -57,10 +57,11 @@ function ThemeToggle() {
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       title={dark ? "Switch to light (vanilla)" : "Switch to dark (cocoa)"}
     >
-      {/* reference masthead pill: sun + moon pair, active theme at full ink */}
-      <IconSun size={16} className={dark ? "on" : "off"} />
+      {/* v6: crisp 24px sun|moon pair (1.5px round-cap stroke, AM-5 set) —
+          active theme at full ink, inactive dim; same pill, no blur */}
+      <IconSun size={24} className={dark ? "on" : "off"} />
       <span className="tt-sep" aria-hidden="true" />
-      <IconMoon size={16} className={dark ? "off" : "on"} />
+      <IconMoon size={24} className={dark ? "off" : "on"} />
     </button>
   );
 }
