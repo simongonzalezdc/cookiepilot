@@ -135,3 +135,23 @@ Clever-copy captions as data labels ("EXACTLY 54.5% BAKED") — wordplay stays i
 
 ## Gate
 Passes only when: tastecheck battery green (skill protocol below still binding), fresh live-capture battery (both themes × desktop/mobile) shows no craft-debt item remaining, console zero, overflow probe PASS, and the CEO has seen the hero-fork renders and picked. Panel/judge scores do not override the CEO's eyes.
+
+---
+
+# v6 INTERVIEW COMPLETION (CEO order 2026-09-13: "every single answer completed"; external panel seated same day)
+
+Every dimension of the original interview + later forks now carries an answer. Provenance is explicit: **CEO** = his committed choice/directive; **PANEL** = converged external verdict (seats: MiniMax-M3, Floor, Gemini, Kimi, Codex-P/Luna@max-reasoning — all with vision or full transcript; GLM-flash seat rate-limited 429×3, recorded as attempted; Ornith seat unavailable — nuc engine lane serves PERSISTENT-BRAIN, owner change needed to load it; Grok lane 502); **nod owed** = panel-settled, awaiting CEO ratification.
+
+| Dimension | Status | Answer | Basis |
+|---|---|---|---|
+| reference | **CEO (2026-09-07)** | Swiss editorial poster (gallery pick) — supersedes the v1 "assumed" row | CEO picked it himself; v1 table was never updated |
+| structure_rhythm | PANEL, nod owed | Poster fold (hero owns 100svh) → numbered sections as densified workbench panels below; mobile becomes a real cockpit (nav + context + headline KPIs + curated activity), not a raw tx dump | v5→v6 evolution + unanimous panel weaknesses list |
+| imagery_iconography | PANEL | Keep the custom 24px line set + bite/crumb motifs; ADD consistent status icons to feed/finality rows (text-heavy today) | floor seat + gemini seat |
+| hero_metric | PANEL 5/5 B, nod owed | **B**: block-time hero (~432ms live) + epoch ring + KPI matrix; price demoted to a header pill. A (recast $0.0₄826) held in reserve | minimax/floor/gemini/kimi/codex-luna all B: "the product is blocks, not price" |
+| texture | **CEO (2026-09-13 directive)** + PANEL restraint recipe | Realistic cookie crumbs + crackling-cookie surface, IMPLEMENTED restrained: crumbs 2–6px irregular, warm beige/ember, low opacity, bite-anchored + one secondary zone only; crackle hairlines on the ring only; never inside charts/tables/labels, never repeating-pattern, never animated | CEO order verbatim; all 4 vision seats warned literal skeuomorph cheapens — final taste ruling stays CEO's on the renders |
+| flat_delta | PANEL | Flat 24h change renders a neutral chip ("24h flat" wording, no directional color/arrow) — a flat delta must not read as a dead feed | kimi + minimax flagged the dead-read; luna recipe |
+| community_alignment | **CEO (2026-09-13 directive)** | Hyper-align to Cookie Chain community intent: playful-warm native voice ("oven-fresh L2", "crumb by crumb" — panel: the single most native element, amplify), bite identity, degen-friendly but precise; wordplay never on a datum (v6 KILL row stands) | CEO directive + kimi/luna convergence |
+| personality / aesthetic / color_mode / signature / type / density | **CEO (2026-09-06, unchanged)** | As v1 interview — playful-premium, cookie-native, dual themes light-first, Bite/Crumb/Oven, one warm family, airy-then-dense | original interview |
+| hosting | CEO question 2026-09-13, answer owed | Netlify was the $0 contest default; edge-proxy rewrites are portable (netlify.toml/vercel.json/_redirects). Recommendation staged for CEO: Cloudflare Pages or self-host on org VPS; cutover only on his word | CEO asked "why Netlify" — answered in session report |
+
+Panel transcripts: org-hq `docs/COOKIEPILOT-PANEL-2026-09-13/` (to be written with the session report). Gate unchanged: CEO's eyes outrank every seat.
