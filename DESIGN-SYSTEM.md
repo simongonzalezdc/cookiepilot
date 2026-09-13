@@ -100,3 +100,38 @@ v4's escalation diagnosis: the app made a dashboard wear poster clothes with all
 - **Texture intact:** page-wide grain bumped (0.085 light / 0.10 dark), halftone quarter-disc enlarged behind the ring, print rules + double rules between sections.
 - **Overflow law:** the fit-to-column price cannot overflow at any live value; tblwrap probe acceptance (scrollWidth === innerWidth at 320/390/400%) must keep passing.
 .
+.
+
+---
+
+# v6 — HONEST-DATA REPAIR (CEO verdict 2026-09-13: "needs a lot of work, starting with the design"; addendum authored 2026-09-13)
+
+Ground truth established before this addendum: the live site (cookiepilot.netlify.app) is byte-identical to master `ab73c7d` v5 (SHA-256 `3617ee29…707d99` both sides). The CEO verdict applies to v5 as deployed. The v5 loop's 93/91/91 gemini scores measured fidelity-to-reference, not design quality; an independent vision battery (org bridge MiniMax-M3, three passes on fresh live captures: light/dark/mobile + full-page + reference comparison, 2026-09-13) converged on three structural findings plus a craft-debt list. All CEO-interview commitments (dual themes light-first, Bite/Crumb Trail/Oven signatures, single warm type family, playful-precise personality, refusal list) remain binding.
+
+## Structural findings (battery verdict)
+1. **Hero number collapses under honest data.** The reference's giant price worked at `$0.0142`; live COOK prints `$0.00008257` at poster scale — reads as bug/meme, kills credibility in 3 seconds. The v4 escalation already named this ("honest live data vs comp copy"); v5 doubled down anyway.
+2. **Hierarchy inversion.** Poster chrome (giant section numerals, fold-bleeding headlines, vertical marginalia) outweighs product content; sections read as empty editorial spreads; "template filled in, not a designed product surface."
+3. **Charts are decorative, not functional.** Sparkline/ring/bars carry no axes, baselines, ranges, or legends while the product's pitch is live network state.
+
+## v6 KEEP (poster DNA worth keeping)
+Swiss grid + modular rhythm · cream/ink/ember palette · MAINNET LIVE pulse pill · section numbering as TOC · hero ring as the dominant single-glance viz · compact label+value+unit metric triplets.
+
+## v6 KILL (fights a live data product)
+Clever-copy captions as data labels ("EXACTLY 54.5% BAKED") — wordplay stays in marketing lines, never on a datum · hero-scale sparkline that is neither actionable nor decorative · vertical rotated marginalia column · section headlines bleeding off the fold.
+
+## THE HERO FORK — CEO ruling required before the next full pass (renders to be presented side-by-side)
+- **Option A — recast the number, keep the gesture (default if no word):** the giant price stays THE poster number but renders in value-preserving poster notation: `0.0826¢` with exact USD in the meta line, or `$0.0₄826` sub-zero form; delta chip obeys the glyph law below. Reference anatomy intact.
+- **Option B — network-health hero:** giant element becomes the epoch/finality ring (live ms-to-cement as the big number: `~458ms` — a number Cookie Chain is actually proud of), KPI matrix beside it; price demoted to an equal-weight chip next to MAINNET LIVE.
+
+## Unconditional v6 fixes (both branches; first implementation pass)
+1. Kill the injected "Powered by Netlify" badge (hosting chrome leaking into product UI).
+2. Theme toggle: crisp 24px dual sun|moon SVG pair (active at full ink, inactive dim) — replace the pixelated glyphs.
+3. Delta glyph law: `▲` only when change > +0.005%, `▼` only when < −0.005%, `◆` (or nothing) at flat ±0.00%; never an up-arrow on `+0.00%`.
+4. Chart honesty floor: every chart gets a labeled baseline, min/max value labels with units, and current-value marker; bars get value labels on hover + top-N axis note; the ring gets segment labels (bridged vs native, with COOK amounts). Zero chart deps stays.
+5. Section-head scale: numerals step down so content leads (numeral ≤ 2× section title, ≤ content max font); no headline may crop at the fold — the fold peek becomes a hairline + "02 — WALLET" microline, not bleeding display type.
+6. Tables (markets/registry/pools): tabular-nums rhythm, unit column headers, row zebra at 3% ink, explicit "—" for nulls; verify no malformed currency strings on live data before shipping.
+7. Below-fold densification (staged): sections become workbench panels — real density (inputs + live state) instead of editorial air; wallet section leads with the connect path, not an empty void.
+8. Mobile: stat strip wraps 2×2 with hairlines; hero ring ≤ 55% viewport width; no horizontal marginalia.
+
+## Gate
+Passes only when: tastecheck battery green (skill protocol below still binding), fresh live-capture battery (both themes × desktop/mobile) shows no craft-debt item remaining, console zero, overflow probe PASS, and the CEO has seen the hero-fork renders and picked. Panel/judge scores do not override the CEO's eyes.
