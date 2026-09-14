@@ -14,7 +14,7 @@
     // tall-viewport captures race the layout). Also honors ?t=dark|light.
     var q = new URLSearchParams(location.search);
     var ov = q.get("t");
-    if (ov === "dark" || ov === "light") { t = ov; document.documentElement.dataset.theme = t; }
+    if (ov === "dark" || ov === "light") { t = ov; document.documentElement.dataset.theme = t; try { localStorage.setItem("cookiepilot-theme", t); } catch (e2) {} }
     if (q.get("poster") === "fixed") {
       var st = document.createElement("style");
       st.textContent = ".hero{min-height:auto!important}html,body{overflow:hidden!important}";

@@ -52,6 +52,12 @@ export function ActivityFeed() {
             for (const s of fresh) {
               seen.current.add(s.signature);
               if (prev.length > 0 || seen.current.size > 1) setArrived(s.signature);
+              // v8: bake→tray sample — the honestly observable delivery speed
+              // (blockTime → first sight). Strict finalize-witnessing is
+              // impossible at 4s list cadence vs ~460ms finality.
+              if (s.blockTime) {
+                window.dispatchEvent(new CustomEvent("cookiepilot:tray-sample", { detail: Date.now() - s.blockTime * 1000 }));
+              }
             }
             const statusById = new Map(sigs.map((s) => [s.signature, s.confirmationStatus]));
             // golden sheen on in-place upgrade to finalized (instant state, decorative sheen)

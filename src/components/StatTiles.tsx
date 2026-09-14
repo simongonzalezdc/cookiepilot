@@ -79,12 +79,20 @@ export function StatsProvider({ children }: { children: ReactNode }) {
  *  fed by ActivityFeed's in-place upgrades via a window event. Honest by
  *  construction: only txs we actually watched finalize count. */
 const finalizeSamples: number[] = [];
+const traySamples: number[] = [];
 if (typeof window !== "undefined") {
   window.addEventListener("cookiepilot:finality-sample", (e) => {
     const ms = (e as CustomEvent<number>).detail;
     if (Number.isFinite(ms) && ms >= 0 && ms < 120_000) {
       finalizeSamples.push(ms);
       if (finalizeSamples.length > 80) finalizeSamples.shift();
+    }
+  });
+  window.addEventListener("cookiepilot:tray-sample", (e) => {
+    const ms = (e as CustomEvent<number>).detail;
+    if (Number.isFinite(ms) && ms >= 0 && ms < 120_000) {
+      traySamples.push(ms);
+      if (traySamples.length > 80) traySamples.shift();
     }
   });
 }
@@ -315,9 +323,12 @@ export function StatTiles() {
       {/* v8 honesty: finality SLA from txs we actually watched finalize */}
       <div className="slaline" aria-label="finality SLA">
         <span className="sla-k">FINALITY SLA</span>
-        {finalizeSamples.length >= 5 ? (
+        {traySamples.length >= 5 ? (
           <span className="sla-v">
-            <b>{Math.round((finalizeSamples.filter((m) => m < 1000).length / finalizeSamples.length) * 100)}%</b> OF {finalizeSamples.length} WATCHED TXS FINALIZED &lt; 1s
+            MEDIAN <b>{(traySamples.slice().sort((a, b) => a - b)[Math.floor(traySamples.length / 2)] / 1000).toFixed(1)}s</b> BAKE→TRAY · N={traySamples.length}
+            {finalizeSamples.length >= 5 && (
+              <> · <b>{Math.round((finalizeSamples.filter((m) => m < 1000).length / finalizeSamples.length) * 100)}%</b> &lt;1s WITNESSED</>
+            )}
           </span>
         ) : (
           <span className="sla-v dim">WATCHING THE TRAY…</span>
