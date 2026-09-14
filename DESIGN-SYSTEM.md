@@ -264,3 +264,13 @@ Skills applied: a11y-pass (tap floor), responsive-layout (fold), tastecheck-pass
 - **v6.5's open item is closed.** The structural mobile pass shipped: `.hero-grid` dissolves to `display:contents` ≤640px, flex `order` reflows to giant → ring → CTA → KPI strip → spark. Measured @390×844: strip **row 2 bottom 881 → 787** (57px clear of the 844 fold); the sparkline straddles the fold as the deliberate teaser; fold-next TOC line rides the fold edge. Poster read unchanged; desktop untouched (1440 geometry identical).
 - **Densify (v6 item "dead space below the fold")**: section rhythm 88→44px, card 22/24→15/17, tighter sect-heads/factslines. Dead air below hero halved (88→44).
 - **Identity hygiene**: favicon re-tinted from retired ember `#E85D2F` → C3 `#CE8A3C` (de-pumpkin law reached the tab icon); og/twitter card metas added (image = `public/cookiepilot-mark.png`, the app's own bitten mark, 512×512) so Telegram/X link previews render a card, not a bare URL.
+
+# v8 addendum — 2026-09-14: honesty floor lands in the product
+
+- **Element→purpose map (the thesis test, now law):** every hero/strip element serves exactly one of *feel-the-speed* (giant ms, KPI strip, feed) or *trust-the-data* (p50/p95 micro-row, stale-guard, SLA line, ring labels, chart honesty labels). New elements must declare their side before merging; demote anything that serves neither.
+- **Number hierarchy law:** giant (fit-to-column, cap 150/96) > strip values (15.5px tabular) > table/body numerals (13.5px). No new numeric surface may blur these tiers.
+- **Motion = state change, never decoration:** the finalized-tx settle and the block tick are the only sanctioned flourishes; fades at cut points ≤200ms. (Same law the demo video composes under.)
+- **Both-themes-before-merge invariant:** every new element ships light+dark with a contrast row ≥4.5:1 before deploy (v8 elements: `.pair.sub`, `.pair.stale`, `.slaline`, `.panelerr` — all tokened, both themes).
+- **Honesty floor extensions shipped:** hero carries `TYP {p50}ms · WORST {p95}ms · 30-SAMPLE BAND`; any feed silence >75s shows `LAST BLOCK Xs AGO` (stale is never rendered as live); `FINALITY SLA` line counts only txs the feed actually watched finalize.
+- **RPC failover honesty ruling (2026-09-14):** the ecosystem has ONE full RPC host (api.cookiescan.io serves no validator methods — verified). Cross-host failover would be theater; robustness = retries + backoff + soft-retry + the visible stale-guard. Revisit if the chain publishes a second RPC.
+- **Ring↔strip cross-reference:** the strip's Bridged entry mirrors the ring segment's name (Hyperlane) and carries the same % — the ring explains the number, the number points back at the ring.

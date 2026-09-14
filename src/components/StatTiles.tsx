@@ -304,8 +304,8 @@ export function StatTiles() {
           <b>3<span className="unit">TICKS TO CEMENT</span></b>
         </span>
         <span className="hstrip">
-          <span className="hlabel">Bridged</span>
-          <b>{bridge?.totalBridged ? fmtCompact(bridge.totalBridged) : "—"}<span className="unit">COOK</span></b>
+          <span className="hlabel">Bridged (Hyperlane)</span>
+          <b>{bridge?.totalBridged ? fmtCompact(bridge.totalBridged) : "—"}<span className="unit">COOK</span>{bridgedPct != null && <span className="unit">· {bridgedPct.toFixed(1)}%</span>}</b>
         </span>
         <span className="hstrip">
           <span className="hlabel">Height</span>

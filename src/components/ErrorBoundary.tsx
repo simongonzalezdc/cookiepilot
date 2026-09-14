@@ -29,7 +29,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="card panelerr" role="alert">
           <h3>{this.props.label} panel paused</h3>
           <p className="pe-note">
-            This section hit an unexpected error — the rest of the cockpit keeps running.
+            This panel stalled — the rest of the cockpit keeps running.
           </p>
           <button className="btn" onClick={() => window.location.reload()}>
             Reload cockpit →
