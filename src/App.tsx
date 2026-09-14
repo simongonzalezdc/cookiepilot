@@ -10,6 +10,7 @@ import { TxPanel } from "./components/TxPanel";
 import { SwapPanel } from "./components/SwapPanel";
 import { AskPanel } from "./components/AskPanel";
 import { Section } from "./components/ui";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { CHAIN } from "./lib/config";
 import { CookieMark, IconChart, IconLink, IconOven, IconSwap, IconWallet } from "./components/icons";
 
@@ -37,29 +38,29 @@ export default function App() {
           <main>
           <StatTiles />
 
-          <Section id="wallet" no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
+          <ErrorBoundary label="Wallet"><Section id="wallet" no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
             <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
-          </Section>
+          </Section></ErrorBoundary>
 
-          <Section id="analytics" no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
+          <ErrorBoundary label="Analytics"><Section id="analytics" no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
             <NetworkFacts />
             <NetworkPanel />
             <div style={{ height: 18 }} />
             <MarketsPanel />
-          </Section>
+          </Section></ErrorBoundary>
 
-          <Section id="activity" no="04" title="Live activity" hint="sub-second finality, on the Crumb Trail" icon={<IconOven size={20} />}>
+          <ErrorBoundary label="Live activity"><Section id="activity" no="04" title="Live activity" hint="sub-second finality, on the Crumb Trail" icon={<IconOven size={20} />}>
             <div className="grid cols-2">
               <ActivityFeed />
               <TxPanel />
             </div>
-          </Section>
+          </Section></ErrorBoundary>
 
-          <Section id="swap" no="05" title="Swap & console" hint="keyless quotes · non-custodial execution · NL chain queries" icon={<IconSwap size={20} />}>
+          <ErrorBoundary label="Swap & console"><Section id="swap" no="05" title="Swap & console" hint="keyless quotes · non-custodial execution · NL chain queries" icon={<IconSwap size={20} />}>
             <SwapPanel />
             <div style={{ height: 18 }} />
             <AskPanel />
-          </Section>
+          </Section></ErrorBoundary>
           </main>
 
           <footer className="footer">

@@ -57,7 +57,15 @@ export function ActivityFeed() {
             // golden sheen on in-place upgrade to finalized (instant state, decorative sheen)
             for (const [sig, st] of statusById) {
               const before = prevStatus.current.get(sig);
-              if (st === "finalized" && before && before !== "finalized") setSheen(sig);
+              if (st === "finalized" && before && before !== "finalized") {
+                setSheen(sig);
+                // v8 honesty floor: feed the hero's finality SLA — only txs we
+                // actually watched upgrade count (firstSeen → finalized delta)
+                const item = prev.find((q) => q.signature === sig);
+                if (item?.firstSeen) {
+                  window.dispatchEvent(new CustomEvent("cookiepilot:finality-sample", { detail: Date.now() - item.firstSeen }));
+                }
+              }
               if (st) prevStatus.current.set(sig, st);
             }
             const upgraded = prev.map((p) => ({

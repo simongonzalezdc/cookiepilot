@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
 import { usePoll, type PollState } from "../hooks/usePoll";
 import { useWallet } from "../hooks/useWallet";
@@ -14,6 +14,8 @@ interface AllStats {
   bridge: BridgeStats | null;
   supply: { circulating: number; total: number };
   slotMs: number | null;
+  slotP50: number | null;
+  slotP95: number | null;
 }
 
 /** Retry a flake-prone fetch a few times before yielding null — one dropped
@@ -37,11 +39,14 @@ async function fetchAll(): Promise<AllStats> {
     soft(() => fetchBridgeStats()),
     rpc<{ value: { circulating: number; total: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]),
     // block time → the finality story, straight from validator perf samples
-    soft(() => rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [1])),
+    soft(() => rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [30])),
   ]);
   const supply = supplyR ?? (await soft(() => rpc<{ value: { circulating: number; total: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]), 2, 800));
   if (!supply) throw new Error("supply unavailable");
-  const slotMs = perf?.[0]?.numSlots ? (perf[0].samplePeriodSecs * 1000) / perf[0].numSlots : null;
+  const perSampleMs = (perf ?? []).filter((s) => s?.numSlots > 0).map((s) => (s.samplePeriodSecs * 1000) / s.numSlots).sort((a, b) => a - b);
+  const slotMs = perSampleMs.length ? perSampleMs[perSampleMs.length - 1] : null;
+  const slotP50 = perSampleMs.length ? perSampleMs[Math.floor(perSampleMs.length * 0.5)] : null;
+  const slotP95 = perSampleMs.length ? perSampleMs[Math.min(perSampleMs.length - 1, Math.floor(perSampleMs.length * 0.95))] : null;
   return {
     stats,
     price,
@@ -49,6 +54,8 @@ async function fetchAll(): Promise<AllStats> {
     bridge: bridge ?? null,
     supply: { circulating: supply.value.circulating / 1e9, total: supply.value.total / 1e9 },
     slotMs,
+    slotP50,
+    slotP95,
   };
 }
 
@@ -66,6 +73,20 @@ const StatsCtx = createContext<PollState<AllStats> | null>(null);
 export function StatsProvider({ children }: { children: ReactNode }) {
   const poll = usePoll<AllStats>(fetchAll, 30_000);
   return <StatsCtx.Provider value={poll}>{children}</StatsCtx.Provider>;
+}
+
+/** Finality SLA — rolling window of feed-observed finalize latencies (ms),
+ *  fed by ActivityFeed's in-place upgrades via a window event. Honest by
+ *  construction: only txs we actually watched finalize count. */
+const finalizeSamples: number[] = [];
+if (typeof window !== "undefined") {
+  window.addEventListener("cookiepilot:finality-sample", (e) => {
+    const ms = (e as CustomEvent<number>).detail;
+    if (Number.isFinite(ms) && ms >= 0 && ms < 120_000) {
+      finalizeSamples.push(ms);
+      if (finalizeSamples.length > 80) finalizeSamples.shift();
+    }
+  });
 }
 
 /** shared-poll hook — exported for the header price chip (no 2nd fetch). */
@@ -124,7 +145,14 @@ function useFitPrice(text: string) {
  * law, no pill chrome).
  */
 export function StatTiles() {
-  const { data, error, refresh } = useStats();
+  const { data, error, lastUpdated, refresh } = useStats();
+  // stale-guard clock: re-render every 5s so feed silence becomes visible
+  const [nowTick, setNowTick] = useState(Date.now());
+  useEffect(() => {
+    const id = window.setInterval(() => setNowTick(Date.now()), 5000);
+    return () => window.clearInterval(id);
+  }, []);
+  const staleSec = lastUpdated ? Math.max(0, (nowTick - lastUpdated) / 1000) : null;
   // hook order is sacred: the fit hook runs on every render, ref or no ref
   const blockMs = data?.slotMs ?? null;
   const blockDigits =
@@ -146,7 +174,7 @@ export function StatTiles() {
       </div>
     );
 
-  const { stats, daily, bridge, supply, slotMs } = data;
+  const { stats, daily, bridge, supply, slotMs, slotP50, slotP95 } = data;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   // centerpiece ring: share of circulating supply bridged from Solana —
   // honest AND reference-scale loud; falls back to epoch progress while
@@ -184,6 +212,14 @@ export function StatTiles() {
           </p>
           <div className="blockmeta">
             <span className="pair">BLOCK TIME · LIVE — VALIDATOR PERF SAMPLES</span>
+            {slotP50 != null && slotP95 != null && (
+              <span className="pair sub">
+                TYP {Math.round(slotP50)}ms · WORST {Math.round(slotP95)}ms · 30-SAMPLE BAND
+              </span>
+            )}
+            {staleSec != null && staleSec > 75 && (
+              <span className="pair stale">LAST BLOCK {Math.round(staleSec)}s AGO</span>
+            )}
           </div>
 
           {/* standfirst (v6.4): leads with sub-second finality */}
@@ -275,6 +311,17 @@ export function StatTiles() {
           <span className="hlabel">Height</span>
           <b>{fmtNum(stats.blockHeight, 0)}</b>
         </span>
+      </div>
+      {/* v8 honesty: finality SLA from txs we actually watched finalize */}
+      <div className="slaline" aria-label="finality SLA">
+        <span className="sla-k">FINALITY SLA</span>
+        {finalizeSamples.length >= 5 ? (
+          <span className="sla-v">
+            <b>{Math.round((finalizeSamples.filter((m) => m < 1000).length / finalizeSamples.length) * 100)}%</b> OF {finalizeSamples.length} WATCHED TXS FINALIZED &lt; 1s
+          </span>
+        ) : (
+          <span className="sla-v dim">WATCHING THE TRAY…</span>
+        )}
       </div>
       {/* v6 fold edge: hairline + small-caps microline replaces the
           fold-bleeding giant "02 — WALLET" peek; no headline crops at the fold */}

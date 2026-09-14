@@ -1478,3 +1478,25 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   .hero-side { padding-left: 0; padding-right: 0; }
   .bite-corner { width: 60px; height: 60px; right: 0; top: 4px; opacity: 0.4; }
 }
+
+/* v8 honesty floor — hero micro-row, stale guard, finality SLA line */
+.blockmeta .pair.sub { color: var(--ink-dim); font-size: 10px; letter-spacing: 0.14em; }
+.blockmeta .pair.stale {
+  color: var(--jam-text); font-size: 10px; letter-spacing: 0.14em; font-weight: 800;
+  border: 1px solid currentColor; padding: 1px 6px; border-radius: 2px;
+}
+.slaline {
+  display: flex; align-items: baseline; gap: 12px;
+  border-top: 1px solid var(--rule-soft);
+  padding: 7px 0 9px;
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em;
+  color: var(--ink-dim);
+}
+.slaline .sla-k { color: var(--ember-text); }
+.slaline .sla-v b { color: var(--ink); font-variant-numeric: tabular-nums; font-size: 11px; }
+.slaline .sla-v.dim { font-weight: 400; letter-spacing: 0.12em; }
+
+/* v8 robustness — error-boundary fallback card (poster language, no debris) */
+.card.panelerr { border-color: var(--jam-text); max-width: 520px; }
+.card.panelerr h3 { color: var(--jam-text); }
+.card.panelerr .pe-note { color: var(--ink-dim); font-size: 13px; margin: 0 0 14px; line-height: 1.5; }

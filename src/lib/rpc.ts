@@ -18,6 +18,9 @@ export async function rpc<T = unknown>(
   const { timeoutMs = 15_000, retries = 1 } = opts;
   let lastErr: unknown;
   for (let attempt = 0; attempt <= retries; attempt++) {
+    // v8 honesty: Cookie Chain has ONE full RPC host (api.cookiescan.io serves
+    // no validator methods — verified 2026-09-14). Cross-host failover would
+    // be theater; robustness = retries + backoff + the visible stale-guard.
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
@@ -40,6 +43,7 @@ export async function rpc<T = unknown>(
   }
   throw lastErr instanceof Error ? lastErr : new RpcError(String(lastErr));
 }
+
 
 export function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
