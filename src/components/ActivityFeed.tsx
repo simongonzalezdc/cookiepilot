@@ -5,6 +5,7 @@ import { EmptyState, ErrorBox } from "./ui";
 import { shortAddr, timeAgo } from "../lib/format";
 import { CrumbTrail } from "./CrumbTrail";
 import { IconCheck, IconCross, IconCrumbs, IconPause, IconPlay } from "./icons";
+import { useStats } from "./StatTiles";
 
 interface FeedItem extends SignatureInfo {
   firstSeen: number;
@@ -27,6 +28,11 @@ export function ActivityFeed() {
   const [sheen, setSheen] = useState<string | null>(null); // finalized confirm
   const seen = useRef<Set<string>>(new Set());
   const prevStatus = useRef<Map<string, string>>(new Map());
+  // v6.5 mobile context header: current slot + block cadence from the shared
+  // stats poll (no second fetch); falls back to the newest row's slot
+  const { data: statsData } = useStats();
+  const ctxSlot = statsData?.stats.slot ?? items[0]?.slot ?? null;
+  const ctxMs = statsData?.slotMs ?? null;
 
   useEffect(() => {
     let alive = true;
@@ -97,6 +103,13 @@ export function ActivityFeed() {
       <h3>
         <IconCrumbs size={16} /> Transaction stream <span className="right">SPL Token program · poll 4s</span>
       </h3>
+      {ctxSlot != null && (
+        <p className="feedctx">
+          <i className={`dot${paused ? " off" : ""}`} aria-hidden="true" />
+          {paused ? "paused" : "live"} · slot {ctxSlot.toLocaleString("en-US")}
+          {ctxMs ? ` · ~${Math.round(ctxMs)}ms per block` : ""}
+        </p>
+      )}
       {error && items.length === 0 && <ErrorBox message={error} onRetry={() => setPaused((p) => !p)} />}
       {items.length === 0 && !error && (
         <EmptyState

@@ -241,3 +241,20 @@ Five hero-surface items, all binding. Evidence: `docs/v6-captures-v6b/` (capture
 Console zero on all loads; overflow PASS 320/390/768/1024/1280/1440 **and 80px (zoom-400)**; contrast 22×2 ≥4.5; reduced-motion static (0 running animations, stuffing parses); keyboard trace clean, toggle aria-pressed flips; error state renders + Retry; tnum on all data elements incl. the price chip; keep-out proofs 0 violations. **Carried (unchanged, owned by the below-fold pass): 41 TAP TARGET fails** (sub-24px market/feed microtext links, pre-existing since v6.2). Subjective rows remain HOLD-for-human per the catalog's independent-reviewer contract — no agent countersigns as a human.
 
 Skills applied: improve-existing-website, tasteroll (accent roll + bite re-validation protocol), color-system, web-typography, spacing-system, theming, responsive-layout, component-states, form-ux, empty-states, micro-motion (static law), data-viz (datum keep-outs), art-direction, a11y-pass, cognitive-a11y, deslop-ui (pill cut), humanize-copy, tastecheck-pass (gate + release-gate ledger).
+
+---
+
+# v6.5 — FINAL PASS, PRE-DEPLOY (2026-09-13: carried tap-target blocker closed + bounded mobile wins; no structural change)
+
+## 1. TAP FLOOR (the carried gate blocker, CLOSED 41→0)
+- **WCAG 2.5.8 AA**: every interactive control carries a ≥24×24 hit area with visual size unchanged. Inline links (`a`) gain `padding-block: 4px` — a painted hit box, zero layout shift in inline flow (market token links, feed/wallet sig links, footer links, prose); control boxes (`button, [role=button], input, select, summary`) get a `min-height: 24px` floor. No chrome added, no redesign: the v6.4 pill-cut text buttons keep their typographic treatment.
+- a11y-audit.js fresh load, both themes: **0 TAP TARGET fails** (v6.4: 41 — 24 market token links, 12 feed/wallet sig links, 5 footer links). Ledger row `verification:a11y`: fail → **pass**; blockers 15 → 14 (all remaining = review-null subjective rows).
+
+## 2. BOUNDED MOBILE WINS (timeboxed 25 min; no mobile rework)
+- **Feed context header (≤640px only)**: one quiet caps line above the stream — `● live · slot {current} · ~{ms} per block` (chain-head slot + block cadence from the SHARED stats poll, no second fetch; dot flips to jam "off" when paused) — the mobile pane reads as a live chain view, not a raw dump. Measured 6.95:1 on card. Desktop keeps the CEO-locked panel untouched (`display:none ≥641px`).
+- **Fold KPI strip (390×844)**: spacing/scale trims only — giant cap 96→72px, ring ≤55vw→≤46vw, spark 56→40px, tightened hero gaps/paddings/strip rhythm. Result: strip row 1 (Throughput TPS + Finality ticks) **above the fold** (bottom 827 ≤ 844), CTA above fold; before the pass the entire strip sat at y=909–1048. Row 2 (Bridged/Height) remains one flick below — full-fold needs a structural mobile pass (post-contest polish, out of timebox).
+
+## 3. Gate (`docs/v6-captures-final/gate-report.json`)
+Console zero on all loads; overflow PASS 320/390/768/1024/1280/1440 **and 80px**; gate-audit 0 fail / 3 documented warns; a11y-audit 0 fails both themes; keyboard trace clean; reduced-motion static. Release-gate re-run: 0 fail rows, all hashes verify against dist sha `bcf725f3…`; verdict HOLD-for-human (CEO countersign queue only).
+
+Skills applied: a11y-pass (tap floor), responsive-layout (fold), tastecheck-pass (final battery + release-gate ledger rebind).

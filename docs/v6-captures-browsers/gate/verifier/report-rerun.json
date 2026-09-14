@@ -394,21 +394,21 @@
       "path": "[REDACTED:ABSOLUTE_PATH]",
       "sha256": "759d21e31e0b0d67dcbf027f1697f838a9bc6d3870642788f126a9a7e66cf33a"
     },
-    "bytes": 654107,
-    "sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
+    "bytes": 654872,
+    "sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
     "hash_verified": true,
     "dependency_manifest": {
       "entry": "dist/index.html",
       "assets": [
         {
-          "path": "dist/assets/index-DxXCqznv.css",
-          "bytes": 40889,
-          "sha256": "89c90001d160c2ed95e2b9190f2faa15ec52e3568cfa2e358d052222123c3f0b"
+          "path": "dist/assets/index-CGCHSKnU.css",
+          "bytes": 41373,
+          "sha256": "753568a846c390562836155a04eb16e2e352eb7b3dd16bd8d96beabc622b5f94"
         },
         {
-          "path": "dist/assets/index-TZ4a8U39.js",
-          "bytes": 501884,
-          "sha256": "8986b2ab7cec40ed16044c31b39e4cc82895ac5285dd335497b081a5c13f4cf9"
+          "path": "dist/assets/index-DyOjNorF.js",
+          "bytes": 502165,
+          "sha256": "67b8df6268d9c8e5eecc01c7a8462d8359fdeda0f927b5dd642acfe68eddb035"
         },
         {
           "path": "dist/fonts/mplus-400.woff2",
@@ -438,7 +438,7 @@
         {
           "path": "dist/index.html",
           "bytes": 1518,
-          "sha256": "441612f627c2696da64ee3fcb1e4249114dacc1ada183fabf05601c044347f97"
+          "sha256": "08b70e97513af47bb96e7a73b168afeda1bb016a7edab1a2f2f532f8f7631687"
         },
         {
           "path": "dist/theme-boot.js",
@@ -446,9 +446,9 @@
           "sha256": "7f29545685bee864d203c22aa36dc168984a3dab54e4fcee2ebc1176e9623136"
         }
       ],
-      "sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68"
+      "sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736"
     },
-    "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+    "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
     "dependency_manifest_hash_verified": true
   },
   "rows": [
@@ -474,10 +474,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -487,7 +487,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -696,10 +696,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -709,7 +709,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -737,10 +737,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -750,7 +750,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -778,10 +778,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -791,7 +791,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -818,10 +818,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -831,7 +831,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -871,10 +871,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -884,7 +884,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -936,10 +936,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -953,7 +953,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": []
@@ -993,10 +993,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1010,7 +1010,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": []
@@ -1062,10 +1062,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1079,7 +1079,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": []
@@ -1106,10 +1106,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1119,7 +1119,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1149,10 +1149,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1162,7 +1162,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1191,10 +1191,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1204,7 +1204,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1214,30 +1214,30 @@
     {
       "skill": "tastecheck-pass",
       "check_id": "verification:a11y",
-      "status": "fail",
-      "reason": "Keyboard path complete and contrast measured, but 41 tap-target failures (sub-24px microtext links in below-fold feed/market rows) remain unresolved — pre-existing, carried. The v6.4 pill cut preserved control padding (text buttons keep ≥24px height) so no new fails were introduced.",
-      "remediation": "Owner: below-fold rework pass (staged item 7). Repair: densify below-fold panels with ≥24px targets. Rerun: a11y-audit.js on fresh load. Acceptance: 0 TAP TARGET fails at both themes. Predecessor: v6.3 pass (same 41).",
+      "status": "pass",
+      "reason": "WCAG 2.5.8 AA met on the v6.5 build: 0 tap-target fails on fresh loads (was 41 — sub-24px microtext links in below-fold feed/market rows + footer links). Every interactive control carries a ≥24×24 hit area via the v6.5 tap floor — inline links grow a vertical-padding hit box (painted box, zero layout shift, visual size unchanged), control boxes get a min-height 24px floor. No redesign: the pill-cut text buttons keep their chrome.",
+      "remediation": "none — carried blocker CLOSED 2026-09-13 (v6.5 final pass). Rerun accepted: a11y-audit.js 0 TAP TARGET fails on fresh loads, both themes.",
       "evidence": {
         "mode": "automated",
-        "summary": "a11y-pass audit.js on fresh load: 41 TAP TARGET fails (identical set to v6.3 — market/feed microtext links), 0 INPUT-label fails; keyboard trace 16 stops :focus-visible incl. theme toggle, hero CTA, wallet text-link; contrast 22 pairs × 2 themes measured.",
+        "summary": "a11y-pass audit.js on fresh chromium load, BOTH themes: 0 fails (0 TAP TARGET, 0 INPUT-label; 41→0 vs v6.4). New v6.5 mobile feed context line measures 6.95:1 on card. Keyboard trace 16 stops :focus-visible incl. theme toggle, hero CTA, wallet text-link. Evidence: docs/v6-captures-final/gate-report.json (a11y.light/a11y.dark).",
         "details": {
           "observations": [
             {
               "subject_id": "subject:app",
-              "violations_resolved": false,
+              "violations_resolved": true,
               "keyboard_reachable": true,
               "contrast_measured": true
             }
           ]
         },
-        "sha256": "c38e0fa1b8734d95eed996af1a35b0136526409e60dc2930db0f0574807a23e8"
+        "sha256": "7d4bdeea5eb12b635d9f04dd952cc9d78a7e32a7dffce341638eedc93cf26370"
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1247,7 +1247,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -1274,10 +1274,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1291,7 +1291,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -1316,10 +1316,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1329,7 +1329,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1358,10 +1358,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1371,7 +1371,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1400,10 +1400,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1413,7 +1413,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -1455,10 +1455,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1472,7 +1472,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -1483,11 +1483,11 @@
       "skill": "tastecheck-pass",
       "check_id": "browser:zoom-400",
       "status": "pass",
-      "reason": "400% zoom re-tested via the 320px→80px effective-viewport simulation after HERO B: scrollWidth 80 === innerWidth 80 — content reflows without loss. The v6.1–v6.3 failure (sw 299) was the 11-char honest price at its 24px font floor; the giant number is now live ms/block (3–4 chars + ms unit, fit floor 14px) and a ≤300px reflow lane ships (single column, minmax(0,1fr) tracks, mid-word breaks, shrinkable inputs, wrap-able pill text).",
+      "reason": "400% zoom re-tested via the 320px→80px effective-viewport simulation after HERO B: scrollWidth 80 === innerWidth 80 — content reflows without loss. The v6.1–v6.3 failure (sw 299) was the 11-char honest price at its 24px font floor; the giant number is now live ms/block (3–4 chars + ms unit, fit floor 14px) and a ≤300px reflow lane ships (single column, minmax(0,1fr) tracks, mid-word breaks, shrinkable inputs, wrap-able pill text). Re-verified on the v6.5 build (docs/v6-captures-final/gate-report.json: overflow-80 PASS).",
       "remediation": "none — repaired by the CEO hero-fork ruling (Option B) this pass",
       "evidence": {
         "mode": "manual",
-        "summary": "zoom400-320to80: sw=80 iw=80 (docs/v6-captures-v6b/gate-report.json checks.overflow-80). Full ladder 320/390/768/1024/1280/1440 also PASS.",
+        "summary": "zoom400-320to80: sw=80 iw=80 (docs/v6-captures-v6b/gate-report.json checks.overflow-80). Full ladder 320/390/768/1024/1280/1440 also PASS. v6.5 re-probe: PASS.",
         "details": {
           "observations": [
             {
@@ -1507,14 +1507,14 @@
             }
           ]
         },
-        "sha256": "dabfaaa67aa5c965972f0da1847c70a527890a44ed6ec88870e92a3eeb290008"
+        "sha256": "f808ad9d2f8981e99d2b2c5613bb88b4cb939d97d8597b53dd835b56be968d7e"
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1528,7 +1528,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -1570,10 +1570,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -1587,7 +1587,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -2166,10 +2166,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2183,7 +2183,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": []
@@ -2220,10 +2220,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2237,7 +2237,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": []
@@ -2246,11 +2246,11 @@
       "skill": "tastecheck-pass",
       "check_id": "browser:cold-load",
       "status": "pass",
-      "reason": "Cold load clean on the v6.4 build: gate-audit 0 fail (warns = documented poster cadence + the single sanctioned hero-CTA pill), a11y-audit 41 pre-existing tap-target carries, no console errors, boot + error states render.",
+      "reason": "Cold load clean on the v6.5 build: gate-audit 0 fail / 3 documented warns (poster cadence + list feed + the single sanctioned hero-CTA pill), a11y-audit 0 fails (the 41 tap-target carry is RESOLVED — v6.5 tap floor), no console errors, boot + error states render.",
       "remediation": "none",
       "evidence": {
         "mode": "manual",
-        "summary": "gate-audit.js + a11y-audit.js on fresh chromium load both themes; error state (all APIs aborted) renders errbox + Retry; console zero on every load in the battery.",
+        "summary": "gate-audit.js + a11y-audit.js on fresh chromium load both themes (docs/v6-captures-final/gate-report.json): 0 gate fails, 0 a11y fails; console zero across the whole battery (6 capture loads + 7 overflow probes + fold probes).",
         "details": {
           "observations": [
             {
@@ -2273,14 +2273,14 @@
             }
           ]
         },
-        "sha256": "4f8ba26f3d28d58cf22b334b93c8d02196991ebb260727af28e09d869f51a571"
+        "sha256": "68c928049a107ff53745ec003610dcaf7650c3b914cd631fa21ec81433fba2a7"
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2294,7 +2294,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -2319,10 +2319,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2336,7 +2336,7 @@
           "role": "release inspector (agent seat)",
           "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
         },
-        "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
+        "sha256": "932dc71a1d88a1823023e3cd87b38032dc76e399bbcff66f8cd739e09cd2791f"
       },
       "review": null,
       "validation_errors": [
@@ -2366,10 +2366,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2379,7 +2379,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -2407,10 +2407,10 @@
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2420,7 +2420,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": []
@@ -2429,11 +2429,11 @@
       "skill": "tastecheck-pass",
       "check_id": "gate:blocker-handoff",
       "status": "pass",
-      "reason": "Both carried blockers carry owner, repair, rerun, and acceptance rule: (1) 400%-zoom overflow — owner CEO (hero-fork notation decision) then repair pass; rerun 80px overflow probe; acceptance scrollWidth ≤ innerWidth. (2) 41 tap targets — owner below-fold rework pass; rerun a11y-audit.js; acceptance 0 TAP TARGET fails.",
+      "reason": "Tap-target blocker CLOSED 2026-09-13 (v6.5: 41→0, acceptance rule met — 0 TAP TARGET fails on fresh loads). The 400%-zoom blocker closed in v6.4 (HERO B). Remaining queue: the 13 subjective rows await the CEO's countersign (review-null by contract — no agent countersigns as a human); ETAs unchanged.",
       "remediation": "none — handoff recorded; ETAs do not change HOLD",
       "evidence": {
         "mode": "automated",
-        "summary": "See rows browser:zoom-400 and verification:a11y remediation fields; identical handoff recorded in DESIGN-SYSTEM.md v6/v6.3.",
+        "summary": "verification:a11y now pass (v6.5 tap floor, 41→0); browser:zoom-400 pass since v6.4. Handoff trail: DESIGN-SYSTEM.md v6/v6.3/v6.5 + gate/README.md.",
         "details": {
           "observations": [
             {
@@ -2445,14 +2445,14 @@
             }
           ]
         },
-        "sha256": "ebf60a95a66249bda4e5866747e31846c8e77fb1a52d32e26c0b80fa90a1f899"
+        "sha256": "7d2c4580461b45d1226f088cc8430b92b306e50734adef71f2d9acfdd159f7eb"
       },
       "provenance": {
         "artifact_identity": "directory:dist",
-        "artifact_sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-        "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+        "artifact_sha256": "bcf725f3b26933f07a5e7734ab9e1c03d1ebf621b809bd714160a6fa68ded5bb",
+        "dependency_manifest_sha256": "633cfa462fb5cff25dd540b6ffe455e46e4fcb9a1ac361529c5c124092d13736",
         "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
-        "captured_at": "2026-09-14T01:48:40Z",
+        "captured_at": "2026-09-14T02:11:20Z",
         "tool": {
           "name": "playwright",
           "version": "1.60.0"
@@ -2462,7 +2462,7 @@
           "version": "1.60.0"
         },
         "inspector": null,
-        "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
+        "sha256": "5ab0dca983126d1de7f8f814512fab7e13b37dca61dbe29c17b66df84557a731"
       },
       "review": null,
       "validation_errors": [
@@ -2477,7 +2477,6 @@
     "surface:micro-motion",
     "surface:data-viz",
     "surface:art-direction",
-    "verification:a11y",
     "verification:cognitive-a11y",
     "verification:i18n",
     "verification:deslop-ui",

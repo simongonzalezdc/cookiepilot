@@ -205,6 +205,13 @@ body::after {
 @media (prefers-reduced-motion: reduce) { body::after { position: absolute; } }
 a { color: var(--ember-text); text-decoration: none; transition: color var(--dur-hit) var(--ease-out); }
 a:hover { color: var(--ember); }
+/* v6.5 TAP FLOOR — WCAG 2.5.8 AA (carried-blocker repair, 2026-09-13):
+   every interactive control keeps its visual size but carries a ≥24×24
+   hit area. Inline links grow by vertical padding — a painted hit box,
+   zero layout shift in inline flow (rows, tables, prose); control boxes
+   get an explicit min-height floor. No chrome added: invisible by design. */
+a { padding-block: 4px; }
+button, [role="button"], input, select, summary { min-height: 24px; }
 button { font-family: inherit; }
 ::selection { background: rgba(206, 138, 60, 0.30); }
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 6px; }
@@ -857,40 +864,43 @@ button { font-family: inherit; }
   .netpill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
   .pricechip { order: 3; white-space: normal; }
   .header .walletline { order: 3; }
-  /* mobile poster: giant number (cap 96px), ring below, strip wraps 2×2
-     with hairlines both ways; ring ≤55vw; no rotated marginalia (hidden
+  /* mobile poster: giant number (cap 72px), ring below, strip wraps 2×2
+     with hairlines both ways; ring ≤46vw; no rotated marginalia (hidden
      ≤1024 already). Masthead stacks to two rows (~106px) — subtract that
-     so the strip still lands on the fold edge. */
-  .hero { display: flex; flex-direction: column; min-height: calc(100svh - 106px); padding-top: 6px; }
+     so the strip still lands on the fold edge.
+     v6.5 FOLD PASS: spacing/scale trims only (no restructure) so the KPI
+     strip values land at/above the 390×844 fold. */
+  .hero { display: flex; flex-direction: column; min-height: calc(100svh - 106px); padding-top: 2px; }
   .hero-grid {
     grid-template-columns: 1fr;
     grid-template-areas: "main" "side" "spark" "cta";
-    gap: 10px 0;
-    padding: 12px 0 8px;
+    gap: 6px 0;
+    padding: 6px 0 2px;
   }
-  .hero-main { --price-cap: 96px; }
-  .giantprice { font-size: clamp(40px, 18cqw, 96px); }
-  .blockmeta { gap: 6px 14px; margin-top: 10px; }
-  .valueprop { font-size: 14px; margin-top: 10px; }
-  .hero-side { padding: 16px 0 4px; align-items: center; }
+  .hero-main { --price-cap: 72px; }
+  .giantprice { font-size: clamp(36px, 17cqw, 72px); }
+  .blockmeta { gap: 6px 14px; margin-top: 6px; }
+  .valueprop { font-size: 14px; margin-top: 8px; }
+  .hero-side { padding: 10px 0 2px; align-items: center; }
   .bite-corner { width: 130px; height: 130px; right: -8px; top: 12px; }
-  /* v6: hero ring ≤ 55% viewport width */
-  .bitering.stacked .ring { width: min(55vw, 236px); }
+  /* v6.5: ring ≤46vw — still the centerpiece, 38px shorter */
+  .bitering.stacked .ring { width: min(46vw, 210px); }
   .ringlegend { max-width: min(88vw, 300px); }
-  .hero-cta-row .btn.primary { flex: 1; justify-content: center; text-align: center; }
-  .hero-strip { margin-top: auto; grid-template-columns: 1fr 1fr; gap: 12px 18px; padding: 12px 0 20px; }
+  .hero-cta-row { gap: 10px; }
+  .hero-cta-row .btn.primary { flex: 1; justify-content: center; text-align: center; padding-block: 7px; }
+  .hero-strip { margin-top: auto; grid-template-columns: 1fr 1fr; gap: 9px 18px; padding: 10px 0 12px; }
   .hstrip { padding: 0 12px; }
   .hstrip:nth-child(odd) { padding-left: 0; border-left: none; }
   /* v6: hairline between the 2×2 strip rows */
-  .hstrip:nth-child(n + 3) { border-top: 1px solid var(--rule); padding-top: 10px; }
-  .fold-next { padding-bottom: 14px; }
+  .hstrip:nth-child(n + 3) { border-top: 1px solid var(--rule); padding-top: 8px; }
+  .fold-next { padding-bottom: 10px; }
   .hstrip b { font-size: 14px; }
   .hidecap { display: none; }
   .hidelong { display: none; }
-  .sparkblock { margin-top: 14px; padding-top: 8px; }
+  .sparkblock { margin-top: 8px; padding-top: 6px; }
   .sparkcap { gap: 8px; margin-bottom: 2px; font-size: 9.5px; }
   .sparkcap span:first-child { max-width: 52%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sparkblock svg { height: 56px; }
+  .sparkblock svg { height: 40px; }
 }
 /* ≤360px: tighter shell so masthead row 2 (connect + live) still fits 320 */
 @media (max-width: 360px) {
@@ -1056,6 +1066,19 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .txrow .sig:hover { color: var(--ember-text); }
 .txrow .meta { color: var(--ink-dim); font-size: 11.5px; font-variant-numeric: tabular-nums; }
 .txrow .t { color: var(--ink-dim); font-size: 11.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* v6.5 MOBILE CONTEXT HEADER — one quiet line above the stream so the
+   mobile pane reads as a live chain view (current slot + block cadence +
+   live/paused state), not a raw dump. Desktop keeps the CEO-locked panel
+   untouched. */
+.feedctx {
+  display: flex; align-items: center; gap: 8px;
+  margin: 4px 0 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ink-dim); font-variant-numeric: tabular-nums;
+}
+.feedctx .dot { width: 7px; height: 7px; flex: none; box-shadow: 0 0 0 2px rgba(206, 138, 60, 0.16); }
+.feedctx .dot.off { box-shadow: 0 0 0 2px rgba(192, 58, 43, 0.14); }
+@media (min-width: 641px) { .feedctx { display: none; } }
 
 /* Oven ambient 1 — tray-glide arrival: new rows glide in (no info carried) */
 .txrow.arrive { animation: trayglide var(--dur-ambient) var(--ease-out); }

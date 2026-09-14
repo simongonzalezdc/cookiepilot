@@ -27,6 +27,33 @@ The 27-row ledger and full report: `release-gate-report.json` (input: `verifier/
    carried repairs land. This is consistent with DESIGN-SYSTEM.md: "the CEO's eyes outrank
    every seat."
 
+## v6.5 re-run (2026-09-13, FINAL pass — tap floor + mobile fold wins)
+
+Verdict: **HOLD** (release_eligible: false) — `verifier/report-rerun.json`. All mechanical
+validation passes against the NEW dist (sha `bcf725f3…`): artifact ✓ dependencies ✓
+evidence hashes ✓ provenance ✓ subject inventory/coverage ✓ — **0 fail rows**.
+
+Row deltas vs the v6.4 run:
+- **`verification:a11y`: fail → PASS** — the carried 41-tap-target blocker is CLOSED.
+  v6.5 tap floor: every interactive control carries a ≥24×24 hit area (inline links gain
+  vertical-padding hit boxes — painted box, zero layout shift, visual size unchanged;
+  controls get a min-height 24px floor). a11y-audit.js fresh load, both themes:
+  **41 → 0 fails** (clusters fixed: 24 market token links, 12 feed/wallet sig links,
+  5 footer links). No redesign — the pill-cut text buttons keep their chrome.
+- `browser:cold-load`: refreshed — gate-audit 0 fail / 3 documented warns; a11y-audit
+  0 fails (carry resolved).
+- `gate:blocker-handoff`: refreshed — both carried blockers now closed (zoom-400 in
+  v6.4, tap targets in v6.5).
+- Blockers: 15 → 14 — every remaining blocker is a review-null subjective row awaiting
+  the CEO's countersign. No mechanical blocker remains.
+
+v6.5 battery (`docs/v6-captures-final/gate-report.json`): console zero on all loads;
+overflow ladder PASS 320/390/768/1024/1280/1440 **and 80px**; keyboard trace clean;
+reduced-motion static; new mobile feed context line 6.95:1. Mobile bounded wins: feed
+context header (live · slot · ms/block, ≤640px only — desktop surface untouched) and
+KPI strip row 1 (Throughput + Finality) above the 390×844 fold, CTA above fold; strip
+row 2 remains one flick below — full-fold needs a structural mobile pass (post-contest).
+
 ## v6.4 re-run (2026-09-13, CEO visual-identity pass 4 — hero B / thick band / C3 accent / stuffing / pill cut)
 
 Verdict: **HOLD** (release_eligible: false) — `verifier/report-rerun.json`. All mechanical

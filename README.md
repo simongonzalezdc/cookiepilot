@@ -4,80 +4,66 @@
 
 **Live: https://cookiepilot.netlify.app**
 
-![CookiePilot dashboard](docs/screenshot-dashboard.png)
+![CookiePilot — final build, desktop light](docs/v6-captures-final/desktop-1440x900-light.png)
+
+![CookiePilot — final build, mobile light](docs/v6-captures-final/mobile-390x844-light.png)
 
 ---
 
-## Design system v2 — "Bakery" (DESIGN-SYSTEM.md v2, all panel amendments applied)
+## Design system v6.5 — "Bakery, final bake" (DESIGN-SYSTEM.md v2–v6.5, every pass gate-verified)
 
-Playful-premium, cookie-native: warm vanilla/chocolate **dual theme, light-first**, one-click toggle top-right (`aria-pressed`, persisted in `localStorage`). One self-hosted warm rounded family; signature geometry = **The Bite** (bitten charts/meters) + **Crumb Trail** (static tx-state stations) + **Oven** (ambient feed motion). Restraint law: all three share one palette + geometry.
+Warm, precise, community-native: vanilla/cocoa **dual theme, light-first**, one-click sun|moon toggle top-right (`aria-pressed`, persisted in `localStorage`). One self-hosted rounded family. Signature geometry = **the bitten stuffed ring** (a real bite, not a scallop) + **Crumb Trail** (static tx-state stations) + **Oven** (ambient feed motion). Flat editorial paper: sharp-cornered cards on ink hairlines — depth comes from rules, not blur or shadows.
 
-### AM-1 — executable color tokens (solid hexes, both themes)
+### The hero (v6.4 "HERO B", CEO-ruled) — block time at poster scale
+
+The first viewport is a poster with one job: the sub-second story.
+
+- **Masthead:** logo · **MAINNET LIVE** pill (dot carries live/offline) · **COOK price as a plain-text chip** (exact USD, tabular, delta obeys the glyph law — no pill chrome) · sun|moon toggle.
+- **The one giant number: LIVE MS/BLOCK** — from validator performance samples (`getRecentPerformanceSamples`), typically ~430–520 ms, refit to its column on every resize/font-load (cap 150 px desktop / 72 px mobile, floor 14 px so it survives the 400%-zoom lane). Caps line underneath: `BLOCK TIME · LIVE — VALIDATOR PERF SAMPLES`.
+- **Standfirst leading with finality:** "Sub-second finality, oven-fresh blocks. A new block bakes every ~450 ms and cements in three ticks — every transfer traced crumb by crumb to the tray."
+- **The ring** (graphic centerpiece, ~380 px) and a **fees sparkline** (honest 10-day series), then the **fold-edge KPI matrix**: Throughput (TPS) · Finality (3 ticks to cement) · Bridged (COOK) · Height — one shared 30 s poll, nothing double-fetched.
+- Exactly **three pill affordances** survive the v6.4 pill cut: MAINNET LIVE, the theme toggle, and the hero connect CTA (while disconnected). Everything else is typographic — text buttons, text tabs with ember underline, quiet text lines.
+
+### The accent — caramel C3 (de-pumpkin ruling, vision-checked)
 
 | Token | Light (vanilla) | Dark (cocoa) | Job |
 | --- | --- | --- | --- |
+| `--ember` | `#CE8A3C` | `#CE8A3C` | the caramel accent — fills, live marks, ring, focus, selection |
+| `--ember-text` | `#94632B` | `#E8B47A` | accent as **text** (4.67:1 vanilla / 9.83:1 cocoa) |
 | `--surface` | `#FAF3E7` | `#1C1210` | page |
 | `--surface-raised` | `#FFFDF8` | `#2A1D18` | cards |
 | `--ink` | `#2B1A12` | `#F5E9D6` | body text |
-| `--ink-dim` | `#6B5443` | `#C9B8A3` | secondary text (solid, never opacity) |
-| `--ember` | `#E85D2F` | `#E85D2F` | decorative fills / live marks / icons only |
-| `--mint` | `#1E8A60` | `#4CC79A` | confirmed marks (light variant darkened for ≥3:1) |
-| `--jam` | `#C03A2B` | `#E05A4A` | error marks |
-| `--ember-text` | `#B53F1F` | `#FF8A5C` | accent as **text** |
-| `--mint-text` | `#1F7A5C` | `#4CC79A` | confirmed as **text** |
-| `--jam-text` | `#A03225` | `#E87A6B` | errors as **text** |
-| `--line` | `#E8DCC8` | `#3A2A22` | decorative hairlines |
-| `--line-ctl` | `#8A6F52` | `#8A6F58` | control boundaries ≥3:1 |
+| `--ink-dim` | `#6B5443` | `#C9B8A3` | secondary text (solid hexes, never opacity) |
 
-Bright accents are **never body text or ≤14px labels**; state is never color-alone (every state carries an icon + label).
+The old pumpkin `#E85D2F` ember family is **retired entirely**. C3 (`#CE8A3C`) won a three-candidate roll (C1 `#D98E2B` / C2 `#C77E33` / C3) vision-checked on the real hero through both order-swapped head-to-heads — "desaturated, brown-leaning caramel… toffee glaze" vs C1's "pumpkin-orange… PSL promotion". State is never color-alone (icon + label always); mint = confirmed, jam = errors, each with ≥4.5:1 text variants. **Contrast, measured (v6.4 gate): 22 pairs × 2 themes, minimum 4.67 light / 6.5 dark — every text pair ≥4.5:1, worst case includes the baking-paper mottle composite.**
 
-**Published contrast table** (WCAG 2.1, computed; gate-verified):
+### The Bite — real-bite geometry (v6.3, locked)
 
-| Pair | Light | Dark | Required |
-| --- | --- | --- | --- |
-| ink / surface | **15.12** | **15.31** | ≥4.5 ✓ |
-| ink / raised | **16.41** | **13.60** | ≥4.5 ✓ |
-| ink-dim / surface | **6.40** | **9.51** | ≥4.5 ✓ |
-| ink-dim / raised | **6.95** | **8.44** | ≥4.5 ✓ |
-| ember-text / surface | **5.15** | **7.91** | ≥4.5 ✓ |
-| ember-text / raised | **5.59** | **7.02** | ≥4.5 ✓ |
-| mint-text / surface | **4.76** | **8.70** | ≥4.5 ✓ |
-| mint-text / raised | **5.17** | **7.72** | ≥4.5 ✓ |
-| jam-text / surface | **6.39** | **6.50** | ≥4.5 ✓ |
-| jam-text / raised | **6.94** | **5.77** | ≥4.5 ✓ |
-| button text on ember fill | **5.23** (`#241100`) | **5.23** | ≥4.5 ✓ |
-| ember mark / surface | **3.15** | **5.28** | ≥3 ✓ |
-| mint mark / surface | **3.92** (`#1E8A60`) | **8.70** | ≥3 ✓ |
-| jam mark / surface | **4.91** | **5.01** | ≥3 ✓ |
-| control border / surface | **4.25** | **3.93** | ≥3 ✓ |
-| control border / raised | **4.61** | **3.49** | ≥3 ✓ |
+The ring's notch is a **REAL BITE crescent**, not a chart scallop: anchored on the outer edge, mouth 52–58° of rim, depth 18–20% of ring radius, wound edge = **double dental-arc** (wide shallow upper incisor arc + narrower deeper lower arc crossing at two cusp points) with 4–6 seeded tooth bumps per arc (mulberry32, seed `0xd1bc3`, never symmetric). One bite only, ≥10° clear of the fill endpoint and the 0° seam. The winner of a 3-candidate vision roll, re-validated both order-swapped. Small chart bites (bars) keep the ≤8 px / 10–14%-of-bbox rule and never cross axes, labels, or the last datum; **the exact value prints beside every bitten element**.
 
-### AM-2 — one bundled typeface, tabular numerals verified
+**The ring is data:** share of circulating COOK bridged from Solana (Hyperlane), segments labeled with amounts + share (`Bridged (Hyperlane) 545M COOK · Native …`), value printed in the center; falls back to epoch progress while the bridge indexer warms.
 
-**M PLUS Rounded 1c** (400/500/700), self-hosted woff2 in `public/fonts/` (~21.5 KB each, latin subset, `font-display: swap`, two weights preloaded). Rounded terminals echo the cookie world. Digit advance measured in a **real browser via Playwright in both Chromium 148 and WebKit 26.4**: all ten digits render at identical width (tabular by default; `font-variant-numeric: tabular-nums` applied to every data element and honored). Evidence: `design-shots-v2/tnum-verification.png`. Metric-matched fallback stack (`ui-rounded → SF Pro Rounded → Nunito → system`); **Inter is forbidden** and not in the stack.
+### Texture (v6.2) — static SVG, zero dependencies
 
-### AM-3 — The Bite (geometry law)
+Baking-paper **mottle** behind the hero, **grain** (feTurbulence) and **halftone** fields, **chocolate chips + sugar speckles baked into the ring band** (a thick 0.17×size band — never touching text or datum geometry, keep-out-probed), **1 px crackle strokes** on the surviving dough only, and **crumbs shed at the bite** (gravity-sagged, seeded) plus exactly one secondary crumb zone on the fold-edge hairline — a ≤2-clusters-per-viewport law. All static: under `prefers-reduced-motion` nothing animates and every texture still parses.
 
-One notch max per element, cut with an SVG/CSS **mask** (zero chart deps — charts are hand-rolled SVG):
-- **Charts:** chord = 10–14% of plot min-dimension, **~40° arc** (depth = r·(1−cos 20°) ≈ 6% of r), only when a bar is wide enough to carry it without crossing neighbours/axes/labels.
-- **Meters (ring + track bars):** bite depth ≤ 8px, cut from the **track**, never at the fill endpoint (ring notch is offset ≥48° from the arc end so it can never touch the current value).
-- Never crosses axes, labels, thresholds, the last data point, or the current value.
-- **Exact value printed beside every bitten element** (ring: "70 % through"; bitten bar: "09-03 · 4,443" tag; bitten meter row: value column).
-- **≤2 bitten elements per viewport** (hero: 1 — the epoch ring; analytics: bar-chart bar + one meter track; feed/swap/console: 0).
+### Chart honesty floor (data-viz law)
 
-### AM-4 — static-equivalent states + motion tokens
+Every chart **direct-labels on the chart itself**: the sparkline carries ruled baseline + MIN/MAX/NOW with live units; ring segments carry amounts + share; bars carry their value and bite-tag; the swap quote spells out min-received, fees, and route venues. Delta glyphs obey the glyph law (▲/▼ only past ±0.005%, otherwise the word "flat"). No unlabeled ink anywhere.
 
-- **Crumb Trail:** every feed row renders three discrete labeled stations — `processed → confirmed → finalized` — each with icon + text; parses in a still screenshot with zero motion. State upgrades happen **instantly** (poll diff), never animation-gated. The tx confirmation tracker uses the same station language with ms timings.
-- **Oven ambient only:** new feed rows tray-glide in (600 ms); finalized rows get a one-time golden sheen (600 ms). Motion tokens split: **interaction 180 ms** / **ambient 500–700 ms**.
-- **`prefers-reduced-motion`:** all durations → 0; the newest feed row keeps a static 2–4% warm sheen; labels and stations persist (the static contract — no content loss).
+### Type + tap floor (a11y contract)
 
-### AM-5 — judging-frame contract + icons
+**M PLUS Rounded 1c**, self-hosted woff2 (weights 400/500/700/800/900, latin subset, 2 preloaded, metric-matched `ui-rounded` fallback; Inter forbidden). `font-variant-numeric: tabular-nums` on **every** data element, verified digit-equal-width in real browsers. **v6.5 tap floor:** every interactive control carries a **≥24×24 hit area** (inline links grow invisible vertical-padding hit boxes with zero layout shift; controls get a min-height floor) — a11y-audit: **0 tap-target fails, both themes** (41 → 0). Keyboard-complete with `:focus-visible` everywhere; Crumb Trail states parse in a still screenshot.
 
-First viewport at **1440×900 and 390×844** shows: product name (header), one-line value proposition ("Live analytics, wallet & swaps on a sub-second chain."), live network state (slot/TPS pill + LIVE badge + price/TPS/block-time stats), **one legible Bite chart** (epoch ring), theme toggle top-right. Section order: `01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail) → 05 swap + NL console`. Dark theme carries its own shadow token `0 8px 24px rgba(0,0,0,.40)` + hairline; light uses `0 8px 24px rgba(43,26,18,.08)`. Icons: one custom 24 px set, 1.5 px round-cap stroke (2 px at 16 px), bite/crumb motifs on exactly 8 marks; the cookie glyph appears only as favicon + wordmark. Evidence: `design-shots-v2/`.
+### Judging frame (AM-5)
 
-**Budget:** JS 149 KB gzip (dominated by `@solana/web3.js`, unchanged from v1) + 5.7 KB CSS + 64 KB webfont (3 × woff2, non-blocking).
+First viewport at **1440×900 and 390×844** shows: product name, the finality standfirst, live network state, the giant block-time number, **one legible bite chart** (the ring), theme toggle top-right, and the KPI matrix on the fold edge. On 390×844 the giant number, the full ring, the CTA and KPI row 1 (Throughput · Finality) land above the fold, and the live-activity pane carries a context line (`● live · slot N · ~450 ms per block`). Section order: `01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail) → 05 swap + NL console`. No horizontal overflow from 320 px to 1440 px, and at the 400%-zoom simulation (80 px effective) content reflows without loss.
 
-**`npm audit` (2026-09-06):** 6 advisories — 5 moderate (`esbuild`, `stream-json`, `uuid` + 2 transitively pinned by `@solana/web3.js`) and 1 high, all on the **vite dev-server toolchain** (path-traversal / `server.fs.deny` / launch-editor advisories; dev-time only, Windows-specific vectors, not in the shipped bundle). The only fix is vite 8 (breaking major); accepted for this bounty window, tracked as a follow-up. Zero vulnerabilities ship in the production bundle's runtime dependencies beyond the audited `@solana/web3.js` pins.
+**Evidence:** `docs/v6-captures-final/` (final battery: captures both themes × both viewports, full page, ring close-up, gate-report.json) · `docs/v6-captures-v6b/` (v6.4 roll evidence) · `docs/v6-captures-browsers/` (3-engine matrix + real-Safari lane + release-gate ledger).
+
+**Budget:** JS 154 KB gzip (dominated by `@solana/web3.js`) + 9.1 KB CSS + 5 × ~21.5 KB webfonts (2 preloaded, rest non-blocking).
+
+**`npm audit` (re-checked 2026-09-13):** 6 advisories — 5 moderate (`esbuild`, `stream-json`, `uuid` + 2 transitively pinned by `@solana/web3.js`) and 1 high, all on the **vite dev-server toolchain** (dev-time only, not in the shipped bundle). The only fix is vite 8 (breaking major); accepted for this bounty window, tracked as a follow-up. Zero vulnerabilities ship in the production bundle's runtime dependencies beyond the audited `@solana/web3.js` pins.
 
 ---
 
@@ -95,10 +81,10 @@ For fully agentic trading, the ecosystem's official **[cookie-mcp](https://githu
 
 | Area | What you get |
 | --- | --- |
-| **Network pulse** | COOK price + 24h change, live TPS, tx counts, base fee (0.000005 COOK/sig), supply, validators, epoch progress, tokens/programs launched, Hyperlane bridge totals — auto-refreshing |
+| **Network pulse (hero)** | LIVE block time in ms at poster scale (validator perf samples), COOK price chip (exact USD + glyph-law delta), live TPS, finality ticks, COOK bridged, block height — one shared poll |
 | **Ask CookiePilot** | Deterministic NL console over the same live APIs (10+ intents, chips, structured cards) |
 | **Analytics** | Daily transactions, active wallets + fees charts, top programs by txns, token registry board, live pools/venues table (Cookiebox DAMM/CLMM, Cookieswap, Raydium, Meteora DBC…) |
-| **Live activity** | Streaming signature feed for the SPL Token program with in-place status upgrades: `processed → confirmed → finalized` — Cookie Chain's sub-second finality, visible |
+| **Live activity** | Streaming signature feed for the SPL Token program with in-place status upgrades: `processed → confirmed → finalized` — Cookie Chain's sub-second finality, visible. On mobile: a live context line (current slot + block cadence) |
 | **Transactions** | Memo ping + COOK transfer. Every send gets a **live confirmation timeline** with millisecond timings per stage, plus a graceful, actionable failure path |
 | **Wallet** | **Nightly** (the wallet Cookie Chain's docs recommend) first, plus Phantom / Backpack / Solflare / standard-injection wallets. Balance in COOK, SPL token positions with USD values, NFTs via the official **Cookie DAS API**, indexed history |
 | **Swap** | Keyless multi-route **quotes** via the Cookieswap (Candy Shop) router across all chain DEX liquidity; execution is simulate-then-sign with your own wallet (non-custodial, optional) |
@@ -154,7 +140,7 @@ src/
 
 | Source | Endpoint | Used for |
 | --- | --- | --- |
-| Cookie Chain RPC | `https://rpc.cookiescan.io` (WS: `wss.cookiescan.io`) | slot/TPS samples, supply, balances, token accounts, signature feeds, status polling, tx send, blockhash, simulation |
+| Cookie Chain RPC | `https://rpc.cookiescan.io` (WS: `wss.cookiescan.io`) | slot/TPS samples, block-time perf samples, supply, balances, token accounts, signature feeds, status polling, tx send, blockhash, simulation |
 | Cookie DAS API | `https://api.cookiescan.io` (JSON-RPC POST) | `getAssetsByOwner` for wallet NFTs; also serves `/api/tokens`, `/api/markets`, `/api/price/cook` |
 | Cookiescan explorer API | `https://cookiescan.io/api/*` | `/mainnet/stats`, `/analytics/daily`, `/bridge/stats`, `/tokens?search=`, `/address/{addr}/transactions` |
 | Cookieswap (Candy Shop) | `https://swap.cookiescan.io/api/*` | `/quote/multi-route` (keyless), `/swap-tx/multi-route` (unsigned tx for optional execution), `/submit-tx`, `/confirm-tx/{sig}` |
@@ -195,6 +181,7 @@ Cookie Chain is a **single community-run mainnet** (Agave 4.1.2, ~1s slots, sub-
 - The explorer history endpoint covers recent indexed txs per address (paginated); deep history belongs to Cookiescan.
 - `cookoven.xyz` (faucet host) intermittently fails plain curl checks (TLS fingerprinting?) — it loads in browsers; the explorer lists it as the official faucet.
 - Registry "holders"/"market cap" figures are indexer estimates (Coinscan's own numbers).
+- On 390×844 the KPI strip's second row (Bridged · Height) sits one flick below the fold — full-fold needs a structural mobile pass (post-contest).
 
 ## Credits & links
 
