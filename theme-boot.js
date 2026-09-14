@@ -9,5 +9,16 @@
     var t = localStorage.getItem("cookiepilot-theme");
     if (t !== "light" && t !== "dark") t = "light";
     document.documentElement.dataset.theme = t;
+    // ?poster=fixed — deterministic print/video layout: hero drops its viewport
+    // min-height BEFORE first paint (was a React-mount effect; mount timing made
+    // tall-viewport captures race the layout). Also honors ?t=dark|light.
+    var q = new URLSearchParams(location.search);
+    var ov = q.get("t");
+    if (ov === "dark" || ov === "light") { t = ov; document.documentElement.dataset.theme = t; }
+    if (q.get("poster") === "fixed") {
+      var st = document.createElement("style");
+      st.textContent = ".hero{min-height:auto!important}html,body{overflow:hidden!important}";
+      document.head.appendChild(st);
+    }
   } catch (e) {}
 })();
