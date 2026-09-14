@@ -258,3 +258,9 @@ Skills applied: improve-existing-website, tasteroll (accent roll + bite re-valid
 Console zero on all loads; overflow PASS 320/390/768/1024/1280/1440 **and 80px**; gate-audit 0 fail / 3 documented warns; a11y-audit 0 fails both themes; keyboard trace clean; reduced-motion static. Release-gate re-run: 0 fail rows, all hashes verify against dist sha `bcf725f3…`; verdict HOLD-for-human (CEO countersign queue only).
 
 Skills applied: a11y-pass (tap floor), responsive-layout (fold), tastecheck-pass (final battery + release-gate ledger rebind).
+
+# v7 addendum — 2026-09-14: fold law lands + link-preview identity
+
+- **v6.5's open item is closed.** The structural mobile pass shipped: `.hero-grid` dissolves to `display:contents` ≤640px, flex `order` reflows to giant → ring → CTA → KPI strip → spark. Measured @390×844: strip **row 2 bottom 881 → 787** (57px clear of the 844 fold); the sparkline straddles the fold as the deliberate teaser; fold-next TOC line rides the fold edge. Poster read unchanged; desktop untouched (1440 geometry identical).
+- **Densify (v6 item "dead space below the fold")**: section rhythm 88→44px, card 22/24→15/17, tighter sect-heads/factslines. Dead air below hero halved (88→44).
+- **Identity hygiene**: favicon re-tinted from retired ember `#E85D2F` → C3 `#CE8A3C` (de-pumpkin law reached the tab icon); og/twitter card metas added (image = `public/cookiepilot-mark.png`, the app's own bitten mark, 512×512) so Telegram/X link previews render a card, not a bare URL.
