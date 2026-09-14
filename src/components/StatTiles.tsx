@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef, type ReactNode } from "re
 import { fetchBridgeStats, fetchChainStats, fetchCookPrice, fetchDailyAnalytics, ChainStats, CookPrice, DailyAnalytics, BridgeStats } from "../lib/api";
 import { usePoll, type PollState } from "../hooks/usePoll";
 import { useWallet } from "../hooks/useWallet";
-import { fmtCompact, fmtNum, fmtUsd, deltaGlyph, pct } from "../lib/format";
+import { fmtCompact, fmtNum } from "../lib/format";
 import { ErrorBox } from "./ui";
 import { Sparkline, BiteRing } from "./charts";
 import { rpc } from "../lib/rpc";
@@ -53,17 +53,20 @@ export function StatsProvider({ children }: { children: ReactNode }) {
   return <StatsCtx.Provider value={poll}>{children}</StatsCtx.Provider>;
 }
 
-function useStats(): PollState<AllStats> {
+/** shared-poll hook — exported for the header price chip (no 2nd fetch). */
+export function useStats(): PollState<AllStats> {
   const ctx = useContext(StatsCtx);
   if (!ctx) throw new Error("useStats must be used inside <StatsProvider>");
   return ctx;
 }
 
 /**
- * Poster fit for the GIANT price: measure the string at 100px and scale
+ * Poster fit for the GIANT number: measure the string at 100px and scale
  * it to fill its column exactly — the Swiss way. Caps per breakpoint via
- * --price-cap (150px desktop / 96px mobile), floors at 24px, and refits
- * on font-load + container resize so no live value can ever overflow.
+ * --price-cap (150px desktop / 96px mobile), floors at --giant-floor
+ * (14px — the 3–4-char block time must survive the 80px 400%-zoom
+ * reflow lane), and refits on font-load + container resize so no live
+ * value can ever overflow.
  */
 function useFitPrice(text: string) {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -74,9 +77,10 @@ function useFitPrice(text: string) {
     let raf = 0;
     const fit = () => {
       const cap = parseFloat(getComputedStyle(el).getPropertyValue("--price-cap")) || 150;
+      const floor = parseFloat(getComputedStyle(el).getPropertyValue("--giant-floor")) || 24;
       el.style.fontSize = "100px";
       const w = el.scrollWidth || 1;
-      const size = Math.max(24, Math.min(cap, (col.clientWidth / w) * 100 * 0.99));
+      const size = Math.max(floor, Math.min(cap, (col.clientWidth / w) * 100 * 0.99));
       el.style.fontSize = `${size}px`;
     };
     const schedule = () => {
@@ -96,18 +100,21 @@ function useFitPrice(text: string) {
 }
 
 /**
- * THE HERO — the poster front page (v5, reference-approved.png anatomy).
- * Editorial pacing like the reference: eyebrow → giant COOK price →
- * ember delta chip → standfirst (live block time) → halftone sparkline →
- * the CTA row — with the bitten ember ring as the right-column centerpiece
- * and a thin fold-edge stat strip. NO dashboard widgets: wallet, markets,
- * feed, swap and console all live in the numbered sections below.
+ * THE HERO — block-time poster (v6.4 HERO B, CEO-ruled 2026-09-13:
+ * "A looks broken"; panel 5/5 converged on B). The giant number is
+ * LIVE MS/BLOCK from validator perf samples — a number Cookie Chain
+ * is proud of — with the bitten ring still the graphic centerpiece
+ * and the KPI matrix on the fold edge (one shared poll). COOK price
+ * is demoted to a plain-text chip in the header (exact USD, glyph
+ * law, no pill chrome).
  */
 export function StatTiles() {
   const { data, error, refresh } = useStats();
   // hook order is sacred: the fit hook runs on every render, ref or no ref
-  const priceText = data ? `$${Number(data.price.data.price.usd).toPrecision(4)}` : "";
-  const fitRef = useFitPrice(priceText);
+  const blockMs = data?.slotMs ?? null;
+  const blockDigits =
+    blockMs != null && Number.isFinite(blockMs) && blockMs > 0 ? String(Math.round(blockMs)) : "—";
+  const fitRef = useFitPrice(blockDigits);
   const wallet = useWallet();
 
   if (error && !data)
@@ -124,11 +131,7 @@ export function StatTiles() {
       </div>
     );
 
-  const { stats, price, daily, bridge, supply, slotMs } = data;
-  const chg = price.data.price.change24h;
-  // v6 delta glyph law: ▲ only > +0.005%, ▼ only < −0.005%, nothing at flat —
-  // never an up-arrow on +0.00% (the live feed has been printing exactly that).
-  const glyph = deltaGlyph(chg);
+  const { stats, daily, bridge, supply, slotMs } = data;
   const epochPct = stats.epochInfo ? (stats.epochInfo.slotIndex / stats.epochInfo.slotsInEpoch) * 100 : 0;
   // centerpiece ring: share of circulating supply bridged from Solana —
   // honest AND reference-scale loud; falls back to epoch progress while
@@ -149,31 +152,29 @@ export function StatTiles() {
           <span className="hero-eyebrow">
             <span className="hero-no" aria-hidden="true">01</span>
             <span className="rule-dash" aria-hidden="true" />
-            Network pulse
+            <span className="eb-text">Network pulse</span>
             <span className="sq" aria-hidden="true" />
           </span>
 
-          {/* the poster's ONE giant display numeral. 4 significant digits —
-              display rounding; the exact price is in the aria-label and
-              everywhere fmtUsd appears. Fit-to-column, cap 150px. */}
-          <p className="giantprice" ref={fitRef} aria-label={`COOK price ${fmtUsd(price.data.price.usd)}`}>
-            {priceText}
+          {/* the poster's ONE giant display numeral (HERO B): live
+              MILLISECONDS PER BLOCK — the sub-second story at poster
+              scale, fit-to-column, cap 150px, floor 14px (400%-zoom
+              reflow lane). Source note on the caps line below. */}
+          <p
+            className="giantprice"
+            ref={fitRef}
+            aria-label={`Block time ${blockMs != null ? `${Math.round(blockMs)}ms` : "unavailable"}`}
+          >
+            {blockDigits}<span className="gp-unit" aria-hidden="true">ms</span>
           </p>
-          <div className="pricemeta">
-            {/* the ember moment: solid chip, hard ink offset (reference).
-              v6 glyph law: no arrow at flat ±0.005%. v6.2 panel fix: at
-              flat the chip goes NEUTRAL (hairline, ink-dim, "flat"
-              wording) — a flat delta is a live state, not a dead ember. */}
-            <span className={glyph ? "chip-ember" : "chip-flat"}>
-              {glyph ? `${glyph} ` : ""}{pct(chg)}{glyph ? "" : " · flat"} <em>/ 24H</em>
-            </span>
-            <span className="pair">COOK / USDC — MAINNET PAIR</span>
+          <div className="blockmeta">
+            <span className="pair">BLOCK TIME · LIVE — VALIDATOR PERF SAMPLES</span>
           </div>
 
-          {/* standfirst: the reference's editorial copy, with live block time */}
+          {/* standfirst (v6.4): leads with sub-second finality */}
           <h1 className="valueprop">
-            The oven-fresh L2. Blocks in {fmtSlotTime(slotMs)}. Finality in three bites — every
-            transfer traced crumb by crumb to the tray.
+            Sub-second finality, oven-fresh blocks. A new block bakes every {fmtSlotTime(slotMs)} and cements in
+            three ticks — every transfer traced crumb by crumb to the tray.
           </h1>
         </div>
 
@@ -248,8 +249,8 @@ export function StatTiles() {
           <b>{fmtNum(stats.liveTps ?? stats.tps, stats.liveTps != null && stats.liveTps < 100 ? 1 : 0)}<span className="unit">TPS</span></b>
         </span>
         <span className="hstrip">
-          <span className="hlabel">Block time</span>
-          <b>{fmtSlotTime(slotMs)}</b>
+          <span className="hlabel">Finality</span>
+          <b>3<span className="unit">TICKS TO CEMENT</span></b>
         </span>
         <span className="hstrip">
           <span className="hlabel">Bridged</span>

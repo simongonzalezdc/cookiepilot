@@ -64,14 +64,17 @@
   --ink: #2b1a12;            /* chocolate        15.1:1 on vanilla */
   --ink-dim: #6b5443;        /* cocoa 60%-ish    6.4:1 on vanilla  */
 
-  /* accents — bright = decorative fills/icons/marks ONLY, never body text */
-  --ember: #e85d2f;          /* 3.15:1 vs vanilla → marks/icons/fills */
+  /* accents — bright = decorative fills/icons/marks ONLY, never body text.
+     v6.4 DE-PUMPKIN (CEO 2026-09-13: "orange = pumpkin spice latte, dates
+     it to a holiday"): the ember #E85D2F family RETIRES; the live accent
+     is the vision-roll winner of C1 #D98E2B / C2 #C77E33 / C3 #CE8A3C. */
+  --ember: #ce8a3c;           /* 2.6:1 vs vanilla → fills/marks (state always text-carried) */
   --mint: #1e8a60;           /* light mark variant, 3.9:1 → chart marks */
   --mint-bright: #2fa87c;    /* decorative fills only */
   --jam: #c03a2b;            /* 4.9:1 vs vanilla → marks */
 
   /* accents as TEXT (AM-1: ≥4.5 on both light surfaces) */
-  --ember-text: #b53f1f;     /* 5.15:1 vanilla / 5.59 sugar */
+  --ember-text: #94632b;     /* 4.67:1 vanilla / 5.06 sugar */
   --mint-text: #1f7a5c;      /* 4.76:1 vanilla / 5.17 sugar */
   --jam-text: #a03225;       /* 6.39:1 vanilla / 6.94 sugar */
 
@@ -80,7 +83,7 @@
   --line-ctl: #8a6f52;       /* input/button boundaries, 4.25:1 */
 
   /* state fills never carry text — pills use text tokens */
-  --wash-ember: #f7e3d3;     /* decorative washes */
+  --wash-ember: #f5e6d2;     /* amber wash of the roll winner */
   --wash-mint: #ddeee2;
   --wash-jam: #f6ddd6;
 
@@ -107,6 +110,10 @@
   --crumb-dough: var(--ring-track);
   --crumb-amber: var(--ember);
   --crumb-ink: color-mix(in srgb, var(--ink) 55%, transparent);
+  /* v6.4 stuffing palette — chocolate chips + sugar speckle on the band */
+  --stuff-chip: #3a2417;     /* dark chocolate, half-sunk in the dough */
+  --stuff-hilite: #f5e7c8;   /* dough-light glint on the chip's shoulder */
+  --stuff-sugar: #fffdf6;    /* sugar crystals at the band edges */
 
   /* motion tokens (AM-4): interaction vs ambient, both reduced-motion aware */
   --dur-hit: 180ms;          /* interaction */
@@ -115,7 +122,7 @@
   --ease-soft: cubic-bezier(0.3, 0.7, 0.3, 1);
 
   /* focus */
-  --focus-ring: #b53f1f;
+  --focus-ring: #94632b;
 
   color-scheme: light;
 }
@@ -129,19 +136,21 @@
   --ink: #f5e9d6;            /* cream 15.3:1 on cocoa */
   --ink-dim: #c9b8a3;        /* 9.5:1 on cocoa */
 
-  --ember: #e85d2f;          /* 5.3:1 on cocoa → ok as mark or text-large */
+  --ember: #ce8a3c;          /* 6.41:1 on cocoa / 5.69 raised → mark or text-large */
   --mint: #4cc79a;           /* 8.7:1 */
   --mint-bright: #4cc79a;
   --jam: #e05a4a;            /* 5.0:1 */
 
-  --ember-text: #ff8a5c;     /* 7.9:1 cocoa / 7.0 raised */
+  /* v6.4: dark accent-as-TEXT from the toffee axis (clears both cocoa
+     surfaces: 9.83:1 cocoa / 8.73:1 raised) */
+  --ember-text: #e8b47a;     /* 9.83:1 cocoa / 8.73 raised */
   --mint-text: #4cc79a;      /* 8.7:1 / 7.7 */
   --jam-text: #e87a6b;       /* 6.5:1 / 5.8 */
 
   --line: #3a2a22;           /* hairline (decorative) */
   --line-ctl: #8a6f58;       /* 3.9:1 */
 
-  --wash-ember: #33201a;
+  --wash-ember: #352316;
   --wash-mint: #1c2b22;
   --wash-jam: #331d19;
 
@@ -157,8 +166,12 @@
   --shadow-ink: 3px 3px 0 0 var(--ember); /* on cocoa, ink offsets vanish — ember carries the print offset */
   --grain-opacity: 0.1;
   --ring-track: var(--line-ctl); /* warm tan track on cocoa (8a6f58) */
+  /* v6.4 stuffing on the cocoa band — deeper chocolate, warm glints */
+  --stuff-chip: #241511;
+  --stuff-hilite: #e8d3b0;
+  --stuff-sugar: #f2e3c9;
 
-  --focus-ring: #ff8a5c;
+  --focus-ring: #e8b47a;
 
   color-scheme: dark;
 }
@@ -193,7 +206,7 @@ body::after {
 a { color: var(--ember-text); text-decoration: none; transition: color var(--dur-hit) var(--ease-out); }
 a:hover { color: var(--ember); }
 button { font-family: inherit; }
-::selection { background: rgba(232, 93, 47, 0.28); }
+::selection { background: rgba(206, 138, 60, 0.30); }
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 6px; }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
@@ -285,26 +298,44 @@ button { font-family: inherit; }
    connecting is neutral ink-dim, offline is jam. Mint stays confirm-only. */
 .dot {
   width: 8px; height: 8px; border-radius: 50%; background: var(--ember);
-  box-shadow: 0 0 0 3px rgba(232, 93, 47, 0.16);
+  box-shadow: 0 0 0 3px rgba(206, 138, 60, 0.18);
   animation: breathe 2.4s ease-in-out infinite;
 }
 .dot.off { background: var(--jam); box-shadow: 0 0 0 3px rgba(192, 58, 43, 0.14); animation: none; }
 .dot.warn { background: var(--ink-dim); box-shadow: 0 0 0 3px rgba(107, 84, 67, 0.14); animation: none; }
 .header .spacer { flex: 1; }
 
-/* masthead connect pill — quiet ink outline (the ring owns the loud ember) */
-.connect-pill {
-  display: inline-flex; align-items: center;
-  background: var(--surface-raised);
-  border: 1.5px solid var(--ink);
-  padding: 7px 16px; border-radius: var(--radius-ctl);
-  font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink); cursor: pointer; white-space: nowrap;
-  font-family: inherit;
-  transition: border-color var(--dur-hit) var(--ease-out), color var(--dur-hit) var(--ease-out),
-    transform var(--dur-hit) var(--ease-out);
+/* v6.4 HERO B + PILL CUT (CEO-ruled 2026-09-13): the COOK price lives
+   here as a PLAIN-TEXT chip — exact USD, tabular, no pill chrome; the
+   delta obeys the glyph law and carries tone via text tokens. */
+.pricechip {
+  display: inline-flex; align-items: baseline; gap: 7px;
+  font-size: 12.5px; color: var(--ink);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.connect-pill:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); }
+.pricechip b {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-dim);
+}
+.pricechip .pc-delta { font-size: 11.5px; font-weight: 700; }
+/* v6.4 PILL CUT: connected wallet = quiet text line (no chip chrome) */
+.walletline {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12.5px; color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+}
+.walletline .bal { color: var(--mint-text); font-weight: 700; }
+.walletline .addr { color: var(--ink); }
+/* quiet text-link button — the typographic control treatment (v6.4) */
+.linkbtn {
+  background: none; border: none; padding: 6px 2px;
+  font-family: inherit; font-size: 12.5px; font-weight: 700;
+  color: var(--ember-text); cursor: pointer;
+  text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ember-text) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: color var(--dur-hit) var(--ease-out);
+}
+.linkbtn:hover { color: var(--ember); }
 
 /* theme toggle — reference masthead pill: sun|moon pair, active at ink.
    v6: the 24px AM-5 icon set renders at true size (1.5px round-cap stroke);
@@ -326,68 +357,77 @@ button { font-family: inherit; }
 .themetoggle svg.off { color: var(--ink-dim); opacity: 0.55; }
 .themetoggle .tt-sep { width: 1px; height: 20px; background: var(--rule); }
 
-/* ---------- buttons (pill controls) ---------- */
+/* ---------- buttons ----------
+   v6.4 PILL CUT (CEO-overruled pill proliferation, 2026-09-13): the
+   only pill controls that survive are the MAINNET LIVE pill, the theme
+   toggle, and the hero CTA (the ONE connect affordance while
+   disconnected). Every other control is typographic — text buttons,
+   text tabs, text chips. Padding is preserved so tap targets stay
+   ≥24px (a11y row). */
 .btn {
-  background: var(--surface-raised); color: var(--ink);
-  border: 1px solid var(--line-ctl); border-radius: var(--radius-ctl);
-  padding: 9px 18px; font-size: 14px; font-weight: 500;
-  cursor: pointer; white-space: nowrap;
-  transition: border-color var(--dur-hit) var(--ease-out), color var(--dur-hit) var(--ease-out),
-    background var(--dur-hit) var(--ease-out), transform var(--dur-hit) var(--ease-out),
-    box-shadow var(--dur-hit) var(--ease-out);
+  background: none; color: var(--ink);
+  border: none; border-radius: 0;
+  padding: 9px 10px; font-size: 14px; font-weight: 500;
+  cursor: pointer; white-space: nowrap; font-family: inherit;
+  transition: color var(--dur-hit) var(--ease-out);
 }
-.btn:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); box-shadow: var(--shadow-card); }
-.btn:active { transform: translateY(0); }
+.btn:hover { color: var(--ember-text); }
+.btn:active { transform: translateY(1px); }
 .btn.primary {
-  /* the reference's print button: ink pill, hard ember offset shadow,
-     loud caps — the CTA is an ember moment, not a gradient */
-  background: var(--ink);
-  border: 1px solid transparent; color: var(--surface);
+  /* typographic primary: loud caps + underline, no chrome */
+  color: var(--ember-text);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.09em;
   font-size: 12.5px;
-  padding: 10px 20px;
-  box-shadow: var(--shadow-ember);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ember-text) 40%, transparent);
+  text-underline-offset: 4px;
+  padding: 10px 10px;
 }
-.btn.primary:hover { color: var(--surface); filter: none; border-color: transparent; transform: translate(1px, 1px); box-shadow: 3px 3px 0 0 var(--ember); }
-[data-theme="dark"] .btn.primary {
+.btn.primary:hover { color: var(--ember); }
+.btn.ghost { color: var(--ink-dim); }
+.btn.ghost:hover { color: var(--ember-text); }
+.btn.small { padding: 5px 8px; font-size: 12.5px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+/* THE hero CTA — the reference's print button and the one surviving
+   pill affordance besides MAINNET LIVE + the toggle (connect while
+   disconnected; the connected state is the header's quiet text line) */
+.hero-cta-row .btn.primary {
+  background: var(--ink);
+  color: var(--surface);
+  border: 1px solid transparent;
+  text-decoration: none;
+  letter-spacing: 0.09em;
+  padding: 10px 20px;
+  border-radius: var(--radius-ctl);
+  box-shadow: var(--shadow-ember);
+  transition: transform var(--dur-hit) var(--ease-out), box-shadow var(--dur-hit) var(--ease-out);
+}
+.hero-cta-row .btn.primary:hover { color: var(--surface); transform: translate(1px, 1px); box-shadow: 3px 3px 0 0 var(--ember); }
+[data-theme="dark"] .hero-cta-row .btn.primary {
   background: var(--surface-sunken);
   color: var(--ink);
   border-color: var(--line-ctl);
 }
-.btn.primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 var(--ember); }
-.btn.ghost { background: transparent; border-color: transparent; }
-.btn.ghost:hover { color: var(--ember-text); border-color: var(--line); box-shadow: none; }
-.btn.small { padding: 5px 13px; font-size: 12.5px; }
-.btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; transform: none; }
-.wallet-chip {
-  display: inline-flex; align-items: center; gap: 9px;
-  background: var(--surface-raised); border: 1px solid var(--line-ctl);
-  padding: 8px 14px; border-radius: var(--radius-ctl); cursor: default;
-  font-size: 13px; font-variant-numeric: tabular-nums;
-  box-shadow: var(--shadow-card);
-  transition: border-color var(--dur-hit) var(--ease-out);
-}
-.wallet-chip .bal { color: var(--mint-text); font-weight: 700; }
-.wallet-chip:hover { border-color: var(--ember-text); }
+.hero-cta-row .btn.primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 var(--ember); }
 
-/* ---------- segmented tabs (pill) ---------- */
+/* ---------- segmented tabs → typographic tabs (v6.4 pill cut) ---------- */
 .seg {
-  display: inline-flex; background: var(--surface-sunken);
-  border: 1px solid var(--line); border-radius: var(--radius-ctl);
-  padding: 3px; gap: 3px;
+  display: inline-flex; align-items: baseline;
+  gap: 2px; padding: 0 0 3px; border-bottom: 1px solid var(--rule);
 }
 .seg button {
-  background: transparent; border: none; border-radius: var(--radius-ctl);
+  background: transparent; border: none; border-radius: 0;
   color: var(--ink-dim); font-size: 12.5px; font-weight: 700;
-  padding: 4px 14px; cursor: pointer;
-  transition: background var(--dur-hit) var(--ease-out), color var(--dur-hit) var(--ease-out);
+  padding: 5px 12px; cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -4px;
+  transition: color var(--dur-hit) var(--ease-out), border-color var(--dur-hit) var(--ease-out);
 }
 .seg button:hover { color: var(--ink); }
 .seg button.on {
-  background: var(--ink); color: var(--surface);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: none; color: var(--ink);
+  border-bottom-color: var(--ember);
 }
 
 /* ============================================================
@@ -435,28 +475,31 @@ button { font-family: inherit; }
   gap: 16px 32px;
   padding: 18px 0 26px;
 }
-.hero-main { grid-area: main; min-width: 0; container-type: inline-size; --price-cap: 150px; }
+.hero-main { grid-area: main; min-width: 0; container-type: inline-size; --price-cap: 150px; --giant-floor: 14px; }
 .hero-side { grid-area: side; }
 .hero-spark { grid-area: spark; min-width: 0; }
 .hero-cta-row { grid-area: cta; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
 
-/* reference eyebrow: "01 — NETWORK PULSE ▪" in loud caps */
+/* reference eyebrow: "01 — NETWORK PULSE ▪" in loud caps. Wraps (with
+   mid-word breaks) in the 400%-zoom reflow lane. */
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 12px;
+  display: inline-flex; align-items: center; gap: 6px 12px; flex-wrap: wrap;
   font-size: 12px; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--ink);
 }
 .hero-eyebrow .hero-no { color: var(--ember-text); letter-spacing: 0.08em; }
 .hero-eyebrow .rule-dash { width: 26px; height: 2px; background: var(--ink); opacity: 0.75; }
 .hero-eyebrow .sq { width: 9px; height: 9px; background: var(--ember); flex: none; }
+.hero-eyebrow .eb-text { overflow-wrap: anywhere; }
 
-/* the GIANT price — the poster's ONE hero numeral, ink on paper.
-   JS fit-to-column (useFitPrice) scales it to the largest size that
-   cannot overflow; this clamp is the no-JS fallback. 700-weight
-   tabular per the v5 brief; cap 150px desktop / 96px mobile. */
+/* the GIANT number (v6.4 HERO B): live ms/block — the poster's ONE hero
+   numeral, ink on paper. JS fit-to-column (useFitPrice) scales it to the
+   largest size that cannot overflow; this clamp is the no-JS fallback.
+   700-weight tabular; cap 150px desktop / 96px mobile; floor 14px so
+   the 3–4-char value reflows through the 80px 400%-zoom lane. */
 .giantprice {
   margin: 0 0 0 -0.045em;
-  font-size: clamp(28px, 13vw, 150px);
+  font-size: clamp(16px, 13vw, 150px);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.94;
@@ -465,39 +508,23 @@ button { font-family: inherit; }
   white-space: nowrap;
 }
 @supports (width: 1cqw) {
-  .giantprice { font-size: clamp(28px, 16.5cqw, 150px); }
+  .giantprice { font-size: clamp(16px, 16.5cqw, 150px); }
 }
-.pricemeta {
-  display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap;
-  margin-top: 16px;
+/* the unit rides the number at poster scale, but smaller — "432ms"
+   reads as one datum, not two */
+.giantprice .gp-unit {
+  font-size: 0.34em;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  margin-left: 0.06em;
 }
-/* the ember moment: solid ember chip, hard ink offset shadow (reference).
-   Text is INK on ember (4.79:1 — AA); white would be 3.4:1.
-   v6.2: FLAT deltas (±0.005%) render the neutral twin — hairline
-   outline, ink-dim, no offset, no directional color. */
-.chip-ember,
-.chip-flat {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 13.5px; font-weight: 800;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-  padding: 7px 13px;
+/* caps source line under the giant number (replaces the price meta row —
+   the price itself now lives in the header as plain text) */
+.blockmeta {
+  display: flex; align-items: baseline; gap: 10px 18px; flex-wrap: wrap;
+  margin-top: 14px;
 }
-.chip-ember {
-  background: var(--ember);
-  color: var(--ink);
-  box-shadow: var(--shadow-ink);
-}
-.chip-flat {
-  background: transparent;
-  color: var(--ink-dim); /* 6.4:1 vanilla / 9.5:1 cocoa */
-  border: 1px solid var(--rule);
-}
-/* v6.2 battery fix: on cocoa the cream ink lands 2.9:1 on ember — the
-   chip prints cocoa-on-ember instead (5.19:1), keeping the reference's
-   solid-ember moment AA in BOTH themes */
-[data-theme="dark"] .chip-ember { color: var(--surface); }
-.chip-ember em, .chip-flat em { font-style: normal; font-weight: 700; font-size: 10.5px; letter-spacing: 0.14em; }
 .pair {
   font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--ink-dim);
@@ -579,6 +606,15 @@ button { font-family: inherit; }
 [data-theme="dark"] .crackle path {
   stroke: color-mix(in srgb, var(--ink) 9%, transparent);
 }
+
+/* v6.4 STUFFING — chocolate chips + sugar on the thick band. Cocoa
+   tokens per theme (see token sheet); half-sunk read = soft bottom
+   shadow + tiny dough-light glint on each chip's shoulder. Static. */
+.stuffing .choc-chip { fill: var(--stuff-chip); }
+.stuffing .choc-shadow { fill: color-mix(in srgb, var(--ink) 22%, transparent); }
+.stuffing .choc-hilite { fill: var(--stuff-hilite); opacity: 0.55; }
+.stuffing .sugar { fill: var(--stuff-sugar); }
+[data-theme="dark"] .stuffing .choc-shadow { fill: color-mix(in srgb, var(--surface) 14%, transparent); }
 
 /* SECONDARY CRUMB ZONE — crumbs along the fold-edge hairline, quiet
    like the bite cluster (see restraint note above). Absolute band
@@ -818,9 +854,9 @@ button { font-family: inherit; }
   .themetoggle { order: 2; width: auto; height: 38px; padding: 0 11px; gap: 7px; }
   .themetoggle .tt-sep { height: 14px; }
   .themetoggle svg { width: 18px; height: 18px; }
-  .header .connect-pill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
   .netpill { order: 3; padding: 6px 12px; font-size: 9.5px; letter-spacing: 0.12em; }
-  .header .wallet-chip { order: 3; }
+  .pricechip { order: 3; white-space: normal; }
+  .header .walletline { order: 3; }
   /* mobile poster: giant number (cap 96px), ring below, strip wraps 2×2
      with hairlines both ways; ring ≤55vw; no rotated marginalia (hidden
      ≤1024 already). Masthead stacks to two rows (~106px) — subtract that
@@ -834,7 +870,7 @@ button { font-family: inherit; }
   }
   .hero-main { --price-cap: 96px; }
   .giantprice { font-size: clamp(40px, 18cqw, 96px); }
-  .pricemeta { gap: 8px 14px; margin-top: 12px; }
+  .blockmeta { gap: 6px 14px; margin-top: 10px; }
   .valueprop { font-size: 14px; margin-top: 10px; }
   .hero-side { padding: 16px 0 4px; align-items: center; }
   .bite-corner { width: 130px; height: 130px; right: -8px; top: 12px; }
@@ -860,6 +896,7 @@ button { font-family: inherit; }
 @media (max-width: 360px) {
   .shell { padding: 0 12px 70px; }
 }
+
 
 /* ============================================================
    CARDS — editorial paper panels: sharp corners, ink hairline,
@@ -946,16 +983,19 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   outline: none;
   transition: border-color var(--dur-hit) var(--ease-out), box-shadow var(--dur-hit) var(--ease-out);
 }
-.askbox input:focus { border-color: var(--ember-text); box-shadow: 0 0 0 3px rgba(232, 93, 47, 0.15); }
+.askbox input:focus { border-color: var(--ember-text); box-shadow: 0 0 0 3px rgba(206, 138, 60, 0.16); }
 .askbox input::placeholder { color: var(--ink-dim); font-size: 13px; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+/* v6.4 PILL CUT: suggestion chips → typographic text buttons */
+.chips { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 12px; }
 .chip {
-  background: var(--surface); border: 1px solid var(--line-ctl); color: var(--ink-dim);
-  border-radius: var(--radius-ctl); padding: 4px 13px; font-size: 12.5px; cursor: pointer;
-  font-family: inherit;
-  transition: border-color var(--dur-hit) var(--ease-out), color var(--dur-hit) var(--ease-out), transform var(--dur-hit) var(--ease-out);
+  background: none; border: none; color: var(--ink-dim);
+  border-radius: 0; padding: 6px 2px; font-size: 12.5px; cursor: pointer;
+  font-family: inherit; text-align: left;
+  text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink-dim) 35%, transparent);
+  text-underline-offset: 3px;
+  transition: color var(--dur-hit) var(--ease-out);
 }
-.chip:hover { border-color: var(--ember-text); color: var(--ember-text); transform: translateY(-1px); }
+.chip:hover { color: var(--ember-text); }
 .answer { margin-top: 16px; }
 .answer .ahead {
   display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
@@ -980,11 +1020,12 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .acard .row { display: flex; justify-content: space-between; gap: 14px; padding: 3px 0; font-size: 13.5px; }
 .acard .row .k { color: var(--ink-dim); }
 .acard .row .v { text-align: right; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+/* v6.4 PILL CUT: the echoed query is an editorial pull-line, not a bubble */
 .querybubble {
   display: inline-block;
-  background: var(--wash-ember); border: 1px solid var(--ember);
-  padding: 6px 14px; border-radius: 16px 16px 4px 16px;
-  font-size: 13px; color: var(--ink);
+  background: none; border: none; border-left: 2px solid var(--ember);
+  padding: 2px 0 2px 12px; border-radius: 0;
+  font-size: 13px; color: var(--ink); font-weight: 500;
 }
 .thinking { display: inline-flex; gap: 4px; align-items: center; color: var(--ink-dim); font-size: 13px; }
 .thinking i { width: 5px; height: 5px; background: var(--ember); border-radius: 50%; animation: pulse 1.1s infinite; }
@@ -1113,7 +1154,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   font-variant-numeric: tabular-nums;
   transition: border-color var(--dur-hit) var(--ease-out), box-shadow var(--dur-hit) var(--ease-out);
 }
-.field input:focus, .field select:focus { border-color: var(--ember-text); box-shadow: 0 0 0 3px rgba(232, 93, 47, 0.15); }
+.field input:focus, .field select:focus { border-color: var(--ember-text); box-shadow: 0 0 0 3px rgba(206, 138, 60, 0.16); }
 .field input::placeholder { color: var(--ink-dim); }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
@@ -1219,9 +1260,8 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .witem .ic svg { width: 20px; height: 20px; }
 .witem .rec {
   margin-left: auto; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--mint-text); border: 1px solid var(--mint);
-  background: var(--wash-mint);
-  padding: 2.5px 9px; border-radius: var(--radius-ctl); white-space: nowrap;
+  color: var(--mint-text);
+  padding: 2.5px 0; white-space: nowrap;
 }
 .winstall { color: var(--ink-dim); font-size: 12.5px; margin-top: 14px; line-height: 1.6; }
 
@@ -1231,12 +1271,14 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .swapgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; align-items: start; }
 @media (max-width: 940px) { .swapgrid { grid-template-columns: 1fr; } }
 .swaparrow { margin: 8px 0; color: var(--ember-text); }
-.routepill {
+/* v6.4 PILL CUT: route hops print as plain text tokens */
+.routehop {
   display: inline-flex; align-items: center; gap: 5px;
-  background: var(--surface); border: 1px solid var(--line-ctl);
-  border-radius: var(--radius-ctl); padding: 3.5px 12px; font-size: 11.5px;
+  padding: 3.5px 0; font-size: 11.5px;
   color: var(--ink-dim); margin: 2px 6px 2px 0; font-variant-numeric: tabular-nums;
 }
+.routehop::after { content: "·"; margin-left: 10px; color: var(--rule); }
+.routehop:last-child::after { content: ""; margin: 0; }
 .quoteout {
   font-size: 34px; font-weight: 700;
   font-variant-numeric: tabular-nums; line-height: 1.1;
@@ -1316,4 +1358,85 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   /* Oven static contract: newest row keeps a 2–4% warm sheen, no glide */
   .txrow.is-new { background: rgba(255, 196, 107, 0.04); }
   .txrow.sheen::after { display: none; }
+}
+
+/* v6.4 400%-ZOOM REFLOW LANE (320px viewport at 4× = 80px effective):
+   single column, mid-word breaks on display type, wrap-able pill text.
+   HERO B's 3–4-char giant number + this lane = scrollWidth ≤ innerWidth
+   at 80px (the release-gate zoom-400 acceptance). */
+@media (max-width: 300px) {
+  .shell { padding: 0 8px 60px; }
+  .header { gap: 6px; row-gap: 8px; padding: 12px 0 10px; }
+  .logo { font-size: 14px; gap: 7px; overflow-wrap: anywhere; }
+  .logo .cookie { width: 26px; height: 26px; }
+  .pricechip { white-space: normal; overflow-wrap: anywhere; row-gap: 2px; }
+  .netpill { white-space: normal; padding: 5px 8px; font-size: 8.5px; letter-spacing: 0.1em; }
+  .themetoggle { height: 32px; padding: 0 8px; }
+  .themetoggle svg { width: 16px; height: 16px; }
+  .hero-strip { grid-template-columns: 1fr; }
+  .hstrip .hlabel { white-space: normal; overflow-wrap: anywhere; }
+  .hstrip b { white-space: normal; overflow-wrap: anywhere; }
+  .pair { white-space: normal; overflow-wrap: anywhere; }
+  .valueprop { font-size: 13px; }
+  .sect-no { font-size: 16px; }
+  .sect-head h2 { font-size: 18px; overflow-wrap: anywhere; }
+  .sect-hint { width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .balbig, .quoteout { font-size: 22px; overflow-wrap: anywhere; }
+  .footer .mono { overflow-wrap: anywhere; }
+  .hero-cta-row .btn.primary { padding: 10px 12px; }
+  /* below-fold rows must reflow too: no unwrappable flex/grid row may
+     exceed the 64px content column */
+  .empty.compact { flex-wrap: wrap; }
+  .empty.compact .eaction { max-width: 100%; }
+  .empty.compact .icon { width: 34px; height: 34px; }
+  .linkbtn { white-space: normal; overflow-wrap: anywhere; max-width: 100%; box-sizing: border-box; text-align: left; }
+  .seg { flex-wrap: wrap; }
+  .netpill { overflow-wrap: anywhere; }
+  .fold-next { flex-wrap: wrap; }
+  .card h3 { flex-wrap: wrap; }
+  .card h3 .right { margin-left: 0; white-space: normal; overflow-wrap: anywhere; }
+  .factsline span { overflow-wrap: anywhere; }
+  .txrow { grid-template-columns: 20px minmax(0, 1fr); }
+  .txrow .t { grid-column: 1 / -1; white-space: normal; }
+  .txrow .meta { white-space: normal; overflow-wrap: anywhere; }
+  .crumbs .station { max-width: 100%; overflow-wrap: anywhere; }
+  .crumbs .link { display: none; }
+  .track .stages { flex-wrap: wrap; gap: 8px; }
+  .stage { min-width: 0; overflow-wrap: anywhere; }
+  .stage .stationicon { width: 22px; height: 22px; }
+  .empty { padding: 16px 8px; }
+  .card { padding: 14px 10px; }
+  .track { padding: 12px 8px; }
+  .txrow { display: block; padding: 10px 2px; }
+  .txrow .ok, .txrow .bad { display: inline-grid; margin-right: 6px; }
+  .btn { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+  div[style*="flex"] { flex-wrap: wrap; }
+  .sparkblock svg { max-width: 100%; }
+  /* ellipsized pool/sig labels are single unbreakable words — the reflow
+     lane breaks them rather than letting their min-content size rows */
+  .card, .card * { overflow-wrap: anywhere; }
+  /* text inputs have an intrinsic ~170px min-content — shrinkable here */
+  input, select { min-width: 0; }
+  .field { min-width: 0; }
+  .promptfield { min-width: 0; }
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  .askbox { flex-wrap: wrap; }
+  /* 1fr tracks resolve to minmax(0,1fr): no content min-content may
+     force a track wider than the reflow column */
+  .grid.cols-2, .grid.cols-3, .grid.cols-4, .swapgrid, .walletgrid, .row2 { grid-template-columns: minmax(0, 1fr) !important; }
+  .footer .brandmark { overflow-wrap: anywhere; white-space: normal; }
+  .empty .icon { width: 30px; height: 30px; }
+  /* ring legend + CTA + spark labels may wrap mid-word: no nowrap
+     min-content may size the single-column grid track */
+  .rl-row { flex-wrap: wrap; row-gap: 2px; }
+  .rl-label, .rl-val { white-space: normal; overflow-wrap: anywhere; }
+  .rl-pct { min-width: 0; }
+  .sparkcap span { white-space: normal; overflow-wrap: anywhere; }
+  .hero-cta-row .btn.primary { white-space: normal; overflow-wrap: anywhere; }
+  .crumbwords { white-space: normal; overflow-wrap: anywhere; }
+  .giantprice { font-size: clamp(14px, 18cqw, 96px); }
+  .bitemeta .bakeline, .bitemeta .bakesub { overflow-wrap: anywhere; }
+  .bitering .bitemeta { min-width: 0; max-width: 100%; }
+  .hero-side { padding-left: 0; padding-right: 0; }
+  .bite-corner { width: 60px; height: 60px; right: 0; top: 4px; opacity: 0.4; }
 }

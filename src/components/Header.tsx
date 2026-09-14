@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "../hooks/useWallet";
+import { useStats } from "./StatTiles";
 import { useTheme } from "../lib/theme";
 import { CHAIN } from "../lib/config";
-import { shortAddr, fmtNum } from "../lib/format";
+import { shortAddr, fmtNum, fmtUsd, deltaGlyph, pct, deltaTone } from "../lib/format";
 import { rpc } from "../lib/rpc";
 import { usePoll } from "../hooks/usePoll";
 import { CookieMark, IconCheck, IconCopy, IconMoon, IconSearch, IconSun } from "./icons";
@@ -84,6 +85,7 @@ export function Header() {
   const w = useWallet();
   const [modal, setModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const stats = useStats(); // shared StatsProvider poll — no second fetch
   const net = usePoll(async () => {
     const slot = await rpc<number>("getSlot", [], { retries: 0 });
     return slot;
@@ -96,6 +98,12 @@ export function Header() {
     return () => window.removeEventListener("cookiepilot:open-connect", open);
   }, []);
 
+  // v6.4 HERO B: COOK price demoted to a PLAIN-TEXT chip beside the
+  // live pill — exact USD (never display-rounded), tabular, no pill
+  // chrome; delta obeys the glyph law (▲ only > +0.005%, ▼ only below
+  // −0.005%, "flat" wording at ±0.005%).
+  const price = stats.data?.price.data.price;
+
   return (
     <>
       <header className="header">
@@ -106,40 +114,44 @@ export function Header() {
           </span>
         </div>
         <div className="spacer" />
-        {/* v5 POSTER-PURIFY: connect is reachable as a pill in the masthead
-            — quiet ink outline, so the ring stays the only loud ember */}
-        {!w.address && (
-          <button className="connect-pill" onClick={() => setModal(true)}>
-            Connect wallet
-          </button>
+        {/* v6.4 PILL CUT: the masthead connect pill is gone — the hero CTA
+            is the ONE connect affordance while disconnected; connected
+            state reads as the quiet text line below. */}
+        {price && (
+          <span className="pricechip" title="COOK / USDC — mainnet pair">
+            <b>COOK</b>
+            <span className="data">{fmtUsd(price.usd)}</span>
+            <span className={`data pc-delta ${deltaTone(price.change24h)}`}>
+              {deltaGlyph(price.change24h)
+                ? `${deltaGlyph(price.change24h)} ${pct(price.change24h)}`
+                : `${pct(price.change24h)} · flat`}
+            </span>
+          </span>
         )}
         <span className="netpill" title={net.error ? net.error : "Live from rpc.cookiescan.io"}>
           <span className={`dot ${net.error ? "off" : net.data ? "" : "warn"}`} aria-hidden="true" />
           {net.error ? "RPC offline" : "Mainnet live"}
         </span>
         {w.address ? (
-          <span className="wallet-chip" title={w.address}>
-            <span className="bal">{w.balance != null ? `${fmtNum(w.balance, 4)} COOK` : "…"}</span>
-            <span>
-              {shortAddr(w.address)}
-              <button
-                className="copybtn"
-                title="Copy address"
-                aria-label="Copy address"
-                onClick={async (e) => {
-                  e.stopPropagation();
-                  await navigator.clipboard.writeText(w.address!).catch(() => {});
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 1000);
-                }}
-              >
-                {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-              </button>
-            </span>
-            <button className="btn small ghost" onClick={() => void w.disconnect()}>Disconnect</button>
+          <span className="walletline" title={w.address}>
+            <span className="bal data">{w.balance != null ? `${fmtNum(w.balance, 4)} COOK` : "…"}</span>
+            <span className="addr data">{shortAddr(w.address)}</span>
+            <button
+              className="copybtn"
+              title="Copy address"
+              aria-label="Copy address"
+              onClick={async () => {
+                await navigator.clipboard.writeText(w.address!).catch(() => {});
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1000);
+              }}
+            >
+              {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+            </button>
+            <button className="linkbtn" onClick={() => void w.disconnect()}>Disconnect</button>
           </span>
         ) : null}
-        {/* Reference masthead: logo · pipe · tagline · connect + ONE live pill · toggle. */}
+        {/* Reference masthead: logo · pipe · price text · ONE live pill · toggle. */}
         <ThemeToggle />
       </header>
       {modal && <WalletModal onClose={() => setModal(false)} />}

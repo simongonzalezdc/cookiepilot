@@ -1,64 +1,14 @@
 {
   "schema_version": 1,
-  "catalog": {
-    "path": "skills/tastecheck-pass/assets/check-catalog.json",
-    "sha256": "a4b61dbd97681471bddc36f5115aceb7ea058e9971f0468242e8cf8a0de522c6"
-  },
-  "artifact": {
-    "type": "directory",
-    "path": "dist",
-    "sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
-    "bytes": 654107,
-    "dependency_manifest": {
-      "entry": "dist/index.html",
-      "assets": [
-        {
-          "path": "dist/assets/index-DxXCqznv.css",
-          "bytes": 40889,
-          "sha256": "89c90001d160c2ed95e2b9190f2faa15ec52e3568cfa2e358d052222123c3f0b"
-        },
-        {
-          "path": "dist/assets/index-TZ4a8U39.js",
-          "bytes": 501884,
-          "sha256": "8986b2ab7cec40ed16044c31b39e4cc82895ac5285dd335497b081a5c13f4cf9"
-        },
-        {
-          "path": "dist/fonts/mplus-400.woff2",
-          "bytes": 21608,
-          "sha256": "2071edce3675ed9c2e79563a08c3f399a290c4c439a4f2ae6f330283e0bf9fba"
-        },
-        {
-          "path": "dist/fonts/mplus-500.woff2",
-          "bytes": 21532,
-          "sha256": "e15f0e7314386720f112c651bbd58ec6c05941f96395e8d075744db1e730c373"
-        },
-        {
-          "path": "dist/fonts/mplus-700.woff2",
-          "bytes": 22244,
-          "sha256": "5bc9f941391ac451c8857ea5ec138b29d64ab144c24c7504f92285f2581fc6a3"
-        },
-        {
-          "path": "dist/fonts/mplus-800.woff2",
-          "bytes": 22224,
-          "sha256": "73247529dc06b255b6b85dd3e42a7af5f2f516761a468003765d421e212140ac"
-        },
-        {
-          "path": "dist/fonts/mplus-900.woff2",
-          "bytes": 21116,
-          "sha256": "698480bd2cf228bebb0390a9ac05195192edef7ecd1291677b78cbc94513756f"
-        },
-        {
-          "path": "dist/index.html",
-          "bytes": 1518,
-          "sha256": "441612f627c2696da64ee3fcb1e4249114dacc1ada183fabf05601c044347f97"
-        },
-        {
-          "path": "dist/theme-boot.js",
-          "bytes": 616,
-          "sha256": "7f29545685bee864d203c22aa36dc168984a3dab54e4fcee2ebc1176e9623136"
-        }
-      ],
-      "sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68"
+  "kind": "tastecheck-release-gate",
+  "roots": {
+    "verifier": {
+      "path": "[REDACTED:ABSOLUTE_PATH]",
+      "sha256": "f50f85e50e7340a2a6abfc1900cb4fdda843f4f18eaed5b91039525e79e315c7"
+    },
+    "artifact": {
+      "path": "[REDACTED:ABSOLUTE_PATH]",
+      "sha256": "759d21e31e0b0d67dcbf027f1697f838a9bc6d3870642788f126a9a7e66cf33a"
     }
   },
   "execution": {
@@ -76,15 +26,74 @@
       390,
       768,
       1280
+    ],
+    "routes": [
+      "/"
+    ],
+    "states": [
+      "default"
+    ],
+    "members": [
+      {
+        "id": "route:/|state:default|viewport:390",
+        "route": "/",
+        "state": "default",
+        "viewport": 390
+      },
+      {
+        "id": "route:/|state:default|viewport:768",
+        "route": "/",
+        "state": "default",
+        "viewport": 768
+      },
+      {
+        "id": "route:/|state:default|viewport:1280",
+        "route": "/",
+        "state": "default",
+        "viewport": 1280
+      }
+    ]
+  },
+  "catalog": {
+    "path": "skills/tastecheck-pass/assets/check-catalog.json",
+    "sha256": "a4b61dbd97681471bddc36f5115aceb7ea058e9971f0468242e8cf8a0de522c6",
+    "check_ids": [
+      "direction:system",
+      "foundation:color",
+      "foundation:typography",
+      "foundation:spacing",
+      "foundation:theming",
+      "structure:responsive-layout",
+      "structure:component-states",
+      "structure:form-ux",
+      "structure:empty-states",
+      "surface:micro-motion",
+      "surface:data-viz",
+      "surface:art-direction",
+      "verification:a11y",
+      "verification:cognitive-a11y",
+      "verification:i18n",
+      "verification:deslop-ui",
+      "verification:humanize-copy",
+      "browser:rendering",
+      "browser:zoom-400",
+      "browser:keyboard",
+      "browser:theme-contrast",
+      "browser:reduced-motion",
+      "browser:cold-load",
+      "browser:shadow-iframe",
+      "gate:artifact-spec",
+      "gate:required-evidence",
+      "gate:blocker-handoff"
     ]
   },
   "subject_inventory": {
     "frozen_at": "2026-09-14T01:00:39Z",
     "subjects": [
-      "motion",
-      "data-viz",
       "art-direction",
-      "cognitive-friction"
+      "cognitive-friction",
+      "data-viz",
+      "motion"
     ],
     "coverage": {
       "direction:system": [
@@ -378,6 +387,70 @@
     },
     "sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833"
   },
+  "artifact": {
+    "type": "directory",
+    "identity": "directory:dist",
+    "root_identity": {
+      "path": "[REDACTED:ABSOLUTE_PATH]",
+      "sha256": "759d21e31e0b0d67dcbf027f1697f838a9bc6d3870642788f126a9a7e66cf33a"
+    },
+    "bytes": 654107,
+    "sha256": "9dd01388ed568646b2ceb527e7812be23e8d30d11de27e998b78bdcd85fff582",
+    "hash_verified": true,
+    "dependency_manifest": {
+      "entry": "dist/index.html",
+      "assets": [
+        {
+          "path": "dist/assets/index-DxXCqznv.css",
+          "bytes": 40889,
+          "sha256": "89c90001d160c2ed95e2b9190f2faa15ec52e3568cfa2e358d052222123c3f0b"
+        },
+        {
+          "path": "dist/assets/index-TZ4a8U39.js",
+          "bytes": 501884,
+          "sha256": "8986b2ab7cec40ed16044c31b39e4cc82895ac5285dd335497b081a5c13f4cf9"
+        },
+        {
+          "path": "dist/fonts/mplus-400.woff2",
+          "bytes": 21608,
+          "sha256": "2071edce3675ed9c2e79563a08c3f399a290c4c439a4f2ae6f330283e0bf9fba"
+        },
+        {
+          "path": "dist/fonts/mplus-500.woff2",
+          "bytes": 21532,
+          "sha256": "e15f0e7314386720f112c651bbd58ec6c05941f96395e8d075744db1e730c373"
+        },
+        {
+          "path": "dist/fonts/mplus-700.woff2",
+          "bytes": 22244,
+          "sha256": "5bc9f941391ac451c8857ea5ec138b29d64ab144c24c7504f92285f2581fc6a3"
+        },
+        {
+          "path": "dist/fonts/mplus-800.woff2",
+          "bytes": 22224,
+          "sha256": "73247529dc06b255b6b85dd3e42a7af5f2f516761a468003765d421e212140ac"
+        },
+        {
+          "path": "dist/fonts/mplus-900.woff2",
+          "bytes": 21116,
+          "sha256": "698480bd2cf228bebb0390a9ac05195192edef7ecd1291677b78cbc94513756f"
+        },
+        {
+          "path": "dist/index.html",
+          "bytes": 1518,
+          "sha256": "441612f627c2696da64ee3fcb1e4249114dacc1ada183fabf05601c044347f97"
+        },
+        {
+          "path": "dist/theme-boot.js",
+          "bytes": 616,
+          "sha256": "7f29545685bee864d203c22aa36dc168984a3dab54e4fcee2ebc1176e9623136"
+        }
+      ],
+      "sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68"
+    },
+    "dependency_manifest_sha256": "6e424074d429d59715ee3adb5bd1d25b012102275d3878e697774b04994b1c68",
+    "dependency_manifest_hash_verified": true
+  },
   "rows": [
     {
       "skill": "tastecheck-pass",
@@ -416,7 +489,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "direction:system: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -635,7 +711,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -675,7 +752,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -715,7 +793,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -754,7 +833,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -806,7 +886,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -874,7 +955,8 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -930,7 +1012,8 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -998,7 +1081,8 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -1037,7 +1121,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "surface:micro-motion: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1077,7 +1164,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "surface:data-viz: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1116,7 +1206,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "surface:art-direction: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1156,7 +1249,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -1199,7 +1293,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "verification:cognitive-a11y: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1234,7 +1331,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "verification:i18n: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1273,7 +1373,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "verification:deslop-ui: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1312,7 +1415,10 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "verification:humanize-copy: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1368,7 +1474,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "browser:rendering: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1421,7 +1530,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "browser:zoom-400: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -1477,7 +1589,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "browser:keyboard: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -2070,7 +2185,8 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -2123,7 +2239,8 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -2179,7 +2296,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "browser:cold-load: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -2218,7 +2338,10 @@
         },
         "sha256": "5a2029a9c515c5467663b921b8103299782e1dc7ce00e3e976c2f2fcccbe5bb3"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "browser:shadow-iframe: subjective rows require reviewer provenance"
+      ]
     },
     {
       "skill": "tastecheck-pass",
@@ -2258,7 +2381,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -2298,7 +2422,8 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": []
     },
     {
       "skill": "tastecheck-pass",
@@ -2339,7 +2464,57 @@
         "inspector": null,
         "sha256": "0b604018e9f98316223a92aea6be2919c5638dabec0c868f9db19538cae223cd"
       },
-      "review": null
+      "review": null,
+      "validation_errors": [
+        "gate:blocker-handoff: subjective rows require reviewer provenance"
+      ]
     }
-  ]
+  ],
+  "verdict": "HOLD",
+  "release_eligible": false,
+  "blockers": [
+    "direction:system",
+    "surface:micro-motion",
+    "surface:data-viz",
+    "surface:art-direction",
+    "verification:a11y",
+    "verification:cognitive-a11y",
+    "verification:i18n",
+    "verification:deslop-ui",
+    "verification:humanize-copy",
+    "browser:rendering",
+    "browser:zoom-400",
+    "browser:keyboard",
+    "browser:cold-load",
+    "browser:shadow-iframe",
+    "gate:blocker-handoff"
+  ],
+  "validation": {
+    "input_valid": false,
+    "execution_policy_valid": true,
+    "browser_subjects_valid": true,
+    "catalog_complete": true,
+    "subject_inventory_valid": true,
+    "subject_coverage_complete": true,
+    "artifact_hash_verified": true,
+    "artifact_dependency_manifest_verified": true,
+    "evidence_hashes_verified": true,
+    "provenance_hashes_verified": true,
+    "errors": [
+      "direction:system: direction:system: subjective rows require reviewer provenance",
+      "surface:micro-motion: surface:micro-motion: subjective rows require reviewer provenance",
+      "surface:data-viz: surface:data-viz: subjective rows require reviewer provenance",
+      "surface:art-direction: surface:art-direction: subjective rows require reviewer provenance",
+      "verification:cognitive-a11y: verification:cognitive-a11y: subjective rows require reviewer provenance",
+      "verification:i18n: verification:i18n: subjective rows require reviewer provenance",
+      "verification:deslop-ui: verification:deslop-ui: subjective rows require reviewer provenance",
+      "verification:humanize-copy: verification:humanize-copy: subjective rows require reviewer provenance",
+      "browser:rendering: browser:rendering: subjective rows require reviewer provenance",
+      "browser:zoom-400: browser:zoom-400: subjective rows require reviewer provenance",
+      "browser:keyboard: browser:keyboard: subjective rows require reviewer provenance",
+      "browser:cold-load: browser:cold-load: subjective rows require reviewer provenance",
+      "browser:shadow-iframe: browser:shadow-iframe: subjective rows require reviewer provenance",
+      "gate:blocker-handoff: gate:blocker-handoff: subjective rows require reviewer provenance"
+    ]
+  }
 }

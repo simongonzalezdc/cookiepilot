@@ -52,7 +52,7 @@ Panel files: org-hq docs/cfo-corpus/consensus/panel-{astra,grok,sol}.md|.log
 - **AM-3 (all 3): Bite geometry contract.** One notch max per chart element, 10–14% of plot bounding box (or ≤8px depth on meters), ~40° arc, NEVER crossing axes, labels, thresholds, the last data point, or the current value; meters bite the TRACK not the fill endpoint; exact numeric value printed beside every bitten element; max two bitten elements per viewport.
 **AM-3 v6.3 (CEO directive 2026-09-13: "the bite doesn't look like a real bite" — dated update):** the RING CENTERPIECE's notch is no longer the scalloped-circle chart bite above. It is a REAL BITE crescent: anchored on the outer edge, mouth opening 52–58° of the rim, crescent depth 18–26% of ring radius at center (locked tasteroll winner: 18–20%), inner edge = double dental-arc (wide shallow upper-incisor arc + narrower deeper lower-incisor arc crossing at TWO cusp points), 4–6 subtle seeded tooth bumps per arc (mulberry32, never symmetric), one bite only, ≥10° clear of the fill endpoint (current value) and the 0° seam, never reaching the center label. Small chart/meter bites (BarChart/HBarList) KEEP the ≤8px / 10–14%-of-bbox rule — they are data marks, not the signature.
 - **AM-4 (all 3): static-equivalent states.** Crumb Trail renders as three discrete labeled stations (processed/confirmed/finalized + icons) that parse with zero motion; Oven's reduced-motion/static = 2–4% warm sheen on newest feed row, no glide. Motion tokens SPLIT: interaction 180ms ease-out; ambient 500–700ms; `prefers-reduced-motion` → durations 0, labels/stations persist.
-- **AM-5 (all 3): judging-frame contract.** First viewport at 1440×900 AND 390×844 must show: product name, one-line value proposition, live network state, one legible Bite chart, theme toggle top-right (aria-pressed, localStorage-persisted, in both screenshot crops). Dark theme gets its own shadow token 0 8px 24px rgba(0,0,0,.40) + hairline (light token vanishes on cocoa). Icons: one 24px set, 1.5px round-cap stroke (2px @16px), bite/crumb motifs on 6–8 marks only; cookie glyph = favicon/wordmark only.
+- **AM-5 (all 3; v6.4 update, CEO hero-fork ruling 2026-09-13 "A looks broken"):** First viewport at 1440×900 AND 390×844 must show: product name, one-line value proposition (leading with sub-second finality), live network state, one legible Bite chart, theme toggle top-right (aria-pressed, localStorage-persisted, in both screenshot crops). The hero's giant display number is LIVE MS/BLOCK (validator perf samples, 3–4 chars + ms unit, fit-to-column floor 14px); the COOK price is a PLAIN-TEXT chip in the masthead cluster (exact USD, tabular, no pill chrome, delta obeys the glyph law). The 400%-zoom lane (80px effective) must reflow: scrollWidth ≤ innerWidth. Dark theme gets its own shadow token 0 8px 24px rgba(0,0,0,.40) + hairline (light token vanishes on cocoa). Icons: one 24px set, 1.5px round-cap stroke (2px @16px), bite/crumb motifs on 6–8 marks only; cookie glyph = favicon/wordmark only.
 
 Consensus state: amendments applied; final approval authority = CEO (panel verdicts superseded by his nod). Next: rebuild to v2 → dual-theme dual-browser render proof → tastecheck-pass gate (SHIP required) → CEO's 3 submission acts.
 
@@ -120,9 +120,9 @@ Swiss grid + modular rhythm · cream/ink/ember palette · MAINNET LIVE pulse pil
 ## v6 KILL (fights a live data product)
 Clever-copy captions as data labels ("EXACTLY 54.5% BAKED") — wordplay stays in marketing lines, never on a datum · hero-scale sparkline that is neither actionable nor decorative · vertical rotated marginalia column · section headlines bleeding off the fold.
 
-## THE HERO FORK — CEO ruling required before the next full pass (renders to be presented side-by-side)
-- **Option A — recast the number, keep the gesture (default if no word):** the giant price stays THE poster number but renders in value-preserving poster notation: `0.00826¢` (= $0.0000826) with exact USD in the meta line, or `$0.0₄826` sub-zero form (implemented — the exact form; the sub-zero notation was verified value-correct); delta chip obeys the glyph law below. Reference anatomy intact.
-- **Option B — network-health hero:** giant element becomes the epoch/finality ring (live ms-to-cement as the big number: `~458ms` — a number Cookie Chain is actually proud of), KPI matrix beside it; price demoted to an equal-weight chip next to MAINNET LIVE.
+## THE HERO FORK — RESOLVED (CEO ruling 2026-09-13: "A looks broken"; panel was 5/5 B)
+- ~~Option A — recast the number~~ (held in reserve; never shipped).
+- **Option B — SHIPPED (v6.4):** the giant display number is LIVE MS/BLOCK (validator perf samples — the sub-second story at poster scale, 3–4 chars so the 400%-zoom probe passes); the epoch/bridged ring stays the graphic centerpiece; KPI matrix (throughput / finality ticks-to-cement / bridged / height) on the fold edge, one shared poll; COOK price demoted to a PLAIN-TEXT chip next to MAINNET LIVE (exact USD, tabular, glyph law, no pill chrome — see v6.4 PILL CUT).
 
 ## Unconditional v6 fixes (both branches; first implementation pass)
 1. Kill the injected "Powered by Netlify" badge (hosting chrome leaking into product UI).
@@ -148,7 +148,7 @@ Every dimension of the original interview + later forks now carries an answer. P
 | reference | **CEO (2026-09-07)** | Swiss editorial poster (gallery pick) — supersedes the v1 "assumed" row | CEO picked it himself; v1 table was never updated |
 | structure_rhythm | PANEL, nod owed | Poster fold (hero owns 100svh) → numbered sections as densified workbench panels below; mobile becomes a real cockpit (nav + context + headline KPIs + curated activity), not a raw tx dump | v5→v6 evolution + unanimous panel weaknesses list |
 | imagery_iconography | PANEL | Keep the custom 24px line set + bite/crumb motifs; ADD consistent status icons to feed/finality rows (text-heavy today) | floor seat + gemini seat |
-| hero_metric | PANEL 5/5 B, nod owed | **B**: block-time hero (~432ms live) + epoch ring + KPI matrix; price demoted to a header pill. A (recast $0.0₄826) held in reserve | minimax/floor/gemini/kimi/codex-luna all B: "the product is blocks, not price" |
+| hero_metric | **CEO (2026-09-13: "A looks broken", panel 5/5 B)** | **B SHIPPED (v6.4)**: block-time hero (live ms/block ~430–520ms) + epoch/bridged ring centerpiece + KPI matrix (throughput / finality ticks / bridged / height, one shared poll); price demoted to a PLAIN-TEXT masthead chip (exact USD, glyph law, no pill chrome) | panel 5/5 unanimous B + CEO ruling; zoom-400 row flips PASS with the 3–4-char number |
 | texture | **CEO (2026-09-13 directive)** + PANEL restraint recipe | Realistic cookie crumbs + crackling-cookie surface, IMPLEMENTED restrained: crumbs 2–6px irregular, warm beige/ember, low opacity, bite-anchored + one secondary zone only; crackle hairlines on the ring only; never inside charts/tables/labels, never repeating-pattern, never animated | CEO order verbatim; all 4 vision seats warned literal skeuomorph cheapens — final taste ruling stays CEO's on the renders |
 | flat_delta | PANEL | Flat 24h change renders a neutral chip ("24h flat" wording, no directional color/arrow) — a flat delta must not read as a dead feed | kimi + minimax flagged the dead-read; luna recipe |
 | community_alignment | **CEO (2026-09-13 directive)** | Hyper-align to Cookie Chain community intent: playful-warm native voice ("oven-fresh L2", "crumb by crumb" — panel: the single most native element, amplify), bite identity, degen-friendly but precise; wordplay never on a datum (v6 KILL row stands) | CEO directive + kimi/luna convergence |
@@ -204,3 +204,40 @@ Latest pack: `/Users/simongonzalezdecruz/workspaces/tastecheck/skills/` (read th
 - release-gate.mjs ledger run against check-catalog.json (first time in any pass): see `gate/release-gate-report.json` + `gate/improve-seat.md` (EVIDENCE vs INFERRED labels).
 
 Skills applied: improve-existing-website, tasteroll, color-system, web-typography, spacing-system, theming, responsive-layout, component-states, form-ux, empty-states, micro-motion, data-viz, art-direction, a11y-pass, cognitive-a11y, i18n-ready (recorded n/a — monolingual), deslop-ui, humanize-copy, tastecheck-pass (gate + release-gate ledger).
+
+---
+
+# v6.4 — CEO VISUAL IDENTITY, FINAL (CEO directives 2026-09-13: hero B ruled, thick band, de-pumpkin, stuffing, pill cut; implemented same day, one commit)
+
+Five hero-surface items, all binding. Evidence: `docs/v6-captures-v6b/` (captures + gate-report.json + vision transcripts below); release-gate ledger re-run in `docs/v6-captures-browsers/gate/`.
+
+## 1. HERO B (CEO: "A looks broken" — the fork resolves to B, panel was 5/5)
+- **Giant number = LIVE MS/BLOCK** from validator perf samples (`getRecentPerformanceSamples`), 3–4 chars + smaller `ms` unit, fit-to-column (cap 150/96px, **floor 14px**), tabular, poster weight. Exact value in `aria-label`; source caps line below.
+- **Ring stays the centerpiece** (bridged share with epoch sub-line — the v4 metric decision unchanged); KPI matrix on the fold edge: THROUGHPUT · FINALITY (3 ticks to cement) · BRIDGED · HEIGHT — one shared `StatsProvider` poll, no new requests.
+- **COOK price demoted to a PLAIN-TEXT masthead chip**: exact USD (never display-rounded), tabular, no pill chrome; delta obeys the glyph law with tone classes (mint/jam/dim), flat = "· flat" wording.
+- Standfirst leads with sub-second finality. **zoom-400 row FLIPS PASS**: 80px probe scrollWidth 80 = innerWidth (was 299 v6.1–v6.3; repair = hero-fork notation decision, now resolved). A ≤300px reflow lane ships (single column, minmax(0,1fr) tracks, mid-word breaks, shrinkable inputs).
+
+## 2. THICK BAND
+- Ring band width **0.17 × ring size** (was 0.118 — gauge-track read). Bite constants **unchanged**: the ±10% tweak experiment (deeper/wider + cusp pinch) collapsed the wound to one clean concave arc — the exact v6.3 failure mode — so the locked geometry stands (seed `0xd1bc3`, depth 18–20%, mouth 26–29° half).
+- Re-validation (org-bridge minimax, both themes, clean 2-line protocol): **REAL 7/10 × 3/3 samples** (single-shot strict-protocol runs scored 4–6/10 — seat noise ±2; identical build scored both 6/10 REAL and 4/10 FAKE across runs, hence the 3-sample protocol). Verdict: real-bite KEPT.
+- New exact keep-out: no crumb floats deep inside the removed crescent (point-in-wound-polygon test); crumbs at the outer rim of the mouth stay (active shedding).
+
+## 3. ACCENT ROLL — de-pumpkin (CEO: "orange = pumpkin spice latte, dates it to a holiday")
+- Roll: C1 `#D98E2B` / C2 `#C77E33` / C3 `#CE8A3C` on the real light hero via token override, vision-checked "premium-bakery warm vs seasonal/holiday?" — **C3 won BOTH order-swapped runs** (C3 > C2 > C1): "desaturated, brown-leaning caramel… toffee glaze" vs C1's "pumpkin-orange… PSL promotion".
+- **Shipped both themes**: `--ember: #CE8A3C` (the `#E85D2F` ember family RETIRES entirely — fills, washes, focus rings, selection, dot halos, crumb amber all derive from the new token). Text variants ≥4.5:1: light `--ember-text: #94632B` (4.67 vanilla / 5.06 sugar), dark from the toffee axis `--ember-text: #E8B47A` (9.83 cocoa / 8.73 raised); focus ring follows.
+- Full matrix re-measured: **22 pairs × 2 themes, light min 4.67, dark min 6.5** (all ≥4.5). Mark ratios published: ember-on-paper 2.6 light (state always text-carried; same regime as the retired 2.09 ember-on-track), 6.41 cocoa.
+
+## 4. STUFFING (procedural, zero deps, static)
+- On the thick band: **dough mottling** (4-octave feTurbulence, fixed seed, color-mapped to the amber accent, composited IN the band shape — can never leave the dough), **6–10 half-sunk chocolate chips** (9 live: irregular 9-vertex cocoa blobs, tiny top glint, soft bottom shadow, seeded `0x3ac0c0`, cocoa tones per theme), **sugar speckle at the band edges** (22 live).
+- Keep-outs (gate-proven): chips ≥10° clear of the fill endpoint (datum) and the 0° seam, ≥10° off the bite wound edge, radially inside the band [123,188] of viewBox 380; nothing in the center-label zone (0 overlaps); painted UNDER the fill (datum always reads clean); the bite mask cuts anything at the mouth.
+- Vision: **COOKIE-ILLUSTRATION (not photo), glance = chocolate-chip cookie YES, restraint "just right"** — 2/2 clean samples + 2 earlier positives.
+
+## 5. PILL CUT (CEO-overruled pill proliferation, 2026-09-13 — deslop ledger rationale updated)
+- **Exactly three pill affordances survive**: MAINNET LIVE pill · theme toggle · the hero CTA (the ONE connect affordance while disconnected; connected state = the header's quiet text line: balance · address · copy · Disconnect text-link).
+- Converted to plain text/typographic treatments: header connect pill (removed), wallet chip (quiet text line), hero delta chip (gone with HERO B — price is the header text chip), suggestion chips + token chips (text buttons), segmented tabs (text tabs + ember underline), route pills (text tokens with · separators), query bubble (editorial pull-line), wallet-modal "recommended" badge (text), all secondary/primary buttons below the hero (text buttons; padding preserved for tap targets).
+- gate-audit pill-CTA warn count drops to 1 — the sanctioned hero CTA itself.
+
+## Gate (v6.4, `docs/v6-captures-v6b/gate-report.json`)
+Console zero on all loads; overflow PASS 320/390/768/1024/1280/1440 **and 80px (zoom-400)**; contrast 22×2 ≥4.5; reduced-motion static (0 running animations, stuffing parses); keyboard trace clean, toggle aria-pressed flips; error state renders + Retry; tnum on all data elements incl. the price chip; keep-out proofs 0 violations. **Carried (unchanged, owned by the below-fold pass): 41 TAP TARGET fails** (sub-24px market/feed microtext links, pre-existing since v6.2). Subjective rows remain HOLD-for-human per the catalog's independent-reviewer contract — no agent countersigns as a human.
+
+Skills applied: improve-existing-website, tasteroll (accent roll + bite re-validation protocol), color-system, web-typography, spacing-system, theming, responsive-layout, component-states, form-ux, empty-states, micro-motion (static law), data-viz (datum keep-outs), art-direction, a11y-pass, cognitive-a11y, deslop-ui (pill cut), humanize-copy, tastecheck-pass (gate + release-gate ledger).

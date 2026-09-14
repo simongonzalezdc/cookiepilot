@@ -71,6 +71,17 @@ interface Crumb {
   ry?: number;
 }
 
+/** ray-cast point-in-polygon — used for the exact wound keep-out. */
+function pointInPoly(x: number, y: number, poly: [number, number][]): boolean {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i];
+    const [xj, yj] = poly[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
 /**
  * CRUMB CLUSTER AT THE BITE — the bitten cookie sheds. Particles sit
  * in/around the notch mouth with gravity sag (crumbs fall, they don't
@@ -89,6 +100,8 @@ function crumbsAtBite(
   fillEndAngle: number,
   rOuter: number,
   minDist = 118,
+  woundPoly?: [number, number][],
+  bandInner = 0,
 ): Crumb[] {
   const rnd = mulberry32(0xc0fee); // fixed seed — placement never re-rolls
   const c = size / 2;
@@ -110,6 +123,10 @@ function crumbsAtBite(
     const onBand = d > rOuter - 50 && d < rOuter + 3;
     const onFill = onBand && ang <= fillEndAngle + 2;
     if (onFill) continue;
+    // v6.4 cavity keep-out (exact): no crumb may DEEP-float inside the
+    // removed crescent; crumbs at the outer rim of the mouth stay — that
+    // is material actively shedding off the wound edge
+    if (woundPoly && pointInPoly(x, y, woundPoly) && d < rOuter - (rOuter - bandInner) * 0.55) continue;
     const s = 2.6 + rnd() * 2.9;
     const kind: Crumb["kind"] = i % 3 === 1 ? "round" : "angular";
     const crumb: Crumb = {
@@ -210,6 +227,106 @@ function crackleOnTrack(
   }
   return cracks;
 }
+/* ------------------------------------------------------------------
+   v6.4 STUFFING (CEO visual-identity pass 4: the thick band gets
+   cookie stuffing — half-sunk chocolate chips + sugar speckle; the
+   mottle filter lives with the ring's defs below). Hand-rolled SVG,
+   zero deps, fully STATIC, seeded (determinism law: placement never
+   re-rolls across renders, themes, or captures). Keep-outs enforced
+   per mark:
+   - angular: only on the exposed dough track, ≥10° clear of the fill
+     endpoint (the datum), clear of the 0° seam, ≥6° off the bite
+     wound edge (the mask would cut anything inside the mouth anyway)
+   - radial: chips fully inside the band, off both edges; sugar speckle
+     AT the edges by design (crystals catch light on the rim)
+   - never inside the center-label keep-out (the band is far outside)
+   Restraint: reads as chocolate-chip cookie at a glance, not a photo.
+------------------------------------------------------------------- */
+
+interface ChipMark {
+  x: number;
+  y: number;
+  rx: number;
+  ry: number;
+  rot: number;
+  points: string;
+}
+
+interface Speck {
+  x: number;
+  y: number;
+  r: number;
+  o: number;
+}
+
+function stuffingOnBand(
+  size: number,
+  r: number,
+  stroke: number,
+  endAngle: number,
+  trackDeg: number,
+  biteStart: number,
+  biteEnd: number,
+): { chips: ChipMark[]; specks: Speck[] } {
+  const rnd = mulberry32(0x3ac0c0); // "choc chip" — fixed seed
+  const c = size / 2;
+  // allowed angular windows: the surviving dough track, inset from the
+  // fill endpoint (≥10°, the datum keep-out) and the 0° seam, minus the
+  // bite mouth ±6° margin (the wound edge keep-out)
+  const insetA = Math.min(10, trackDeg * 0.28);
+  const insetB = Math.min(8, trackDeg * 0.2);
+  const a0 = endAngle + insetA;
+  const a1 = endAngle + trackDeg - insetB;
+  const w1 = Math.max(0, biteStart - 10 - a0);
+  const w2 = Math.max(0, a1 - (biteEnd + 10));
+  const L = w1 + w2;
+  const at = (deg: number, rad2: number) => {
+    const t = ((deg - 90) * Math.PI) / 180;
+    return [c + Math.cos(t) * rad2, c + Math.sin(t) * rad2] as const;
+  };
+  const degAt = (t: number) => (t <= w1 ? a0 + t : biteEnd + 10 + (t - w1));
+  const chips: ChipMark[] = [];
+  // 6–10 chips: 14 seeded candidates, keep-outs + spacing discard
+  for (let i = 0; i < 14 && chips.length < 9; i++) {
+    const t = rnd() * L;
+    const deg = degAt(t);
+    const rr = r + (rnd() - 0.5) * (stroke - 26); // inside the band, off its edges
+    const [x, y] = at(deg, rr);
+    const rx = 7 + rnd() * 4; // 7–11 viewBox units (≈7–11px at hero scale)
+    const ry = rx * (0.72 + rnd() * 0.2);
+    const reach = Math.max(rx, ry);
+    // radial keep-out: chip fully inside the band
+    if (rr + reach > r + stroke / 2 - 1.5 || rr - reach < r - stroke / 2 + 1.5) continue;
+    // spacing: no chip piles — ≥15 units center-to-center
+    if (chips.some((p) => Math.hypot(p.x - x, p.y - y) < 15)) continue;
+    // irregular blob: 9 vertices with radius jitter — never a clean ellipse
+    const pts: string[] = [];
+    const ph0 = rnd() * Math.PI * 2;
+    for (let v = 0; v < 9; v++) {
+      const va = ph0 + (v / 9) * Math.PI * 2;
+      const vr = rx * (0.8 + rnd() * 0.28);
+      pts.push(`${(Math.cos(va) * vr).toFixed(1)},${(Math.sin(va) * vr * (ry / rx)).toFixed(1)}`);
+    }
+    chips.push({
+      x: +x.toFixed(1),
+      y: +y.toFixed(1),
+      rx: +rx.toFixed(1),
+      ry: +ry.toFixed(1),
+      rot: Math.round(rnd() * 360),
+      points: pts.join(" "),
+    });
+  }
+  // sugar speckle: tiny crystals catching light at the band edges
+  const specks: Speck[] = [];
+  for (let i = 0; i < 30 && specks.length < 22; i++) {
+    const deg = degAt(rnd() * L);
+    const edge = rnd() < 0.5 ? -1 : 1;
+    const rr = r + edge * (stroke / 2 - (2 + rnd() * 3.5));
+    const [x, y] = at(deg, rr);
+    specks.push({ x: +x.toFixed(1), y: +y.toFixed(1), r: +(0.7 + rnd() * 0.9).toFixed(1), o: 0.4 + rnd() * 0.35 });
+  }
+  return { chips, specks };
+}
 
 /* ------------------------------------------------------------------
    v6.3 REAL BITE (CEO directive 2026-09-13: "the bite doesn't look
@@ -233,6 +350,8 @@ interface RealBite {
   /** wound mouth center — the crumb-shed anchor */
   cx: number;
   cy: number;
+  /** wound-edge polygon (absolute coords, closed) — exact keep-out */
+  woundPoly: [number, number][];
 }
 
 /** 4–6 seeded incisor impressions along one dental arc (relative to its peak). */
@@ -261,6 +380,10 @@ function realBiteGeometry(
   const rnd = mulberry32(seed);
   // LOCKED v6.3 tasteroll winner (org-bridge minimax, 2026-09-13):
   // mouth half-angle 26–29°, crescent depth 18–20% of ring radius.
+  // v6.4 thick-band re-validation: constants UNCHANGED — the ±10% tweak
+  // (deeper/wider) collapsed the wound edge to one clean concave arc
+  // (vision 4/10 FAKE, the v6.3 failure mode); the locked geometry held
+  // REAL 6/10 on the 0.17 band, so it stands as-is.
   const mouthHalf = Math.min(26 + rnd() * 3, Math.max(24, fitHalf)); // 52–58° mouth
   const depth = r * (0.18 + rnd() * 0.02); // crescent depth at center, 18–20% of ring radius
   // upper incisor row: wide + shallow; lower: narrower + deeper. Peaks
@@ -292,12 +415,16 @@ function realBiteGeometry(
   // wound edge: the deeper of the two dental arcs at every angle
   const steps = 44;
   const pts: string[] = [];
+  const poly: [number, number][] = [];
   for (let i = 0; i <= steps; i++) {
     const phi = -mouthHalf + (i / steps) * mouthHalf * 2;
     const d = Math.max(arcDepth(phi, up), arcDepth(phi, lo));
     const rad = ((biteAngle + phi - 90) * Math.PI) / 180;
     const R = rOut - d;
-    pts.push(`${(c + Math.cos(rad) * R).toFixed(1)} ${(c + Math.sin(rad) * R).toFixed(1)}`);
+    const x = c + Math.cos(rad) * R;
+    const y = c + Math.sin(rad) * R;
+    pts.push(`${x.toFixed(1)} ${y.toFixed(1)}`);
+    poly.push([x, y]);
   }
   const rimPt = (phi: number) => {
     const rad = ((biteAngle + phi - 90) * Math.PI) / 180;
@@ -308,7 +435,13 @@ function realBiteGeometry(
   const d = `M${PL} L${pts.join(" L")} L${PR} A${rOut.toFixed(1)} ${rOut.toFixed(1)} 0 0 0 ${PL} Z`;
   const rad0 = ((biteAngle - 90) * Math.PI) / 180;
   const shedR = rOut - depth * 0.5;
-  return { d, cx: c + Math.cos(rad0) * shedR, cy: c + Math.sin(rad0) * shedR };
+  // wound polygon closes along the outer rim (the removed crescent)
+  for (let i = 0; i <= 24; i++) {
+    const phi = mouthHalf - (i / 24) * mouthHalf * 2;
+    const rad = ((biteAngle + phi - 90) * Math.PI) / 180;
+    poly.push([c + Math.cos(rad) * rOut, c + Math.sin(rad) * rOut]);
+  }
+  return { d, cx: c + Math.cos(rad0) * shedR, cy: c + Math.sin(rad0) * shedR, woundPoly: poly };
 }
 
 interface BiteMaskProps {
@@ -615,7 +748,11 @@ export function BiteRing({
 }) {
   const mid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const p = Math.max(0, Math.min(100, percent));
-  const stroke = layout === "stacked" ? Math.round(size * 0.118) : 13;
+  // v6.4 THICK BAND (CEO visual-identity pass 4: chunky-cookie read):
+  // band width 0.17 × ring size (was 0.118 — the thin band read as a
+  // gauge track, not a cookie rim). Bite constants re-validated on the
+  // thick canvas via the org-bridge vision seat; seed unchanged.
+  const stroke = layout === "stacked" ? Math.round(size * 0.17) : 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
   // v6.3 REAL BITE: the notch is a human-bite crescent (see
@@ -644,7 +781,7 @@ export function BiteRing({
   // off the rim) — min distance = just inside the dough track.
   const crumbs =
     layout === "stacked" && bite
-      ? crumbsAtBite(size, bite.cx, bite.cy, endAngle, rOuter, r - stroke / 2 + 3)
+      ? crumbsAtBite(size, bite.cx, bite.cy, endAngle, rOuter, r - stroke / 2 + 3, bite.woundPoly, r - stroke / 2)
       : [];
   // crackle lives on the exposed track OUTSIDE the bite mouth (the mask
   // would cut any stroke inside it anyway — this keeps the count honest)
@@ -652,6 +789,13 @@ export function BiteRing({
     layout === "stacked" && hasTrack
       ? crackleOnTrack(size, r, stroke, endAngle, trackDeg, biteAngle - 32, biteAngle + 32)
       : [];
+  // v6.4 STUFFING — chocolate chips + sugar speckle on the thick band
+  // (stacked centerpiece only — restraint law). Seeded, static, and
+  // painted UNDER the fill so the datum (live arc) always reads clean.
+  const stuffing =
+    layout === "stacked" && hasTrack
+      ? stuffingOnBand(size, r, stroke, endAngle, trackDeg, biteAngle - 32, biteAngle + 32)
+      : { chips: [], specks: [] };
 
   const ringSvg = (
     <svg
@@ -672,6 +816,16 @@ export function BiteRing({
               No exposed track → no bite (AM-3 keeps the law). */}
           {bite && <path d={bite.d} fill="#000" />}
         </mask>
+        {/* v6.4 DOUGH MOTTLE — multi-octave feTurbulence color-mapped to
+            the amber accent, composited IN the band shape (SourceGraphic)
+            so the mottle can never leave the dough. Fixed seed = static. */}
+        <filter id={`mottle${mid}`} x="-8%" y="-8%" width="116%" height="116%" colorInterpolationFilters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" seed="53344" stitchTiles="stitch" result="noise" />
+          <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.34 0.34 0.34 0 -0.16" result="ma" />
+          <feFlood style={{ floodColor: "var(--ember)" }} result="mc" />
+          <feComposite in="mc" in2="ma" operator="in" result="tint" />
+          <feComposite in="tint" in2="SourceGraphic" operator="in" />
+        </filter>
       </defs>
       <g mask={`url(#ringbite${mid})`}>
         {/* clean center: paper disc under the value so backdrop halftone
@@ -686,6 +840,17 @@ export function BiteRing({
           style={{ stroke: "var(--ring-track)" }}
           strokeWidth={stroke}
         />
+        {/* v6.4 mottle layer: amber dough blotching over the track */}
+        <circle
+          cx={c}
+          cy={c}
+          r={r}
+          fill="none"
+          strokeWidth={stroke}
+          style={{ stroke: "var(--ring-track)" }}
+          filter={`url(#mottle${mid})`}
+          opacity="0.5"
+        />
         {/* v6.2 CRACKLE — shortbread crack lines on the dough track,
             UNDER the fill paint order: any stroke wandering toward the
             live arc is covered, so the datum always reads clean */}
@@ -693,6 +858,24 @@ export function BiteRing({
           <g className="crackle" aria-hidden="true">
             {cracks.map((d, i) => (
               <path key={i} d={d} vectorEffect="non-scaling-stroke" />
+            ))}
+          </g>
+        )}
+        {/* v6.4 STUFFING — half-sunk chocolate chips (irregular cocoa
+            blobs, tiny top highlight, soft bottom shadow) + sugar speckle
+            at the band edges. Painted UNDER the fill: any mark that could
+            reach the datum is covered — the live arc reads clean. */}
+        {stuffing.chips.length > 0 && (
+          <g className="stuffing" aria-hidden="true">
+            {stuffing.chips.map((ch, i) => (
+              <g key={i} transform={`translate(${ch.x} ${ch.y}) rotate(${ch.rot})`}>
+                <ellipse className="choc-shadow" cx="0" cy={ch.ry * 0.6} rx={ch.rx * 1.18} ry={ch.ry * 0.85} />
+                <polygon className="choc-chip" points={ch.points} />
+                <ellipse className="choc-hilite" cx={-ch.rx * 0.3} cy={-ch.ry * 0.4} rx={ch.rx * 0.34} ry={ch.ry * 0.24} transform="rotate(-24)" />
+              </g>
+            ))}
+            {stuffing.specks.map((sp, i) => (
+              <circle key={`s${i}`} className="sugar" cx={sp.x} cy={sp.y} r={sp.r} opacity={sp.o.toFixed(2)} />
             ))}
           </g>
         )}

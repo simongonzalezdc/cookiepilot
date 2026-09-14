@@ -15,8 +15,10 @@ import { CookieMark, IconChart, IconLink, IconOven, IconSwap, IconWallet } from 
 
 /**
  * v5 POSTER-PURIFY structure (CEO order; DESIGN-SYSTEM v5 addendum):
- * viewport 01 = the poster — masthead (header) + giant COOK price +
- * bitten ember ring + thin fold-edge stat strip. NOTHING else.
+ * viewport 01 = the poster — masthead (header) + bitten ember ring +
+ * thin fold-edge stat strip. NOTHING else.
+ * v6.4 HERO B (CEO ruling 2026-09-13): the poster's giant number is
+ * live ms/block; COOK price is the header's plain-text chip.
  * Below the fold, clean poster sections:
  * deck (value prop) → 02 wallet → 03 analytics → 04 live feed
  * (Crumb Trail) → 05 swap + NL console.

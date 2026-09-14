@@ -1,0 +1,748 @@
+{
+  "pass4": "v6.4 visual identity (hero B, thick band, C3 roll, stuffing, pill cut)",
+  "captures": [
+    {
+      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-v6b/desktop-1440x900-light.png",
+      "giant": "492ms",
+      "price": "COOK$0.000069434+0.00% · flat",
+      "chips": 9,
+      "specks": 22,
+      "crumbs": 9,
+      "cracks": 5,
+      "pills": [
+        1,
+        1,
+        1
+      ],
+      "heroCTA": true,
+      "strip": [
+        "Throughput",
+        "Finality",
+        "Bridged",
+        "Height"
+      ]
+    },
+    {
+      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-v6b/desktop-1440x900-dark.png",
+      "giant": "480ms",
+      "price": "COOK$0.000069434+0.00% · flat",
+      "chips": 9,
+      "specks": 22,
+      "crumbs": 9,
+      "cracks": 5,
+      "pills": [
+        1,
+        1,
+        1
+      ],
+      "heroCTA": true,
+      "strip": [
+        "Throughput",
+        "Finality",
+        "Bridged",
+        "Height"
+      ]
+    },
+    {
+      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-v6b/mobile-390x844-light.png",
+      "giant": "480ms",
+      "price": "COOK$0.000069434+0.00% · flat",
+      "chips": 9,
+      "specks": 22,
+      "crumbs": 9,
+      "cracks": 5,
+      "pills": [
+        1,
+        1,
+        1
+      ],
+      "heroCTA": true,
+      "strip": [
+        "Throughput",
+        "Finality",
+        "Bridged",
+        "Height"
+      ]
+    },
+    {
+      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-v6b/mobile-390x844-dark.png",
+      "giant": "480ms",
+      "price": "COOK$0.000069434+0.00% · flat",
+      "chips": 9,
+      "specks": 22,
+      "crumbs": 9,
+      "cracks": 5,
+      "pills": [
+        1,
+        1,
+        1
+      ],
+      "heroCTA": true,
+      "strip": [
+        "Throughput",
+        "Finality",
+        "Bridged",
+        "Height"
+      ]
+    },
+    {
+      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-v6b/desktop-1440-fullpage-light.png",
+      "giant": "480ms",
+      "price": "COOK$0.000069434+0.00% · flat",
+      "chips": 9,
+      "specks": 22,
+      "crumbs": 9,
+      "cracks": 5,
+      "pills": [
+        1,
+        1,
+        1
+      ],
+      "heroCTA": true,
+      "strip": [
+        "Throughput",
+        "Finality",
+        "Bridged",
+        "Height"
+      ]
+    }
+  ],
+  "console": {
+    "desktop-1440x900-light": [],
+    "desktop-1440x900-dark": [],
+    "mobile-390x844-light": [],
+    "mobile-390x844-dark": [],
+    "desktop-1440-fullpage-light": []
+  },
+  "checks": {
+    "overflow-320": "PASS",
+    "overflow-390": "PASS",
+    "overflow-768": "PASS",
+    "overflow-1024": "PASS",
+    "overflow-1280": "PASS",
+    "overflow-1440": "PASS",
+    "overflow-80": "PASS",
+    "keep-out": {
+      "chips": 9,
+      "chipRadialRange": [
+        "137.9",
+        "173.2"
+      ],
+      "bandRange": [
+        "123.0",
+        "188.0"
+      ],
+      "chipsOutsideBand": 0,
+      "crumbsInLabelZone": 0,
+      "stripCrumbsOnText": 0,
+      "fillPaintsAfterStuffing": true
+    },
+    "reduced-motion": {
+      "chips": 9,
+      "crumbs": 9,
+      "cracks": 5,
+      "runningAnimations": []
+    },
+    "gate-audit-light": [
+      "TASTECHECK GATE AUDIT — fresh-load + tells (paste into the gate report)\n⚠ WARN uniform card grid: 3× identical div.card in div.grid (equal size, bordered/rounded — the \"three cards\" tell?)\n⚠ WARN uniform card grid: 11× identical div.txrow in div.feed (equal size, bordered/rounded — the \"three cards\" tell?)\n⚠ WARN pill text CTA: \"Connect wallet →\" (button.btn, radius 999px on 40px)\n— display face resolves to \"M PLUS Rounded 1c\"\nverdict: REVIEW WARNS — 0 fail / 3 warn · 10 checks · gateAudit() to re-run\nScope: light DOM only — shadow roots and iframes are not audited.\nReminder: run on a FRESH load. Warns are evidence for judgment against the committed spec, not verdicts."
+    ],
+    "a11y-audit-light": [
+      "%c a11y-pass audit  background:#0a6c50;color:#fff;font-weight:700;padding:2px 6px",
+      "%cFAILS (41) color:#e5484d;font-weight:700",
+      "  ✗ TAP TARGET 43x19 (<24) — a \"bCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 43x19 (<24) — a \"bCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 73x19 (<24) — a \"TRASHCOIN\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 61x19 (<24) — a \"GORBAGE\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 52x19 (<24) — a \"GORBOY\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 33x19 (<24) — a \"CHAT\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 51x19 (<24) — a \"OMNOM\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 73x19 (<24) — a \"TRASHCOIN\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 35x19 (<24) — a \"CHAD\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 174x17 (<24) — a \"2FTUWZVBEmKM…9xq1HYZ\"",
+      "  ✗ TAP TARGET 151x17 (<24) — a \"WckFBFuSTyxK…KTtkj3h\"",
+      "  ✗ TAP TARGET 156x17 (<24) — a \"59TqX1oaYdhi…MDAtV66\"",
+      "  ✗ TAP TARGET 152x17 (<24) — a \"5XiNQwxd5Eer…Fj19szK\"",
+      "  ✗ TAP TARGET 165x17 (<24) — a \"2dQ22CWUUrhD…52bcgho\"",
+      "  ✗ TAP TARGET 162x17 (<24) — a \"3RPqwvG6zNpC…VLoYkuG\"",
+      "  ✗ TAP TARGET 166x17 (<24) — a \"65QSrKc8DmC1…mUV6RvB\"",
+      "  ✗ TAP TARGET 166x17 (<24) — a \"64vjA6zqvmBm…LuSHq5N\"",
+      "  ✗ TAP TARGET 157x17 (<24) — a \"3LyLTjSjQXQe…yUDdwtD\"",
+      "  ✗ TAP TARGET 151x17 (<24) — a \"36Kt1tiYVi99…5fHExfb\"",
+      "  ✗ TAP TARGET 165x17 (<24) — a \"numsSLdUMbvA…W2CzDkz\"",
+      "  ✗ TAP TARGET 168x17 (<24) — a \"2wmLhsDK1kmo…u891qMc\"",
+      "  ✗ TAP TARGET 28x21 (<24) — a \"docs\"",
+      "  ✗ TAP TARGET 50x21 (<24) — a \"explorer\"",
+      "  ✗ TAP TARGET 78x21 (<24) — a \"COOK faucet\"",
+      "  ✗ TAP TARGET 56x21 (<24) — a \"bridge\"",
+      "  ✗ TAP TARGET 69x21 (<24) — a \"cookie-mcp\"",
+      "%cWARNINGS (111) color:#c2851a;font-weight:700",
+      "  ! TINY 10.5px text — \"oven-fresh L2 · issue 07\"",
+      "  ! TINY 11.5px text — \"+0.00% · flat\"",
+      "  ! TINY 11.5px text — \"Mainnet live\"",
+      "  ! TINY 11px text — \"BLOCK TIME · LIVE — VALIDATO\"",
+      "  ! TINY 11.5px text — \"54.5%\"",
+      "  ! TINY 11.5px text — \"45.5%\"",
+      "  ! TINY 10.5px text — \"Fees · 10 days · COOK\"",
+      "  ! TINY 10.5px text — \"Processed · Confirmed · Fina\"",
+      "  ! TINY 9.5px text — \"Throughput\"",
+      "  ! TINY 10px text — \"TPS\"",
+      "  ! TINY 9.5px text — \"Finality\"",
+      "  ! TINY 10px text — \"TICKS TO CEMENT\"",
+      "  ! TINY 9.5px text — \"Bridged\"",
+      "  ! TINY 10px text — \"COOK\"",
+      "  ! TINY 9.5px text — \"Height\"",
+      "  ! TINY 9.5px text — \"Next\"",
+      "  ! TINY 10.5px text — \"02 — Wallet\"",
+      "  ! TINY 9.5px text — \"CookiePilot · live network s\"",
+      "  ! TINY 11px text — \"Nightly + any standard SVM w\"",
+      "  ! TINY 11px text — \"Your wallet\"",
+      "  ! TINY 11px text — \"indexer + swap feeds\"",
+      "  ! TINY 11.5px text — \"0.000005 base fee\"",
+      "  ! TINY 11.5px text — \"3 ticks to cement\"",
+      "  ! TINY 11.5px text — \"1B COOK circulating\"",
+      "  ! TINY 11.5px text — \"8 validators\"",
+      "  ! TINY 11.5px text — \"5.7K tokens · 38 programs\"",
+      "  ! TINY 11.5px text — \"545.4M COOK bridged from Sol\"",
+      "  ! TINY 11px text — \"Daily transactions indexer\"",
+      "  ! TINY 11.5px text — \"indexer\"",
+      "  ! TINY 10.5px text — \"09-03\"",
+      "  ! TINY 9.5px text — \"12 bars · top labeled\"",
+      "  ! TINY 10.5px text — \"09-14\"",
+      "  ! TINY 11px text — \"Active wallets + fees (COOK)\"",
+      "  ! TINY 11.5px text — \"indexer\"",
+      "  ! TINY 10.5px text — \"09-03\"",
+      "  ! TINY 9.5px text — \"12 bars · top labeled\"",
+      "  ! TINY 10.5px text — \"09-14\"",
+      "  ! TINY 11px text — \"Top programs by txns recent \"",
+      "  ! TINY 11.5px text — \"recent window\"",
+      "  ! TINY 11px text — \"MarketsPoolsTokens\"",
+      "  ! TINY 11.5px text — \"PoolsTokens\"",
+      "  ! TINY 11.5px text — \"PoolsTokens\"",
+      "  ! TINY 10.5px text — \"Pair\"",
+      "  ! TINY 10.5px text — \"Venue\"",
+      "  ! TINY 10.5px text — \"Price (USD)\"",
+      "  ! TINY 10.5px text — \"Liquidity (USD)\"",
+      "  ! TINY 10.5px text — \"24h %\"",
+      "  ! TINY 11px text — \"sub-second finality, on the \"",
+      "  ! TINY 11px text — \"Transaction stream SPL Token\"",
+      "  ! TINY 11.5px text — \"SPL Token program · poll 4s\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"2m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"6m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"9m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"12m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"16m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"19m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"22m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"26m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"29m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"33m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"36m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"40m ago\"",
+      "  ! TINY 11px text — \"Transactions execute on-chai\"",
+      "  ! TINY 11.5px text — \"execute on-chain · live conf\"",
+      "  ! TINY 11px text — \"keyless quotes · non-custodi\"",
+      "  ! TINY 11px text — \"Quote & execute Cookieswap (\"",
+      "  ! TINY 11.5px text — \"Cookieswap (Candy Shop) rout\"",
+      "  ! TINY 10.5px text — \"COOK — native\"",
+      "  ! TINY 10.5px text — \"Output token\"",
+      "  ! TINY 10.5px text — \"Amount in\"",
+      "  ! TINY 10.5px text — \"Slippage\"",
+      "  ! TINY 11px text — \"Console deterministic · loca\"",
+      "  ! TINY 11.5px text — \"deterministic · local · no A\"",
+      "  ! TINY 11.5px text — \"rpc.cookiescan.io · wss.cook\"",
+      "  ! 57 interactive els have outline:none at rest — verify a :focus-visible style exists",
+      "%cFix fails, then re-run a11yAudit(). color:#888"
+    ],
+    "gate-audit-dark": [
+      "TASTECHECK GATE AUDIT — fresh-load + tells (paste into the gate report)\n⚠ WARN uniform card grid: 3× identical div.card in div.grid (equal size, bordered/rounded — the \"three cards\" tell?)\n⚠ WARN uniform card grid: 11× identical div.txrow in div.feed (equal size, bordered/rounded — the \"three cards\" tell?)\n⚠ WARN pill text CTA: \"Connect wallet →\" (button.btn, radius 999px on 40px)\n— display face resolves to \"M PLUS Rounded 1c\"\nverdict: REVIEW WARNS — 0 fail / 3 warn · 10 checks · gateAudit() to re-run\nScope: light DOM only — shadow roots and iframes are not audited.\nReminder: run on a FRESH load. Warns are evidence for judgment against the committed spec, not verdicts."
+    ],
+    "a11y-audit-dark": [
+      "%c a11y-pass audit  background:#0a6c50;color:#fff;font-weight:700;padding:2px 6px",
+      "%cFAILS (41) color:#e5484d;font-weight:700",
+      "  ✗ TAP TARGET 43x19 (<24) — a \"bCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 43x19 (<24) — a \"bCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 73x19 (<24) — a \"TRASHCOIN\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 61x19 (<24) — a \"GORBAGE\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 52x19 (<24) — a \"GORBOY\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 33x19 (<24) — a \"CHAT\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 51x19 (<24) — a \"OMNOM\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 73x19 (<24) — a \"TRASHCOIN\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 78x19 (<24) — a \"COOKHOUSE\"",
+      "  ✗ TAP TARGET 35x19 (<24) — a \"CHAD\"",
+      "  ✗ TAP TARGET 46x19 (<24) — a \"wCOOK\"",
+      "  ✗ TAP TARGET 174x17 (<24) — a \"2FTUWZVBEmKM…9xq1HYZ\"",
+      "  ✗ TAP TARGET 151x17 (<24) — a \"WckFBFuSTyxK…KTtkj3h\"",
+      "  ✗ TAP TARGET 156x17 (<24) — a \"59TqX1oaYdhi…MDAtV66\"",
+      "  ✗ TAP TARGET 152x17 (<24) — a \"5XiNQwxd5Eer…Fj19szK\"",
+      "  ✗ TAP TARGET 165x17 (<24) — a \"2dQ22CWUUrhD…52bcgho\"",
+      "  ✗ TAP TARGET 162x17 (<24) — a \"3RPqwvG6zNpC…VLoYkuG\"",
+      "  ✗ TAP TARGET 166x17 (<24) — a \"65QSrKc8DmC1…mUV6RvB\"",
+      "  ✗ TAP TARGET 166x17 (<24) — a \"64vjA6zqvmBm…LuSHq5N\"",
+      "  ✗ TAP TARGET 157x17 (<24) — a \"3LyLTjSjQXQe…yUDdwtD\"",
+      "  ✗ TAP TARGET 151x17 (<24) — a \"36Kt1tiYVi99…5fHExfb\"",
+      "  ✗ TAP TARGET 165x17 (<24) — a \"numsSLdUMbvA…W2CzDkz\"",
+      "  ✗ TAP TARGET 168x17 (<24) — a \"2wmLhsDK1kmo…u891qMc\"",
+      "  ✗ TAP TARGET 28x21 (<24) — a \"docs\"",
+      "  ✗ TAP TARGET 50x21 (<24) — a \"explorer\"",
+      "  ✗ TAP TARGET 78x21 (<24) — a \"COOK faucet\"",
+      "  ✗ TAP TARGET 56x21 (<24) — a \"bridge\"",
+      "  ✗ TAP TARGET 69x21 (<24) — a \"cookie-mcp\"",
+      "%cWARNINGS (111) color:#c2851a;font-weight:700",
+      "  ! TINY 10.5px text — \"oven-fresh L2 · issue 07\"",
+      "  ! TINY 11.5px text — \"+0.00% · flat\"",
+      "  ! TINY 11.5px text — \"Mainnet live\"",
+      "  ! TINY 11px text — \"BLOCK TIME · LIVE — VALIDATO\"",
+      "  ! TINY 11.5px text — \"54.5%\"",
+      "  ! TINY 11.5px text — \"45.5%\"",
+      "  ! TINY 10.5px text — \"Fees · 10 days · COOK\"",
+      "  ! TINY 10.5px text — \"Processed · Confirmed · Fina\"",
+      "  ! TINY 9.5px text — \"Throughput\"",
+      "  ! TINY 10px text — \"TPS\"",
+      "  ! TINY 9.5px text — \"Finality\"",
+      "  ! TINY 10px text — \"TICKS TO CEMENT\"",
+      "  ! TINY 9.5px text — \"Bridged\"",
+      "  ! TINY 10px text — \"COOK\"",
+      "  ! TINY 9.5px text — \"Height\"",
+      "  ! TINY 9.5px text — \"Next\"",
+      "  ! TINY 10.5px text — \"02 — Wallet\"",
+      "  ! TINY 9.5px text — \"CookiePilot · live network s\"",
+      "  ! TINY 11px text — \"Nightly + any standard SVM w\"",
+      "  ! TINY 11px text — \"Your wallet\"",
+      "  ! TINY 11px text — \"indexer + swap feeds\"",
+      "  ! TINY 11.5px text — \"0.000005 base fee\"",
+      "  ! TINY 11.5px text — \"3 ticks to cement\"",
+      "  ! TINY 11.5px text — \"1B COOK circulating\"",
+      "  ! TINY 11.5px text — \"8 validators\"",
+      "  ! TINY 11.5px text — \"5.7K tokens · 38 programs\"",
+      "  ! TINY 11.5px text — \"545.4M COOK bridged from Sol\"",
+      "  ! TINY 11px text — \"Daily transactions indexer\"",
+      "  ! TINY 11.5px text — \"indexer\"",
+      "  ! TINY 10.5px text — \"09-03\"",
+      "  ! TINY 9.5px text — \"12 bars · top labeled\"",
+      "  ! TINY 10.5px text — \"09-14\"",
+      "  ! TINY 11px text — \"Active wallets + fees (COOK)\"",
+      "  ! TINY 11.5px text — \"indexer\"",
+      "  ! TINY 10.5px text — \"09-03\"",
+      "  ! TINY 9.5px text — \"12 bars · top labeled\"",
+      "  ! TINY 10.5px text — \"09-14\"",
+      "  ! TINY 11px text — \"Top programs by txns recent \"",
+      "  ! TINY 11.5px text — \"recent window\"",
+      "  ! TINY 11px text — \"MarketsPoolsTokens\"",
+      "  ! TINY 11.5px text — \"PoolsTokens\"",
+      "  ! TINY 11.5px text — \"PoolsTokens\"",
+      "  ! TINY 10.5px text — \"Pair\"",
+      "  ! TINY 10.5px text — \"Venue\"",
+      "  ! TINY 10.5px text — \"Price (USD)\"",
+      "  ! TINY 10.5px text — \"Liquidity (USD)\"",
+      "  ! TINY 10.5px text — \"24h %\"",
+      "  ! TINY 11px text — \"sub-second finality, on the \"",
+      "  ! TINY 11px text — \"Transaction stream SPL Token\"",
+      "  ! TINY 11.5px text — \"SPL Token program · poll 4s\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"2m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"6m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"9m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"12m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"16m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"19m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"22m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"26m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"30m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"33m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"36m ago\"",
+      "  ! TINY 10.5px text — \"processed\"",
+      "  ! TINY 10.5px text — \"confirmed\"",
+      "  ! TINY 10.5px text — \"finalized\"",
+      "  ! TINY 11.5px text — \"40m ago\"",
+      "  ! TINY 11px text — \"Transactions execute on-chai\"",
+      "  ! TINY 11.5px text — \"execute on-chain · live conf\"",
+      "  ! TINY 11px text — \"keyless quotes · non-custodi\"",
+      "  ! TINY 11px text — \"Quote & execute Cookieswap (\"",
+      "  ! TINY 11.5px text — \"Cookieswap (Candy Shop) rout\"",
+      "  ! TINY 10.5px text — \"COOK — native\"",
+      "  ! TINY 10.5px text — \"Output token\"",
+      "  ! TINY 10.5px text — \"Amount in\"",
+      "  ! TINY 10.5px text — \"Slippage\"",
+      "  ! TINY 11px text — \"Console deterministic · loca\"",
+      "  ! TINY 11.5px text — \"deterministic · local · no A\"",
+      "  ! TINY 11.5px text — \"rpc.cookiescan.io · wss.cook\"",
+      "  ! 57 interactive els have outline:none at rest — verify a :focus-visible style exists",
+      "%cFix fails, then re-run a11yAudit(). color:#888"
+    ],
+    "error-state": {
+      "errorBox": true,
+      "retryButton": true
+    },
+    "tnum": {
+      "giant": "tabular-nums",
+      "stripB": "tabular-nums",
+      "priceChip": "tabular-nums",
+      "ringBig": "tabular-nums",
+      "bakesub": "tabular-nums"
+    }
+  },
+  "contrast": {
+    "light": {
+      "pairs": [
+        {
+          "label": "ink on surface (standfirst)",
+          "fg": "43,26,18",
+          "ratio": 15.12
+        },
+        {
+          "label": "ink-dim on surface (blockmeta caps)",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "ink-dim on MOTTLE-WORST (strip labels)",
+          "fg": "107,84,67",
+          "ratio": 6.08
+        },
+        {
+          "label": "ink on MOTTLE-WORST (strip values)",
+          "fg": "43,26,18",
+          "ratio": 14.36
+        },
+        {
+          "label": "ink on mottle-worst (giant block time)",
+          "fg": "43,26,18",
+          "ratio": 14.36
+        },
+        {
+          "label": "ink-dim on mottle-worst (giant unit)",
+          "fg": "107,84,67",
+          "ratio": 6.08
+        },
+        {
+          "label": "ember-text on surface (eyebrow no)",
+          "fg": "148,99,43",
+          "ratio": 4.67
+        },
+        {
+          "label": "ink-dim on surface (fold-next title)",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "ink on raised (section h2)",
+          "fg": "43,26,18",
+          "ratio": 16.41
+        },
+        {
+          "label": "ink-dim on raised (sect hint)",
+          "fg": "107,84,67",
+          "ratio": 6.95
+        },
+        {
+          "label": "ink on raised (netpill text)",
+          "fg": "43,26,18",
+          "ratio": 16.41
+        },
+        {
+          "label": "ring center big (SVG fill vs surface)",
+          "fg": "43,26,18",
+          "ratio": 15.12
+        },
+        {
+          "label": "ring center cap (SVG fill vs surface)",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "bakeline ink on surface",
+          "fg": "43,26,18",
+          "ratio": 15.12
+        },
+        {
+          "label": "ring legend label on surface",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "footer link ember-text on surface",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "header price USD ink on surface",
+          "fg": "43,26,18",
+          "ratio": 15.12
+        },
+        {
+          "label": "header price label ink-dim on surface",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "header delta UP mint-text on surface",
+          "fg": "31,122,92",
+          "ratio": 4.76
+        },
+        {
+          "label": "header delta DOWN jam-text on surface",
+          "fg": "160,50,37",
+          "ratio": 6.39
+        },
+        {
+          "label": "header delta FLAT ink-dim on surface",
+          "fg": "107,84,67",
+          "ratio": 6.4
+        },
+        {
+          "label": "walletline balance mint-text on surface",
+          "fg": "43,26,18",
+          "ratio": 15.12
+        }
+      ],
+      "mottleWorstRgb": "246,237,221",
+      "emberToken": "206,138,60",
+      "emberText": "148,99,43"
+    },
+    "dark": {
+      "pairs": [
+        {
+          "label": "ink on surface (standfirst)",
+          "fg": "245,233,214",
+          "ratio": 15.31
+        },
+        {
+          "label": "ink-dim on surface (blockmeta caps)",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "ink-dim on MOTTLE-WORST (strip labels)",
+          "fg": "201,184,163",
+          "ratio": 9.69
+        },
+        {
+          "label": "ink on MOTTLE-WORST (strip values)",
+          "fg": "245,233,214",
+          "ratio": 15.61
+        },
+        {
+          "label": "ink on mottle-worst (giant block time)",
+          "fg": "245,233,214",
+          "ratio": 15.61
+        },
+        {
+          "label": "ink-dim on mottle-worst (giant unit)",
+          "fg": "201,184,163",
+          "ratio": 9.69
+        },
+        {
+          "label": "ember-text on surface (eyebrow no)",
+          "fg": "232,180,122",
+          "ratio": 9.83
+        },
+        {
+          "label": "ink-dim on surface (fold-next title)",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "ink on raised (section h2)",
+          "fg": "245,233,214",
+          "ratio": 13.6
+        },
+        {
+          "label": "ink-dim on raised (sect hint)",
+          "fg": "201,184,163",
+          "ratio": 8.44
+        },
+        {
+          "label": "ink on raised (netpill text)",
+          "fg": "245,233,214",
+          "ratio": 13.6
+        },
+        {
+          "label": "ring center big (SVG fill vs surface)",
+          "fg": "245,233,214",
+          "ratio": 15.31
+        },
+        {
+          "label": "ring center cap (SVG fill vs surface)",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "bakeline ink on surface",
+          "fg": "245,233,214",
+          "ratio": 15.31
+        },
+        {
+          "label": "ring legend label on surface",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "footer link ember-text on surface",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "header price USD ink on surface",
+          "fg": "245,233,214",
+          "ratio": 15.31
+        },
+        {
+          "label": "header price label ink-dim on surface",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "header delta UP mint-text on surface",
+          "fg": "76,199,154",
+          "ratio": 8.7
+        },
+        {
+          "label": "header delta DOWN jam-text on surface",
+          "fg": "232,122,107",
+          "ratio": 6.5
+        },
+        {
+          "label": "header delta FLAT ink-dim on surface",
+          "fg": "201,184,163",
+          "ratio": 9.51
+        },
+        {
+          "label": "walletline balance mint-text on surface",
+          "fg": "245,233,214",
+          "ratio": 15.31
+        }
+      ],
+      "mottleWorstRgb": "25,16,14",
+      "emberToken": "206,138,60",
+      "emberText": "232,180,122"
+    }
+  },
+  "keyboard": {
+    "trace": [
+      "BUTTON.themetoggle[pressed=false]",
+      "BUTTON.btn.primary",
+      "BUTTON.linkbtn",
+      "BUTTON.on",
+      "BUTTON",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A",
+      "A"
+    ],
+    "toggle": {
+      "before": "false",
+      "after": "true",
+      "themeNow": "dark"
+    }
+  },
+  "zoom400": {
+    "sw": 80,
+    "iw": 80,
+    "bw": 80,
+    "pass": true
+  },
+  "consoleZero": true
+}

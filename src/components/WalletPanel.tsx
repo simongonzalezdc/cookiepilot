@@ -22,7 +22,7 @@ export function WalletPanel({ onWantConnect }: { onWantConnect: () => void }) {
           icon={<IconWallet size={24} />}
           title="No wallet connected"
           body="Connect Nightly (recommended on Cookie Chain) or any standard SVM wallet to see balances, tokens, NFTs and your history."
-          action={<button className="btn primary" onClick={onWantConnect}>Connect wallet</button>}
+          action={<button className="linkbtn" onClick={onWantConnect}>Connect wallet →</button>}
         />
       </div>
     );

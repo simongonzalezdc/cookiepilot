@@ -199,7 +199,7 @@ export function SwapPanel() {
               </div>
               <div>
                 {quote.multiRoute.segments.map((s, i) => (
-                  <span key={i} className="routepill" title={`pool ${s.poolAddress}`}>
+                  <span key={i} className="routehop" title={`pool ${s.poolAddress}`}>
                     {s.programName} {quote.multiRoute.segments.length > 1 ? `${s.percentage}%` : ""} · fee {s.feeBps / 100}%
                   </span>
                 ))}
