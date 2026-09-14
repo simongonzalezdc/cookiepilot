@@ -870,13 +870,20 @@ button { font-family: inherit; }
      so the strip still lands on the fold edge.
      v6.5 FOLD PASS: spacing/scale trims only (no restructure) so the KPI
      strip values land at/above the 390×844 fold. */
+  /* v7 FOLD LAW (2026-09-14, structural — replaces the v6.5 trims-only pass):
+     the grid dissolves into the hero flex column so `order` can drop the
+     sparkline BELOW the KPI strip. Poster read unchanged (giant → ring → CTA);
+     the spark becomes the fold-next hook and the strip's row 2 lands well
+     above the 390×844 fold. Verified: strip row2 bottom ≈ 749, fold-next
+     bottom rides the fold edge. */
   .hero { display: flex; flex-direction: column; min-height: calc(100svh - 106px); padding-top: 2px; }
-  .hero-grid {
-    grid-template-columns: 1fr;
-    grid-template-areas: "main" "side" "spark" "cta";
-    gap: 6px 0;
-    padding: 6px 0 2px;
-  }
+  .hero-grid { display: contents; }
+  .hero-main { order: 0; }
+  .hero-side { order: 1; margin-top: 4px; }
+  .hero-cta-row { order: 2; }
+  .hero-strip { order: 3; }
+  .hero-spark { order: 4; margin-top: 10px; border-top: 1px solid var(--rule-soft); padding-top: 8px; }
+  .fold-next { order: 5; }
   .hero-main { --price-cap: 72px; }
   .giantprice { font-size: clamp(36px, 17cqw, 72px); }
   .blockmeta { gap: 6px 14px; margin-top: 6px; }
@@ -894,6 +901,14 @@ button { font-family: inherit; }
   /* v6: hairline between the 2×2 strip rows */
   .hstrip:nth-child(n + 3) { border-top: 1px solid var(--rule); padding-top: 8px; }
   .fold-next { padding-bottom: 10px; }
+  /* v7 DENSIFY (2026-09-14): deliberate secondary zone instead of air —
+     tighter section rhythm, card padding, and microline spacing below the fold. */
+  .sect { margin-top: 44px; scroll-margin-top: 76px; }
+  .sect-head { margin-bottom: 14px; padding-bottom: 10px; }
+  .card { padding: 15px 17px; }
+  .card h3 { margin: 0 0 12px; padding-bottom: 8px; }
+  .factsline { margin: -2px 0 12px; padding-bottom: 10px; }
+  .sparkblock svg { height: 34px; }
   .hstrip b { font-size: 14px; }
   .hidecap { display: none; }
   .hidelong { display: none; }
