@@ -96,6 +96,45 @@ export function ActivityFeed() {
     };
   }, [paused]);
 
+  // v8 honesty floor: fast status sub-poll — while any row is not yet finalized,
+  // check just those signatures every 600ms so sub-second upgrades are actually
+  // WITNESSED (the 4s list poll is blind to them) and feed the hero's SLA.
+  const pending = items.filter((i) => i.confirmationStatus !== "finalized" && !i.err).map((i) => i.signature);
+  useEffect(() => {
+    if (paused || pending.length === 0) return;
+    let alive = true;
+    const id = window.setInterval(async () => {
+      try {
+        const res = await rpc<{ confirmationStatus: SignatureInfo["confirmationStatus"] }[]>(
+          "getSignatureStatuses",
+          [pending.slice(0, 10), { searchTransactionHistory: false }],
+          { retries: 0, timeoutMs: 4000 },
+        );
+        if (!alive || !res) return;
+        setItems((prev) => {
+          let changed = false;
+          const next = prev.map((p) => {
+            const idx = pending.indexOf(p.signature);
+            if (idx < 0 || idx >= res.length) return p;
+            const st = res[idx]?.confirmationStatus;
+            if (!st || st === p.confirmationStatus) return p;
+            if (st === "finalized" && p.confirmationStatus !== "finalized") {
+              setSheen(p.signature);
+              if (p.firstSeen) {
+                window.dispatchEvent(new CustomEvent("cookiepilot:finality-sample", { detail: Date.now() - p.firstSeen }));
+              }
+            }
+            changed = true;
+            return { ...p, confirmationStatus: st };
+          });
+          return changed ? next : prev;
+        });
+      } catch { /* transient — next tick retries */ }
+    }, 600);
+    return () => { alive = false; window.clearInterval(id); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paused, pending.join(",")]);
+
   // sheen/glide are one-shot: clear after the ambient window
   useEffect(() => {
     if (!arrived && !sheen) return;

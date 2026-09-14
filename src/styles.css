@@ -882,8 +882,9 @@ button { font-family: inherit; }
   .hero-side { order: 1; margin-top: 4px; }
   .hero-cta-row { order: 2; }
   .hero-strip { order: 3; }
-  .hero-spark { order: 4; margin-top: 10px; border-top: 1px solid var(--rule-soft); padding-top: 8px; }
-  .fold-next { order: 5; }
+  .slaline { order: 4; }
+  .hero-spark { order: 5; margin-top: 10px; border-top: 1px solid var(--rule-soft); padding-top: 8px; }
+  .fold-next { order: 6; }
   .hero-main { --price-cap: 72px; }
   .giantprice { font-size: clamp(36px, 17cqw, 72px); }
   .blockmeta { gap: 6px 14px; margin-top: 6px; }
