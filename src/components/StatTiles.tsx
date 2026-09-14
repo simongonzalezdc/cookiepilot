@@ -321,8 +321,8 @@ export function StatTiles() {
         </span>
       </div>
       {/* v8 honesty: finality SLA from txs we actually watched finalize */}
-      <div className="slaline" aria-label="finality SLA">
-        <span className="sla-k">FINALITY SLA</span>
+      <div className="slaline" aria-label="tray speed">
+        <span className="sla-k">TRAY SPEED</span>
         {traySamples.length >= 5 ? (
           <span className="sla-v">
             MEDIAN <b>{(traySamples.slice().sort((a, b) => a - b)[Math.floor(traySamples.length / 2)] / 1000).toFixed(1)}s</b> BAKE→TRAY · N={traySamples.length}
