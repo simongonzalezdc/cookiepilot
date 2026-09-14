@@ -14,10 +14,24 @@ function monogram(name: string): string {
 function WalletModal({ onClose }: { onClose: () => void }) {
   const { wallets, connect, connecting, error } = useWallet();
   const hasNightly = wallets.some((w) => w.id === "nightly");
+  // component-states/form-ux: a dialog must be keyboard-dismissable (Escape)
+  // — backdrop click alone strands keyboard users in the modal.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
   return (
     <div className="modal-veil" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Connect a wallet">
-        <h4>Connect a wallet</h4>
+        <h4>
+          Connect a wallet
+          <button type="button" className="modal-x" aria-label="Close dialog" onClick={onClose}>
+            ×
+          </button>
+        </h4>
         <div className="wlist">
           {wallets.length === 0 && (
             <div className="empty" style={{ padding: "12px 4px" }}>

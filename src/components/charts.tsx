@@ -88,6 +88,7 @@ function crumbsAtBite(
   bcy: number,
   fillEndAngle: number,
   rOuter: number,
+  minDist = 118,
 ): Crumb[] {
   const rnd = mulberry32(0xc0fee); // fixed seed — placement never re-rolls
   const c = size / 2;
@@ -103,7 +104,7 @@ function crumbsAtBite(
     const vx = x - c;
     const vy = y - c;
     const d = Math.hypot(vx, vy);
-    if (d < 118) continue; // center label zone
+    if (d < Math.max(118, minDist)) continue; // center label + ring hollow
     if (x < 7 || x > size - 7 || y < 7 || y > size - 7) continue; // viewBox
     const ang = ((Math.atan2(vy, vx) * 180) / Math.PI + 90 + 360) % 360; // from top
     const onBand = d > rOuter - 50 && d < rOuter + 3;
@@ -152,22 +153,30 @@ function crackleOnTrack(
   stroke: number,
   endAngle: number,
   trackDeg: number,
+  biteStart: number,
+  biteEnd: number,
 ): string[] {
   const rnd = mulberry32(0x5b0a7); // "shortbread" — fixed seed
   const c = size / 2;
-  // arc window: inset from the fill endpoint and the 0° seam
+  // arc window: inset from the fill endpoint and the 0° seam, minus the
+  // bite mouth (crackle belongs to the dough that survived the bite)
   const insetA = Math.min(10, trackDeg * 0.2);
   const insetB = Math.min(6, trackDeg * 0.15);
   const a0 = endAngle + insetA;
-  const span = Math.max(6, trackDeg - insetA - insetB);
-  const n = Math.max(4, Math.min(10, Math.round(span / 16)));
+  const a1 = a0 + Math.max(6, trackDeg - insetA - insetB);
+  const w1 = Math.max(0, biteStart - 3 - a0);
+  const w2 = Math.max(0, a1 - (biteEnd + 3));
+  const L = w1 + w2;
+  const n = Math.max(4, Math.min(10, Math.round(L / 16)));
   const cracks: string[] = [];
   const at = (deg: number, rad2: number) => {
     const t = ((deg - 90) * Math.PI) / 180;
     return [c + Math.cos(t) * rad2, c + Math.sin(t) * rad2] as const;
   };
   for (let i = 0; i < n; i++) {
-    const deg = a0 + (n === 1 ? span / 2 : (i / (n - 1)) * span) + (rnd() - 0.5) * (span / n) * 0.9;
+    // position along the combined allowed track (before / after the bite)
+    const t = Math.min(L, Math.max(0, (n === 1 ? L / 2 : (i / (n - 1)) * L) + (rnd() - 0.5) * (L / n) * 0.9));
+    const deg = t <= w1 ? a0 + t : biteEnd + 3 + (t - w1);
     const rr = r + (rnd() - 0.5) * (stroke - 12); // inside the band, off its edges
     const [sx, sy] = at(deg, rr);
     // crack direction: roughly tangent to the arc, either way, then wobbles
@@ -200,6 +209,106 @@ function crackleOnTrack(
     cracks.push(parts.join(""));
   }
   return cracks;
+}
+
+/* ------------------------------------------------------------------
+   v6.3 REAL BITE (CEO directive 2026-09-13: "the bite doesn't look
+   like a real bite" — the scalloped circle notch read as gear teeth).
+   A human bite from a round cookie is a CRESCENT removal anchored on
+   the outer edge: the mouth interrupts the rim, and the wound's inner
+   edge is a DOUBLE DENTAL-ARC — a wide shallow upper-incisor arc and
+   a narrower deeper lower-incisor arc crossing at TWO CUSP POINTS
+   (where the deeper one switches). Each arc carries 4–6 subtle tooth
+   bumps (individual incisor impressions). Everything is seeded
+   (mulberry32) and deliberately asymmetric; crescent depth at center
+   lands in the 18–26%-of-ring-radius band (AM-3 v6.3). One bite only;
+   centered in the exposed track so it never touches the fill endpoint
+   (current value) or the 0° seam, and its deepest radius (~145 at the
+   hero size) stays outside the center-label keep-out.
+------------------------------------------------------------------- */
+
+interface RealBite {
+  /** mask path for the removal (black region, wound edge + rim arc) */
+  d: string;
+  /** wound mouth center — the crumb-shed anchor */
+  cx: number;
+  cy: number;
+}
+
+/** 4–6 seeded incisor impressions along one dental arc (relative to its peak). */
+function dentalBumps(rnd: () => number, spanUnits: number) {
+  const n = 4 + Math.floor(rnd() * 3);
+  const list: { c: number; a: number; s: number }[] = [];
+  const span = spanUnits * 1.5;
+  for (let k = 0; k < n; k++) {
+    list.push({
+      c: -span / 2 + (n === 1 ? span / 2 : (k / (n - 1)) * span) + (rnd() - 0.5) * (span / n) * 0.6,
+      a: 1.1 + rnd() * 1.7, // subtle — ≈0.7–1.7% of ring radius each
+      s: spanUnits * (0.11 + rnd() * 0.08),
+    });
+  }
+  return list;
+}
+
+function realBiteGeometry(
+  c: number, // ring center (viewBox coords)
+  rOut: number, // rim radius (outer edge the mouth opens into)
+  r: number, // ring mid radius — the depth band is a % of this
+  biteAngle: number, // mouth center, degrees clockwise from top
+  fitHalf: number, // max half-angle the exposed track allows
+  seed: number,
+): RealBite {
+  const rnd = mulberry32(seed);
+  // LOCKED v6.3 tasteroll winner (org-bridge minimax, 2026-09-13):
+  // mouth half-angle 26–29°, crescent depth 18–20% of ring radius.
+  const mouthHalf = Math.min(26 + rnd() * 3, Math.max(24, fitHalf)); // 52–58° mouth
+  const depth = r * (0.18 + rnd() * 0.02); // crescent depth at center, 18–20% of ring radius
+  // upper incisor row: wide + shallow; lower: narrower + deeper. Peaks
+  // offset oppositely → the two arcs cross at two cusp points flanking
+  // the crescent center (a bite is never symmetric).
+  const up = {
+    d: depth * (0.55 + rnd() * 0.16),
+    w: mouthHalf * (0.94 + rnd() * 0.08),
+    o: (rnd() - 0.5) * mouthHalf * 0.3,
+    bumps: dentalBumps(rnd, mouthHalf * 0.66),
+  };
+  const lo = {
+    d: depth * (0.94 + rnd() * 0.06),
+    w: mouthHalf * (0.52 + rnd() * 0.16),
+    o: (rnd() - 0.5) * mouthHalf * 0.5 - up.o, // opposite-side bias, seeded
+    bumps: dentalBumps(rnd, mouthHalf * 0.4),
+  };
+  const arcDepth = (phi: number, arc: typeof up) => {
+    const e = 1 - ((phi - arc.o) / arc.w) ** 2;
+    if (e <= 0) return 0;
+    const root = Math.sqrt(e);
+    let d = arc.d * root;
+    for (const b of arc.bumps) {
+      const g = Math.exp(-(((phi - arc.o - b.c) / b.s) ** 2));
+      d += b.a * g * Math.min(1, root * 1.6); // impressions fade at the row ends
+    }
+    return d;
+  };
+  // wound edge: the deeper of the two dental arcs at every angle
+  const steps = 44;
+  const pts: string[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const phi = -mouthHalf + (i / steps) * mouthHalf * 2;
+    const d = Math.max(arcDepth(phi, up), arcDepth(phi, lo));
+    const rad = ((biteAngle + phi - 90) * Math.PI) / 180;
+    const R = rOut - d;
+    pts.push(`${(c + Math.cos(rad) * R).toFixed(1)} ${(c + Math.sin(rad) * R).toFixed(1)}`);
+  }
+  const rimPt = (phi: number) => {
+    const rad = ((biteAngle + phi - 90) * Math.PI) / 180;
+    return `${(c + Math.cos(rad) * rOut).toFixed(1)} ${(c + Math.sin(rad) * rOut).toFixed(1)}`;
+  };
+  const PL = rimPt(-mouthHalf);
+  const PR = rimPt(mouthHalf);
+  const d = `M${PL} L${pts.join(" L")} L${PR} A${rOut.toFixed(1)} ${rOut.toFixed(1)} 0 0 0 ${PL} Z`;
+  const rad0 = ((biteAngle - 90) * Math.PI) / 180;
+  const shedR = rOut - depth * 0.5;
+  return { d, cx: c + Math.cos(rad0) * shedR, cy: c + Math.sin(rad0) * shedR };
 }
 
 interface BiteMaskProps {
@@ -509,32 +618,40 @@ export function BiteRing({
   const stroke = layout === "stacked" ? Math.round(size * 0.118) : 13;
   const c = size / 2;
   const r = (size - stroke) / 2 - 2;
-  // bite size: chord exactly at the AM-3 bound — 14% of plot bbox, ≤8px depth
-  const br = size * 0.07;
-  // the bite is taken from the cookie's OUTER EDGE (reference: the notch
-  // opens outward) and reaches just past the inner edge so no sliver of
-  // band shows through the notch.
-  const centerRad = r + stroke / 2 - br * 0.18;
-  // place the notch inside the exposed TRACK (AM-3: bite the track, never
-  // the fill endpoint/current value) — centered when the track allows,
-  // else ≥18° past the fill end; never wrapping across the 0° seam.
-  // Near-full rings have no usable track: no bite (AM-3 keeps the law).
+  // v6.3 REAL BITE: the notch is a human-bite crescent (see
+  // realBiteGeometry) — mouth opening on the OUTER EDGE, crescent depth
+  // 18–26% of ring radius at center, double dental-arc wound edge.
+  // It sits centered in the exposed TRACK (AM-3: never the fill
+  // endpoint/current value, never across the 0° seam) with ≥10° clear
+  // on both sides; no usable track → no bite (AM-3 keeps the law).
   const endAngle = (p / 100) * 360;
   const trackDeg = (100 - p) * 3.6;
-  const hasTrack = trackDeg >= 26 && p > 2;
-  const biteAngle = endAngle + Math.max(trackDeg / 2, 18);
-  const rad = ((biteAngle - 90) * Math.PI) / 180;
-  const bcx = c + Math.cos(rad) * centerRad;
-  const bcy = c + Math.sin(rad) * centerRad;
+  const fitHalf = trackDeg / 2 - 10;
+  const hasTrack = fitHalf >= 24 && p > 2 && p < 98;
+  const biteAngle = endAngle + trackDeg / 2;
+  const rOuter = r + stroke / 2;
+  // v6.3 tasteroll (2026-09-13): three seeded candidates vision-checked via
+  // the org bridge (minimax) — v2 (deep/wide mouth) FAILED ("one clean
+  // concave arc", 3/10); v1 vs v3 head-to-head ×2 (order-swapped) both
+  // picked THIS geometry: "more irregular tooth impressions with varied
+  // depth". Locked: seed 0xd1bc3, depth 18–20% of r, mouth 26–29° half.
+  const bite = hasTrack ? realBiteGeometry(c, rOuter, r, biteAngle, fitHalf, 0xd1bc3) : null;
   const centerFont = Math.round(size * 0.2);
   const capFont = Math.max(9, Math.round(size * 0.045));
   // v6.2 cookie texture (stacked centerpiece only — restraint law):
-  // crumbs at the bite + crackle on the dough track. Seeded, static.
-  const rOuter = r + stroke / 2;
+  // crumbs shed AT the bite + crackle on the dough track. Seeded, static.
+  // Crumbs keep out of the ring hollow (they cling to the wound / fall
+  // off the rim) — min distance = just inside the dough track.
   const crumbs =
-    layout === "stacked" && hasTrack ? crumbsAtBite(size, bcx, bcy, endAngle, rOuter) : [];
+    layout === "stacked" && bite
+      ? crumbsAtBite(size, bite.cx, bite.cy, endAngle, rOuter, r - stroke / 2 + 3)
+      : [];
+  // crackle lives on the exposed track OUTSIDE the bite mouth (the mask
+  // would cut any stroke inside it anyway — this keeps the count honest)
   const cracks =
-    layout === "stacked" && hasTrack ? crackleOnTrack(size, r, stroke, endAngle, trackDeg) : [];
+    layout === "stacked" && hasTrack
+      ? crackleOnTrack(size, r, stroke, endAngle, trackDeg, biteAngle - 32, biteAngle + 32)
+      : [];
 
   const ringSvg = (
     <svg
@@ -549,21 +666,11 @@ export function BiteRing({
       <defs>
         <mask id={`ringbite${mid}`} maskUnits="userSpaceOnUse" x="0" y="0" width={size} height={size}>
           <rect x="0" y="0" width={size} height={size} fill="#fff" />
-          {/* ONE bite (AM-3: a single notch region, total arc ≤40°) with a
-              lightly scalloped edge like the reference's cookie bite —
-              satellites overlap the main circle so the region stays one
-              connected shape. No exposed track → no bite (AM-3). */}
-          {hasTrack && (
-            <g fill="#000">
-              <circle cx={bcx} cy={bcy} r={br} />
-              {[-12, 12].map((a) => {
-                const srad = ((biteAngle + a - 90) * Math.PI) / 180;
-                const sx = c + Math.cos(srad) * centerRad;
-                const sy = c + Math.sin(srad) * centerRad;
-                return <circle key={a} cx={sx} cy={sy} r={br * 0.55} />;
-              })}
-            </g>
-          )}
+          {/* ONE bite (AM-3 v6.3): a single crescent removal — the
+              wound-edge path from realBiteGeometry (double dental arc,
+              seeded tooth bumps, mouth opening on the outer edge).
+              No exposed track → no bite (AM-3 keeps the law). */}
+          {bite && <path d={bite.d} fill="#000" />}
         </mask>
       </defs>
       <g mask={`url(#ringbite${mid})`}>

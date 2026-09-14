@@ -1,0 +1,767 @@
+{
+  "light-390": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 5.15,
+      "fg": "rgb(181, 63, 31)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.24
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 6.03
+    }
+  ],
+  "light-768": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 5.15,
+      "fg": "rgb(181, 63, 31)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.24
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 6.03
+    }
+  ],
+  "light-1280": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 5.15,
+      "fg": "rgb(181, 63, 31)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 6.4,
+      "fg": "rgb(107, 84, 67)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 16.41,
+      "fg": "rgb(43, 26, 18)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.12,
+      "fg": "rgb(250, 243, 231)",
+      "bg": "rgb(43, 26, 18)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.24
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 6.03
+    }
+  ],
+  "dark-390": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 7.91,
+      "fg": "rgb(255, 138, 92)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.14
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 8.78
+    }
+  ],
+  "dark-768": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 7.91,
+      "fg": "rgb(255, 138, 92)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.14
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 8.78
+    }
+  ],
+  "dark-1280": [
+    {
+      "label": "ink on surface (standfirst)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (pair caps)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ember-text on surface (eyebrow no)",
+      "kind": "body",
+      "ratio": 7.91,
+      "fg": "rgb(255, 138, 92)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (chip-flat text)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on raised (section h2)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (sect hint)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ring center big vs surface",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on raised (ring cap)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (bakeline)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (bakesub)",
+      "kind": "body",
+      "ratio": 9.51,
+      "fg": "rgb(201, 184, 163)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink on surface (stat strip value)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "ink-dim on surface (stat strip label)",
+      "kind": "body",
+      "ratio": 15.31,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "link ember-text on surface",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "feed row primary text on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "table ink on raised",
+      "kind": "body",
+      "ratio": 13.6,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "label": "button text on ink pill",
+      "kind": "body",
+      "ratio": 15.89,
+      "fg": "rgb(245, 233, 214)",
+      "bg": "rgb(22, 14, 12)"
+    },
+    {
+      "label": "ink on MOTTLE-WORST (price)",
+      "kind": "body",
+      "ratio": 14.14
+    },
+    {
+      "label": "ink-dim on MOTTLE-WORST (strip labels)",
+      "kind": "body",
+      "ratio": 8.78
+    }
+  ],
+  "emptyStates": {
+    "empties": [
+      {
+        "title": "No wallet connected",
+        "visible": true
+      },
+      {
+        "title": "Connect a wallet to send transactions",
+        "visible": true
+      },
+      {
+        "title": "Quotes route all Cookie Chain DEX liquidity",
+        "visible": true
+      },
+      {
+        "title": "Your cockpit copilot",
+        "visible": true
+      }
+    ],
+    "errboxes": 0
+  }
+}

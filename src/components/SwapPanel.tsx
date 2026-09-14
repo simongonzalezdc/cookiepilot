@@ -83,6 +83,16 @@ export function SwapPanel() {
 
   const getQuote = async () => {
     setErr(null);
+    // form-ux: never silently disable submit — an invalid click explains
+    // what's missing instead (adjacent errbox, value preserved)
+    if (!canQuote) {
+      setErr(
+        !outTok || inTok.mint === outTok.mint
+          ? "Pick a different output token — in and out can't match."
+          : "Enter an amount above 0 to get a quote.",
+      );
+      return;
+    }
     setQuote(null);
     setBusy(true);
     try {
@@ -170,7 +180,7 @@ export function SwapPanel() {
               </select>
             </div>
           </div>
-          <button className="btn primary" disabled={!canQuote || busy} onClick={() => void getQuote()}>
+          <button className="btn primary" disabled={busy} onClick={() => void getQuote()}>
             {busy ? "Routing…" : "Get quote"}
           </button>
           {err && <div className="errbox" style={{ marginTop: 10 }}>{err}</div>}

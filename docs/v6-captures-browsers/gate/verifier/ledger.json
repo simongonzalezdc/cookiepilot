@@ -1,0 +1,2345 @@
+{
+  "schema_version": 1,
+  "catalog": {
+    "path": "skills/tastecheck-pass/assets/check-catalog.json",
+    "sha256": "a4b61dbd97681471bddc36f5115aceb7ea058e9971f0468242e8cf8a0de522c6"
+  },
+  "artifact": {
+    "type": "directory",
+    "path": "dist",
+    "sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+    "bytes": 648310,
+    "dependency_manifest": {
+      "entry": "dist/index.html",
+      "assets": [
+        {
+          "path": "dist/assets/index-C7zNGIt_.js",
+          "bytes": 498800,
+          "sha256": "0b68437111e05313faa7733fa21708b1e650d1d3fffb69320a72050b63976659"
+        },
+        {
+          "path": "dist/assets/index-lu-D-Tno.css",
+          "bytes": 38176,
+          "sha256": "aac2d5de511cd9f3328f68100bfac47f35feed6e1adb1a4dd159d1b9c2c940d8"
+        },
+        {
+          "path": "dist/fonts/mplus-400.woff2",
+          "bytes": 21608,
+          "sha256": "2071edce3675ed9c2e79563a08c3f399a290c4c439a4f2ae6f330283e0bf9fba"
+        },
+        {
+          "path": "dist/fonts/mplus-500.woff2",
+          "bytes": 21532,
+          "sha256": "e15f0e7314386720f112c651bbd58ec6c05941f96395e8d075744db1e730c373"
+        },
+        {
+          "path": "dist/fonts/mplus-700.woff2",
+          "bytes": 22244,
+          "sha256": "5bc9f941391ac451c8857ea5ec138b29d64ab144c24c7504f92285f2581fc6a3"
+        },
+        {
+          "path": "dist/fonts/mplus-800.woff2",
+          "bytes": 22224,
+          "sha256": "73247529dc06b255b6b85dd3e42a7af5f2f516761a468003765d421e212140ac"
+        },
+        {
+          "path": "dist/fonts/mplus-900.woff2",
+          "bytes": 21116,
+          "sha256": "698480bd2cf228bebb0390a9ac05195192edef7ecd1291677b78cbc94513756f"
+        },
+        {
+          "path": "dist/index.html",
+          "bytes": 1518,
+          "sha256": "0174dcbdbdcc05ce095c6e6680d4fa5fa3ea797f1ceb2a429b2006365df34c39"
+        },
+        {
+          "path": "dist/theme-boot.js",
+          "bytes": 616,
+          "sha256": "7f29545685bee864d203c22aa36dc168984a3dab54e4fcee2ebc1176e9623136"
+        }
+      ],
+      "sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670"
+    }
+  },
+  "execution": {
+    "mode": "audit",
+    "target_origin": "repo",
+    "authenticated": false,
+    "writes": false,
+    "injection": false,
+    "authorization": null
+  },
+  "browser_subjects": {
+    "manifest_path": "skills/tastecheck-pass/assets/browser-subject-manifest.json",
+    "manifest_sha256": "0e79c5e91e2ec9b71a819371333164a28ee5ada3b24aa564982131315f4d00f9",
+    "required_viewports": [
+      390,
+      768,
+      1280
+    ]
+  },
+  "subject_inventory": {
+    "frozen_at": "2026-09-14T01:00:39Z",
+    "subjects": [
+      "motion",
+      "data-viz",
+      "art-direction",
+      "cognitive-friction"
+    ],
+    "coverage": {
+      "direction:system": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "foundation:color": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "foundation:typography": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "foundation:spacing": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "foundation:theming": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "structure:responsive-layout": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "structure:component-states": [
+        {
+          "id": "control:theme-toggle|state:rest-focus-pressed",
+          "control": "theme-toggle",
+          "state": "rest-focus-pressed"
+        },
+        {
+          "id": "control:connect-wallet|state:dialog-open-dismiss",
+          "control": "connect-wallet",
+          "state": "dialog-open-dismiss"
+        },
+        {
+          "id": "control:get-quote|state:invalid-explained-recovered",
+          "control": "get-quote",
+          "state": "invalid-explained-recovered"
+        },
+        {
+          "id": "control:ask-console|state:submit-answered",
+          "control": "ask-console",
+          "state": "submit-answered"
+        },
+        {
+          "id": "control:hero-retry|state:api-error-retry",
+          "control": "hero-retry",
+          "state": "api-error-retry"
+        }
+      ],
+      "structure:form-ux": [
+        {
+          "id": "control:swap-amount|state:invalid-then-recovered",
+          "control": "swap-amount",
+          "state": "invalid-then-recovered"
+        },
+        {
+          "id": "control:swap-outpick|state:search-pick",
+          "control": "swap-outpick",
+          "state": "search-pick"
+        },
+        {
+          "id": "control:ask-console|state:query-answer",
+          "control": "ask-console",
+          "state": "query-answer"
+        }
+      ],
+      "structure:empty-states": [
+        {
+          "id": "control:hero|state:boot-loading",
+          "control": "hero",
+          "state": "boot-loading"
+        },
+        {
+          "id": "control:hero|state:api-error-retry",
+          "control": "hero",
+          "state": "api-error-retry"
+        },
+        {
+          "id": "control:wallet-panel|state:empty-no-wallet",
+          "control": "wallet-panel",
+          "state": "empty-no-wallet"
+        },
+        {
+          "id": "control:swap-card|state:empty-pre-quote",
+          "control": "swap-card",
+          "state": "empty-pre-quote"
+        },
+        {
+          "id": "control:ask-console|state:empty-first-run",
+          "control": "ask-console",
+          "state": "empty-first-run"
+        }
+      ],
+      "surface:micro-motion": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "surface:data-viz": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "surface:art-direction": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "verification:a11y": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "verification:cognitive-a11y": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "verification:i18n": [],
+      "verification:deslop-ui": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "verification:humanize-copy": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "browser:rendering": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:zoom-400": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:keyboard": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:theme-contrast": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:reduced-motion": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:cold-load": [
+        {
+          "id": "route:/|state:default|viewport:390",
+          "route": "/",
+          "state": "default",
+          "viewport": 390
+        },
+        {
+          "id": "route:/|state:default|viewport:768",
+          "route": "/",
+          "state": "default",
+          "viewport": 768
+        },
+        {
+          "id": "route:/|state:default|viewport:1280",
+          "route": "/",
+          "state": "default",
+          "viewport": 1280
+        }
+      ],
+      "browser:shadow-iframe": [],
+      "gate:artifact-spec": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "gate:required-evidence": [
+        {
+          "id": "subject:app"
+        }
+      ],
+      "gate:blocker-handoff": [
+        {
+          "id": "subject:app"
+        }
+      ]
+    },
+    "sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833"
+  },
+  "rows": [
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "direction:system",
+      "status": "pass",
+      "reason": "DESIGN-SYSTEM.md (CEO interview + v2–v6.3 addenda) present and the built artifact matches every committed row (poster anatomy, dual themes, Bite/Crumb/Oven, single warm family, refusal list held).",
+      "remediation": "none — spec binding verified this pass",
+      "evidence": {
+        "mode": "automated",
+        "summary": "Spec present: DESIGN-SYSTEM.md at repo root (v1 interview + v6 interview-completion + v6.3 addendum). Built-to-spec verified by the v6.3 battery: bite geometry per AM-3 v6.3, contrast law, poster structure, theme toggle.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "spec_present": true,
+              "built_to_spec": true
+            }
+          ]
+        },
+        "sha256": "5c7a550afa2dfc60a7813a2fbc9a73902d636175da019f3ed199627a2665ef80"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "foundation:color",
+      "status": "pass",
+      "reason": "36 measured fg/bg pairs (18 × 2 themes, incl. mottle worst-case composites): minimum ratio 5.15 — all text pairs ≥4.5:1.",
+      "remediation": "none — all measured pairs clear 4.5:1 in both themes",
+      "evidence": {
+        "mode": "automated",
+        "summary": "Canvas-composited computed-style measurement at 1280px (identical minima at 390/768, see contrast-viewports.json): light min 5.15, dark min 7.91.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "pairs": [
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 5.15,
+                  "label": "light: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.24,
+                  "label": "light: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 6.03,
+                  "label": "light: ink-dim on MOTTLE-WORST (strip labels)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 7.91,
+                  "label": "dark: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.14,
+                  "label": "dark: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 8.78,
+                  "label": "dark: ink-dim on MOTTLE-WORST (strip labels)"
+                }
+              ]
+            }
+          ]
+        },
+        "sha256": "b4c86b0d6684f484018566b828216dae2946bfa8f9644499c74664f1714220e6"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "foundation:typography",
+      "status": "pass",
+      "reason": "M PLUS Rounded 1c self-hosted woff2 loads in all engines; tabular-nums applied on 12/12 .data elements; standfirst measures 65.5ch; no text overflow at any probed width.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "fontLoads=true, tnum 12/12, measure 65.5ch, overflow 0.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "font_loads": true,
+              "measure_holds": true,
+              "wraps_without_overflow": true
+            }
+          ]
+        },
+        "sha256": "423f425c4f2bcb4a00c44af9f11929220e92690e1df6bfd71cd2c43fa723ac73"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "foundation:spacing",
+      "status": "pass",
+      "reason": "Spacing is a 4px-base ladder (observed gaps 16/18/32px + section rhythm); off-scale usages are documented poster decisions; proximity verified — crumbs/labels never collide (0 keep-out overlaps).",
+      "remediation": "none — scale documented in DESIGN-SYSTEM; --space-* token names not used (own ladder), recorded as an off-scale decision",
+      "evidence": {
+        "mode": "automated",
+        "summary": "Observed gap values {16px, 18px, 32px} on grids/cards/strip; the v6.2 keep-out law re-verified with the new bite (0 crumb/label overlaps).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "scale_present": true,
+              "off_scale_decisions": true,
+              "proximity_verified": true
+            }
+          ]
+        },
+        "sha256": "76e3c1956ecfc4bb29c218a9f04d6188f06900094e8f57e87307691ae76719fd"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "foundation:theming",
+      "status": "pass",
+      "reason": "18/18 semantic roles mapped in both themes; both theme states measured (contrast pairs ×2 themes, mottle worst-case included).",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "rolesMapped 18/18 light + 18/18 dark; theme toggle aria-pressed flips data-theme; both themes captured in the 12-shot matrix + 2 real-Safari shots.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "theme_roles_mapped": true,
+              "theme_states_measured": true
+            }
+          ]
+        },
+        "sha256": "70ae0f1db00c060e63e0c5b9e42f7f62c0710ed7e7b885cf725bf1e5812e8b4e"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "structure:responsive-layout",
+      "status": "pass",
+      "reason": "At 390/768/1280: page renders, zero horizontal overflow (scrollWidth === innerWidth), hierarchy preserved (eyebrow → price → h1 → ring → strip all present and ordered). Ladder also PASS at 320/1024/1440.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "Playwright chromium at authority viewports; full engine × theme × viewport matrix in browser-matrix.json (12 combos, 0 console errors).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "rendered": true,
+              "overflow_free": true,
+              "hierarchy_preserved": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "rendered": true,
+              "overflow_free": true,
+              "hierarchy_preserved": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "rendered": true,
+              "overflow_free": true,
+              "hierarchy_preserved": true
+            }
+          ]
+        },
+        "sha256": "9c04f8355ebafc905dab314065f96377b4cfb86e034e65676eb16cd8d62010d3"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "structure:component-states",
+      "status": "pass",
+      "reason": "Every probed control exposes its states with keyboard reach and visible focus: theme toggle (rest/focus/pressed, Enter parity), connect dialog (open/Escape-dismiss + labeled close), swap quote (invalid→explained→recovered), NL console (submit→answered), error path (retry).",
+      "remediation": "none — two gaps (modal Escape, silent swap disable) were found and FIXED this pass",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Live interaction traces: closedOnEsc=true; swapInvalid present (\"Pick a different output token…\") → recovery quoteVisible=true errGone=true; NL answered; 16-stop keyboard trace :focus-visible everywhere.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "control:theme-toggle|state:rest-focus-pressed",
+              "state_present": true,
+              "keyboard_reachable": true,
+              "focus_visible": true
+            },
+            {
+              "subject_id": "control:connect-wallet|state:dialog-open-dismiss",
+              "state_present": true,
+              "keyboard_reachable": true,
+              "focus_visible": true
+            },
+            {
+              "subject_id": "control:get-quote|state:invalid-explained-recovered",
+              "state_present": true,
+              "keyboard_reachable": true,
+              "focus_visible": true
+            },
+            {
+              "subject_id": "control:ask-console|state:submit-answered",
+              "state_present": true,
+              "keyboard_reachable": true,
+              "focus_visible": true
+            },
+            {
+              "subject_id": "control:hero-retry|state:api-error-retry",
+              "state_present": true,
+              "keyboard_reachable": true,
+              "focus_visible": true
+            }
+          ]
+        },
+        "sha256": "6c32a2358e427877e3fe8efae7e348fb9b0580cdf4f31bbe6ba7016f350f3998"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "structure:form-ux",
+      "status": "pass",
+      "reason": "All 5 inputs have persistent labels (5/5); validation explains and preserves value on the swap path; submission is recoverable (invalid → errbox → fix → quote) and the console answers queries. autocomplete n/a: no personal-data fields (WCAG 1.3.5 not applicable) — recorded decision.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Measured: formInventory labeled 5/5; swap invalid click → explained errbox (value preserved) → pick bCOOK + amount → quoteout visible, err gone. The silent-disable violation found this pass was fixed in SwapPanel.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "control:swap-amount|state:invalid-then-recovered",
+              "labels_and_autocomplete": true,
+              "validation_recoverable": true,
+              "submission_recoverable": true
+            },
+            {
+              "subject_id": "control:swap-outpick|state:search-pick",
+              "labels_and_autocomplete": true,
+              "validation_recoverable": true,
+              "submission_recoverable": true
+            },
+            {
+              "subject_id": "control:ask-console|state:query-answer",
+              "labels_and_autocomplete": true,
+              "validation_recoverable": true,
+              "submission_recoverable": true
+            }
+          ]
+        },
+        "sha256": "6df021cd60394d5340b9dc962a3c7635f59a14dc35f9cc62df368456fae02811"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "structure:empty-states",
+      "status": "pass",
+      "reason": "Four distinct empty states live in the fresh DOM (wallet / tx / swap pre-quote / console first-run), boot loading state, and API-error + Retry — each with recovery and stable layout.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Fresh DOM: .empty titles \"No wallet connected\", \"Connect a wallet to send transactions\", \"Quotes route all Cookie Chain DEX liquidity\", \"Your cockpit copilot\"; API-abort lane: errbox + Retry visible.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "control:hero|state:boot-loading",
+              "state_present": true,
+              "recovery_available": true,
+              "layout_stable": true
+            },
+            {
+              "subject_id": "control:hero|state:api-error-retry",
+              "state_present": true,
+              "recovery_available": true,
+              "layout_stable": true
+            },
+            {
+              "subject_id": "control:wallet-panel|state:empty-no-wallet",
+              "state_present": true,
+              "recovery_available": true,
+              "layout_stable": true
+            },
+            {
+              "subject_id": "control:swap-card|state:empty-pre-quote",
+              "state_present": true,
+              "recovery_available": true,
+              "layout_stable": true
+            },
+            {
+              "subject_id": "control:ask-console|state:empty-first-run",
+              "state_present": true,
+              "recovery_available": true,
+              "layout_stable": true
+            }
+          ]
+        },
+        "sha256": "a9f23c1e43e022c52b8366ad1ee7bcd9c30d1ffd6b7402b7a459350a0c0f9edb"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "surface:micro-motion",
+      "status": "pass",
+      "reason": "Motion is interaction-only (180ms ease-out on hover/focus/color) plus the Oven ambient with a reduced-motion kill switch; committed static-equivalent law holds: 0 running animations under reduce, stations + textures parse.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "prefers-reduced-motion emulated: runningAnimations=0, stationsParse=true, texturesIntact=true (v6.3 textures are fully static by construction).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "purposeful_motion": true,
+              "reduced_motion_safe": true
+            }
+          ]
+        },
+        "sha256": "a58105fb3d535cbe577e2ce56aba3bf4c8992b6cff3662deae98ff5b35a640a6"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "surface:data-viz",
+      "status": "pass",
+      "reason": "Every chart direct-labels: sparkline MIN/MAX/NOW + ruled baseline, ring segments with COOK amounts + share, bar bite-tags + top-bar label, quote panel shows min-received/price-impact/low-liquidity flags; ring carries role=img aria-label; tables wrapped and readable.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "sparkLabels=3, ringSegments=2, barValueLabels=2, ring aria=\"of supply bridged: 54.5%\".",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "uncertainty_shown": true,
+              "direct_labels": true,
+              "accessible_table": true
+            }
+          ]
+        },
+        "sha256": "3134410e4697de3b56b92c4a2225397db1726ea784947e396c1d6b80e378f011"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "surface:art-direction",
+      "status": "pass",
+      "reason": "Asset roles defined (favicon/wordmark = cookie glyph only; ring = the bite signature; 24px line icon set; grain/halftone/mottle = paper texture layers); decorative marks carry aria-hidden, informative marks carry labels.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "DOM: bite-corner/crumbline/crumbs aria-hidden; ring svg role=img + aria-label; icons inline-SVG with text labels; real-bite crescent locked by vision roll (AM-3 v6.3).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "asset_roles_defined": true,
+              "alt_or_decorative_marked": true
+            }
+          ]
+        },
+        "sha256": "dcdf232cae8c20f3a763142317bcf9b56a7584488d407a9ac2d2aedaac8e4300"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "verification:a11y",
+      "status": "fail",
+      "reason": "Keyboard path complete and contrast measured, but 41 tap-target failures (sub-24px microtext links in below-fold feed/market rows) remain unresolved — pre-existing, carried.",
+      "remediation": "Owner: below-fold rework pass (staged item 7). Repair: densify below-fold panels with ≥24px targets. Rerun: a11y-audit.js on fresh load. Acceptance: 0 TAP TARGET fails at both themes. Predecessor: v6.2 pass (same 41).",
+      "evidence": {
+        "mode": "automated",
+        "summary": "a11y-pass audit.js on fresh load, all 3 engines: 41 TAP TARGET fails (identical set), 0 INPUT-label fails, heading order/focus clean; keyboard trace 16 stops :focus-visible; contrast 36 pairs measured.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "violations_resolved": false,
+              "keyboard_reachable": true,
+              "contrast_measured": true
+            }
+          ]
+        },
+        "sha256": "929896751c935415821e2d7b86ede140bf8539044a4e5f37fabdb28daf00de5b"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "verification:cognitive-a11y",
+      "status": "pass",
+      "reason": "Friction walked on real paths: invalid swap → plain-language fix; API failure → named problem + Retry; console answers in place; no surprise navigations; data always labeled with units; recovery is predictable everywhere probed.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Error copy formula applied (\"Pick a different output token — in and out can't match.\", \"Something broke: … + Retry\"); NL console keeps context; no time pressure; language plain and front-loaded.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "friction_reviewed": true,
+              "predictable_recovery": true
+            }
+          ]
+        },
+        "sha256": "5d842a4a0c6744c948c1e31c58617035234b1afabb55a427374ebfd9de1eb975"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "verification:i18n",
+      "status": "n/a",
+      "reason": "Monolingual English product; no multilingual surface exists (single-locale copy, no language toggle, no locale routing).",
+      "remediation": "none — if a second locale ships, run the i18n-ready locale contract first",
+      "evidence": {
+        "mode": "automated",
+        "summary": "DOM audit: no lang switches, no locale toggle, no hreflang, single-locale strings only — subject \"multilingual\" absent (0 multilingual surfaces).",
+        "details": {
+          "observations": []
+        },
+        "sha256": "9fba9b19f477b87f00f9b0ef81ebeededeff92ad24c1de3a87d8f279e0c405c3",
+        "subject_absent": true,
+        "subject": "multilingual"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "verification:deslop-ui",
+      "status": "pass",
+      "reason": "Audited against DESIGN-SYSTEM.md: no purple gradients, no glassmorphism, no stock icon pack, no default type face (gate-audit resolves M PLUS Rounded 1c), poster structure is brief-bound; the 6 gate-audit warns (pill CTAs ×4, uniform-grid ×2) are each documented committed decisions (CEO control radius; poster cadence + list feed).",
+      "remediation": "none — remaining warns are documented decisions, re-reviewed this pass",
+      "evidence": {
+        "mode": "automated",
+        "summary": "gate-audit.js fresh-load on chromium+webkit+firefox: 0 fail / 6 warn (same set as v6.2, all adjudicated as committed decisions in DESIGN-SYSTEM v4/v5 rows).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "against_spec": true,
+              "tells_reviewed": true
+            }
+          ]
+        },
+        "sha256": "b0c7725929fa9298b3013f8079ed4efe538baa88139cbe7609cf9847f3f09104"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "verification:humanize-copy",
+      "status": "pass",
+      "reason": "Copy is source-bound (live metrics, named programs, real endpoints) in the community voice the CEO directed (\"oven-fresh L2\", \"crumb by crumb\"); no filler superlatives, no generic LLM tells; wordplay never lands on a datum (v6 KILL row enforced).",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "Copy walk over hero/sections/empty/error states: every claim ties to a live feed or a named program; humor lives in marketing lines only.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "source_bound_copy": true,
+              "generic_tells_resolved": true
+            }
+          ]
+        },
+        "sha256": "c16fe74d9632fbc5559c033784b71d160742863369fca3351349b554111d6745"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:rendering",
+      "status": "pass",
+      "reason": "All three authority viewports render the full dashboard (0 console errors, expected layout probes true). Additionally verified across chromium+webkit+firefox × 2 themes × {1440×900, 390×844} with engine-divergence probes (font/tnum, grain, halftone, mottle, svh hero, price sizing, halo, bite path) — no divergence.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Playwright matrix (browser-matrix.json): 12/12 combos 0 console errors; real-Safari lane captured via screencapture — vision: RENDER OK, TEXTURE VISIBLE, BITE REAL, both themes.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "rendered": true,
+              "overflow_free": true,
+              "expected_layout": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "rendered": true,
+              "overflow_free": true,
+              "expected_layout": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "rendered": true,
+              "overflow_free": true,
+              "expected_layout": true
+            }
+          ]
+        },
+        "sha256": "1d386e2bbfea94fe66b433383dfe475540e560ecfcf2b3285d34bfa6c478281e"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:zoom-400",
+      "status": "fail",
+      "reason": "400% zoom tested via the 320px→80px effective-viewport simulation: content does NOT reflow without loss — scrollWidth 299 vs 80 (.giantprice min-content floor). Pre-existing on the v6.1 base; carried per assignment.",
+      "remediation": "Owner: CEO (hero-fork notation decision) → repair pass. Repair: adopt value-preserving poster notation for sub-cent prices (Option A) or demote price (Option B), then re-run the 80px probe. Rerun: overflow probe at 320/400% zoom. Acceptance: scrollWidth ≤ innerWidth at 80px. Predecessor: v6.2 pass (identical failure).",
+      "evidence": {
+        "mode": "manual",
+        "summary": "zoom400-320to80: sw=299 iw=80 (evidence.json). 200% (320px viewport at 2× = 160px content) ladder passes at 320; the failure is the 11-char honest price at the 24px font floor.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "zoom_400_tested": true,
+              "reflow_without_loss": false
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "zoom_400_tested": true,
+              "reflow_without_loss": false
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "zoom_400_tested": true,
+              "reflow_without_loss": false
+            }
+          ]
+        },
+        "sha256": "d7727eeaad45f4359f4febdd0e20dd8f7c0cd75553bcc7f73d073104953bf4b8"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:keyboard",
+      "status": "pass",
+      "reason": "Focus path complete (16 stops from browser chrome through hero → sections → footer), :focus-visible styling on every stop, activation parity (Enter on theme toggle === click: theme + aria-pressed flip).",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Tab trace recorded in evidence.json (connect-pill → themetoggle → CTAs → nav → links); Escape now dismisses the wallet dialog (fixed this pass).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "focus_path_complete": true,
+              "focus_visible": true,
+              "activation_parity": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "focus_path_complete": true,
+              "focus_visible": true,
+              "activation_parity": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "focus_path_complete": true,
+              "focus_visible": true,
+              "activation_parity": true
+            }
+          ]
+        },
+        "sha256": "120da731a96a9e4d3799844093e6dbcad1fbdec2ca6b5f59f58b6da2c13bfa72"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:theme-contrast",
+      "status": "pass",
+      "reason": "Both themes measured at every authority viewport: minimum ratio 5.15 across the 36-pair set (light min 5.15, dark min 7.91) — all text ≥4.5:1, large/chart marks ≥3:1.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Computed-style canvas measurement at 390/768/1280 × light/dark (contrast-viewports.json): identical minima (viewport-independent token ratios).",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "pairs": [
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 5.15,
+                  "label": "light: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.24,
+                  "label": "light: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 6.03,
+                  "label": "light: ink-dim on MOTTLE-WORST (strip labels)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 7.91,
+                  "label": "dark: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.14,
+                  "label": "dark: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 8.78,
+                  "label": "dark: ink-dim on MOTTLE-WORST (strip labels)"
+                }
+              ]
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "pairs": [
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 5.15,
+                  "label": "light: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.24,
+                  "label": "light: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 6.03,
+                  "label": "light: ink-dim on MOTTLE-WORST (strip labels)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 7.91,
+                  "label": "dark: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.14,
+                  "label": "dark: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 8.78,
+                  "label": "dark: ink-dim on MOTTLE-WORST (strip labels)"
+                }
+              ]
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "pairs": [
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 5.15,
+                  "label": "light: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 6.4,
+                  "label": "light: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 16.41,
+                  "label": "light: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.12,
+                  "label": "light: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.24,
+                  "label": "light: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 6.03,
+                  "label": "light: ink-dim on MOTTLE-WORST (strip labels)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (standfirst)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (pair caps)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 7.91,
+                  "label": "dark: ember-text on surface (eyebrow no)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (chip-flat text)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on raised (section h2)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on raised (sect hint)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ring center big vs surface"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on raised (ring cap)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (bakeline)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 9.51,
+                  "label": "dark: ink-dim on surface (bakesub)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink on surface (stat strip value)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.31,
+                  "label": "dark: ink-dim on surface (stat strip label)"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: link ember-text on surface"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: feed row primary text on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 13.6,
+                  "label": "dark: table ink on raised"
+                },
+                {
+                  "kind": "body",
+                  "ratio": 15.89,
+                  "label": "dark: button text on ink pill"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 14.14,
+                  "label": "dark: ink on MOTTLE-WORST (price)"
+                },
+                {
+                  "kind": "large",
+                  "ratio": 8.78,
+                  "label": "dark: ink-dim on MOTTLE-WORST (strip labels)"
+                }
+              ]
+            }
+          ]
+        },
+        "sha256": "0d399e09ee4b6559ec40217ecd49281ada44e6e1bee14a7d3ec9d4c0fcb93d75"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:reduced-motion",
+      "status": "pass",
+      "reason": "With prefers-reduced-motion: reduce — 0 running animations, crumb stations parse as static labels, all v6.2/v6.3 textures intact.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "Playwright reducedMotion:\"reduce\" emulation on the served dist.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "reduced_motion_setting": true,
+              "motion_suppressed": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "reduced_motion_setting": true,
+              "motion_suppressed": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "reduced_motion_setting": true,
+              "motion_suppressed": true
+            }
+          ]
+        },
+        "sha256": "6b3752a695af5def99bef324b6731deaf002914f2dc6df221f96fc15cf9ea965"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:cold-load",
+      "status": "pass",
+      "reason": "Cold loads are clean across all engines and viewports: initial render honest (boot state → live data, no pre-revealed content), 0 console errors on every load (12-shot matrix + battery + audits), no hidden loading states (gate-audit checks 1–5 all clean).",
+      "remediation": "none",
+      "evidence": {
+        "mode": "manual",
+        "summary": "gate-audit.js cold-load on 3 engines: 0 fail (6 documented warns); console error count 0 on all 12 matrix combos + 6 battery loads + 3 audit loads + 2 real-Safari loads.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "route:/|state:default|viewport:390",
+              "initial_render": true,
+              "console_clean": true,
+              "no_hidden_loading": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:768",
+              "initial_render": true,
+              "console_clean": true,
+              "no_hidden_loading": true
+            },
+            {
+              "subject_id": "route:/|state:default|viewport:1280",
+              "initial_render": true,
+              "console_clean": true,
+              "no_hidden_loading": true
+            }
+          ]
+        },
+        "sha256": "334059f475f8ef8c9f5d76da9ae212458e15bd190747ada64f85f1ce49c8eb11"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "browser:shadow-iframe",
+      "status": "n/a",
+      "reason": "No shadow roots and no iframes exist in the rendered app — subject \"shadow-or-iframe\" absent.",
+      "remediation": "none — re-run if a shadow root or embed is ever introduced",
+      "evidence": {
+        "mode": "manual",
+        "summary": "DOM walk on fresh load: iframes=0, shadowHosts=0 (evidence.json shadowIframe).",
+        "details": {
+          "observations": []
+        },
+        "sha256": "85b1c28d076be75aef38e8eb6a75d6931d6ccffb8f37b62a2e2c44938c65318a",
+        "subject_absent": true,
+        "subject": "shadow-or-iframe"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": {
+          "name": "2-CookiePilot-v6-pass3",
+          "role": "release inspector (agent seat)",
+          "method": "playwright-driven live inspection of served dist; org-bridge minimax vision checks on captures"
+        },
+        "sha256": "947163e695f8513042a71035f7d0d7a55f51ee591b016e8a0b4c593fe2acd511"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "gate:artifact-spec",
+      "status": "pass",
+      "reason": "Artifact = dist/ directory, SHA-256 verified by the gate's own inspector; dependency manifest (entry + linked CSS/JS/font closure) measured and hash-verified; spec identity = DESIGN-SYSTEM.md bound into this ledger run.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "inspectArtifact(directory:dist): hash_verified=true, dependency_manifest_hash_verified=true.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "artifact_hash_verified": true,
+              "dependency_manifest_verified": true,
+              "spec_identity_bound": true
+            }
+          ]
+        },
+        "sha256": "f0c86962b0a60e99538f10b64c053794f18a8e48b106c2bc14127294506e986e"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "gate:required-evidence",
+      "status": "pass",
+      "reason": "Numeric evidence present (36 contrast ratios, overflow ladder + 400% sim, keyboard trace, animation count, tap-target counts); browser evidence present (12-combo engine matrix + real-Safari lane + authority-viewport probes); all required catalog members covered by this ledger.",
+      "remediation": "none",
+      "evidence": {
+        "mode": "automated",
+        "summary": "evidence.json + browser-matrix.json + contrast-viewports.json + safari-real-{light,dark}.png, all under docs/v6-captures-browsers/.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "numeric_evidence_present": true,
+              "browser_evidence_present": true,
+              "all_required_members_covered": true
+            }
+          ]
+        },
+        "sha256": "b4468891fb0b35c8f928a2619723621f5f64ad0483a74ba4f1a208096d4ce17b"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    },
+    {
+      "skill": "tastecheck-pass",
+      "check_id": "gate:blocker-handoff",
+      "status": "pass",
+      "reason": "Both carried blockers carry owner, repair, rerun, and acceptance rule: (1) 400%-zoom overflow — owner CEO (hero-fork notation decision) then repair pass; rerun 80px overflow probe; acceptance scrollWidth ≤ innerWidth. (2) 41 tap targets — owner below-fold rework pass; rerun a11y-audit.js; acceptance 0 TAP TARGET fails.",
+      "remediation": "none — handoff recorded; ETAs do not change HOLD",
+      "evidence": {
+        "mode": "automated",
+        "summary": "See rows browser:zoom-400 and verification:a11y remediation fields; identical handoff recorded in DESIGN-SYSTEM.md v6/v6.3.",
+        "details": {
+          "observations": [
+            {
+              "subject_id": "subject:app",
+              "owners_named": true,
+              "repairs_named": true,
+              "reruns_named": true,
+              "acceptance_rules_named": true
+            }
+          ]
+        },
+        "sha256": "ebf60a95a66249bda4e5866747e31846c8e77fb1a52d32e26c0b80fa90a1f899"
+      },
+      "provenance": {
+        "artifact_identity": "directory:dist",
+        "artifact_sha256": "2f2d7d7c98dc54a6ff79a955f72311104a9cf82d223661699f8cd6d2d140ec37",
+        "dependency_manifest_sha256": "aa5c351a191037a5484e02a146884b5b15fa6c979f7486889e653cad660a0670",
+        "subject_inventory_sha256": "678f400c0c869823bbeff7e500d3f19e2a2fbe3de172015d673123e05d7b2833",
+        "captured_at": "2026-09-14T01:00:39Z",
+        "tool": {
+          "name": "playwright",
+          "version": "1.60.0"
+        },
+        "browser": {
+          "name": "chromium",
+          "version": "1.60.0"
+        },
+        "inspector": null,
+        "sha256": "dee5bbe729d8408aad4d47969ff0d400d417d61a043dd22bc9cbf9f69a950568"
+      },
+      "review": null
+    }
+  ]
+}

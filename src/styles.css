@@ -186,7 +186,7 @@ body::after {
   z-index: 2000;
   pointer-events: none;
   opacity: var(--grain-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='%75rl%28%23n%29'/%3E%3C/svg%3E");
   background-size: 240px 240px;
 }
 @media (prefers-reduced-motion: reduce) { body::after { position: absolute; } }
@@ -1199,7 +1199,13 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--ember), var(--mint-bright));
 }
-.modal h4 { margin: 0 0 14px; font-size: 17px; }
+.modal h4 { margin: 0 0 14px; font-size: 17px; display: flex; align-items: center; justify-content: space-between; }
+/* v6.3 component-states fix: visible keyboard-reachable close for the dialog */
+.modal-x {
+  border: 1px solid var(--line-ctl); background: var(--surface); color: var(--ink-dim);
+  border-radius: 8px; width: 28px; height: 28px; line-height: 1; font-size: 16px; cursor: pointer;
+}
+.modal-x:hover { color: var(--ink); border-color: var(--ink-dim); }
 .wlist { display: flex; flex-direction: column; gap: 8px; }
 .witem {
   display: flex; align-items: center; gap: 12px;
