@@ -16,19 +16,9 @@
     />
     <link rel="preload" href="/cookiepilot/fonts/mplus-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/cookiepilot/fonts/mplus-700.woff2" as="font" type="font/woff2" crossorigin />
-    <script>
-      // Light-first dual theme; restore saved choice before first paint (no flash).
-      // CSS is render-blocking, so data-theme alone guarantees a correct first paint.
-      (function () {
-        try {
-          var t = localStorage.getItem("cookiepilot-theme");
-          if (t !== "light" && t !== "dark") t = "light";
-          document.documentElement.dataset.theme = t;
-        } catch (e) {}
-      })();
-    </script>
-    <script type="module" crossorigin src="/cookiepilot/assets/index-DH7fgXUj.js"></script>
-    <link rel="stylesheet" crossorigin href="/cookiepilot/assets/index-BjjyTXYs.css">
+    <script src="/cookiepilot/theme-boot.js"></script>
+    <script type="module" crossorigin src="/cookiepilot/assets/index-BsOL2QmY.js"></script>
+    <link rel="stylesheet" crossorigin href="/cookiepilot/assets/index-DeDi3QE-.css">
   </head>
   <body>
     <div id="root"></div>
