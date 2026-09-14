@@ -37,25 +37,25 @@ export default function App() {
           <main>
           <StatTiles />
 
-          <Section no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
+          <Section id="wallet" no="02" title="Wallet" hint="Nightly + any standard SVM wallet" icon={<IconWallet size={20} />}>
             <WalletPanel onWantConnect={() => window.dispatchEvent(new CustomEvent("cookiepilot:open-connect"))} />
           </Section>
 
-          <Section no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
+          <Section id="analytics" no="03" title="Analytics" hint="indexer + swap feeds" icon={<IconChart size={20} />}>
             <NetworkFacts />
             <NetworkPanel />
             <div style={{ height: 18 }} />
             <MarketsPanel />
           </Section>
 
-          <Section no="04" title="Live activity" hint="sub-second finality, on the Crumb Trail" icon={<IconOven size={20} />}>
+          <Section id="activity" no="04" title="Live activity" hint="sub-second finality, on the Crumb Trail" icon={<IconOven size={20} />}>
             <div className="grid cols-2">
               <ActivityFeed />
               <TxPanel />
             </div>
           </Section>
 
-          <Section no="05" title="Swap & console" hint="keyless quotes · non-custodial execution · NL chain queries" icon={<IconSwap size={20} />}>
+          <Section id="swap" no="05" title="Swap & console" hint="keyless quotes · non-custodial execution · NL chain queries" icon={<IconSwap size={20} />}>
             <SwapPanel />
             <div style={{ height: 18 }} />
             <AskPanel />

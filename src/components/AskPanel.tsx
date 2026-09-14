@@ -29,6 +29,17 @@ export function AskPanel() {
     }
     bottom.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [exchanges, busy]);
+  // Deep link: ?q=<query> auto-asks once on load (shareable console state; also
+  // drives the demo video's console frame). ?t=dark|light overrides theme.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const deep = params.get("q");
+    if (deep) {
+      const id = window.setTimeout(() => void ask(deep), 700);
+      return () => window.clearTimeout(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ask = async (query: string) => {
     const text = query.trim();

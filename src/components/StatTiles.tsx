@@ -16,16 +16,31 @@ interface AllStats {
   slotMs: number | null;
 }
 
+/** Retry a flake-prone fetch a few times before yielding null — one dropped
+ *  request must not blank the hero number for a whole poll cycle (30s). */
+async function soft<T>(p: () => Promise<T>, tries = 3, baseMs = 1200): Promise<T | null> {
+  for (let i = 0; i < tries; i++) {
+    try {
+      return await p();
+    } catch {
+      if (i < tries - 1) await new Promise((r) => setTimeout(r, baseMs * (i + 1)));
+    }
+  }
+  return null;
+}
+
 async function fetchAll(): Promise<AllStats> {
-  const [stats, price, daily, bridge, supply, perf] = await Promise.all([
+  const [stats, price, daily, bridge, supplyR, perf] = await Promise.all([
     fetchChainStats(),
     fetchCookPrice(),
     fetchDailyAnalytics(),
-    fetchBridgeStats().catch(() => null),
+    soft(() => fetchBridgeStats()),
     rpc<{ value: { circulating: number; total: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]),
     // block time → the finality story, straight from validator perf samples
-    rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [1]).catch(() => null),
+    soft(() => rpc<{ numSlots: number; samplePeriodSecs: number }[]>("getRecentPerformanceSamples", [1])),
   ]);
+  const supply = supplyR ?? (await soft(() => rpc<{ value: { circulating: number; total: number } }>("getSupply", [{ excludeNonCirculatingAccountsList: true }]), 2, 800));
+  if (!supply) throw new Error("supply unavailable");
   const slotMs = perf?.[0]?.numSlots ? (perf[0].samplePeriodSecs * 1000) / perf[0].numSlots : null;
   return {
     stats,
