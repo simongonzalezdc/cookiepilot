@@ -10,7 +10,7 @@
 
 ---
 
-## Design system v6.5 — "Bakery, final bake" (DESIGN-SYSTEM.md v2–v6.5, every pass gate-verified)
+## Design system v8 — "honesty floor" (v6.5 → v7 fold-law → v8 trust-the-data; DESIGN-SYSTEM.md v2–v8, every pass gate-verified)
 
 Warm, precise, community-native: vanilla/cocoa **dual theme, light-first**, one-click sun|moon toggle top-right (`aria-pressed`, persisted in `localStorage`). One self-hosted rounded family. Signature geometry = **the bitten stuffed ring** (a real bite, not a scallop) + **Crumb Trail** (static tx-state stations) + **Oven** (ambient feed motion). Flat editorial paper: sharp-cornered cards on ink hairlines — depth comes from rules, not blur or shadows.
 
@@ -58,12 +58,15 @@ Every chart **direct-labels on the chart itself**: the sparkline carries ruled b
 ### Judging frame (AM-5)
 
 First viewport at **1440×900 and 390×844** shows: product name, the finality standfirst, live network state, the giant block-time number, **one legible bite chart** (the ring), theme toggle top-right, and the KPI matrix on the fold edge. On 390×844 the giant number, the full ring, the CTA and KPI row 1 (Throughput · Finality) land above the fold, and the live-activity pane carries a context line (`● live · slot N · ~450 ms per block`). Section order: `01 pulse-hero → 02 wallet → 03 analytics → 04 live feed (Crumb Trail) → 05 swap + NL console`. No horizontal overflow from 320 px to 1440 px, and at the 400%-zoom simulation (80 px effective) content reflows without loss.
+- **v7 (fold law):** the hero-grid dissolves to flex order on mobile so the sparkline drops below the KPI strip as the fold hook (strip row2 881 → 787 px @ 390×844); favicon de-pumpkin to caramel C3; og/twitter preview cards.
+- **v8 (honesty floor):** p50/p95 hero micro-row, stale-guard, feed-witnessed finality SLA, per-panel error boundaries, RPC failover investigated and refused as theater (single-RPC ecosystem, documented in DESIGN-SYSTEM v8 failover ruling). Tray-speed line replaced bake-speed with strictly-observable tray median.
 
 **Evidence:** `docs/v6-captures-final/` (final battery: captures both themes × both viewports, full page, ring close-up, gate-report.json) · `docs/v6-captures-v6b/` (v6.4 roll evidence) · `docs/v6-captures-browsers/` (3-engine matrix + real-Safari lane + release-gate ledger).
+**Honest note:** the tastecheck-pass capture battery (`docs/v6-captures*/`) was last re-run at v6.5. v7 and v8 changed layout and copy on the live hero/strip without re-emitting captures; rebuilds remain byte-identical (`npm run build` ↔ `https://cookiepilot.netlify.app`, SHA-256 `d15f903046a74fe0403d273734630687b854516d397ee55232d18dc7daf451ad`).
 
 **Budget:** JS 154 KB gzip (dominated by `@solana/web3.js`) + 9.1 KB CSS + 5 × ~21.5 KB webfonts (2 preloaded, rest non-blocking).
 
-**`npm audit` (re-checked 2026-09-13):** 6 advisories — 5 moderate (`esbuild`, `stream-json`, `uuid` + 2 transitively pinned by `@solana/web3.js`) and 1 high, all on the **vite dev-server toolchain** (dev-time only, not in the shipped bundle). The only fix is vite 8 (breaking major); accepted for this bounty window, tracked as a follow-up. Zero vulnerabilities ship in the production bundle's runtime dependencies beyond the audited `@solana/web3.js` pins.
+**`npm audit` (re-checked 2026-09-15):** 4 advisories — 3 moderate (`esbuild` dev-time, `stream-json` transitively via `@solana/web3.js` Node build, `vite` moderate) and 1 high (`vite` dev-server, transitive of `esbuild`) — all on the **vite dev-server toolchain** (dev-time only, not in the shipped bundle; web3.js ships its browser build via `lib/index.browser.esm.js`). `stream-json`/`jayson` have no patched upstream; `uuid` already overridden to `^11.1.1`. The only fix is vite 8 (breaking major); accepted for this bounty window, tracked as a follow-up. Zero vulnerabilities ship in the production bundle's runtime dependencies.
 
 ---
 
