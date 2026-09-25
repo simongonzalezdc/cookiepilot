@@ -1,8 +1,0 @@
-{
- "ruling": "ok this design is good enough ... all approved do it yourself",
- "timestamp": "2026-09-13T19:25:00-07:00",
- "approver": "CEO (Simon)",
- "scope": "v6.5 @ 355a40b + 13 review-null subjective rows in verifier/ledger.json",
- "ruling_sha256": "4203ebaa858c31e210758cdffe0785e23f72dd268e5ad4ec83cc89e8f9b7540f",
- "record_file": "CEO-APPROVAL-2026-09-13.md"
-}
