@@ -2,7 +2,7 @@
   "base": "http://localhost:4271",
   "captures": [
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440x900-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440x900-light.png",
       "crumbs": 5,
       "cracks": 9,
       "crumbline": 8,
@@ -12,7 +12,7 @@
       "chipText": "+0.00% · flat / 24H"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440x900-dark.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440x900-dark.png",
       "crumbs": 5,
       "cracks": 9,
       "crumbline": 8,
@@ -22,7 +22,7 @@
       "chipText": "+0.00% · flat / 24H"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-texture/mobile-390x844-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-texture/mobile-390x844-light.png",
       "crumbs": 5,
       "cracks": 9,
       "crumbline": 8,
@@ -32,7 +32,7 @@
       "chipText": "+0.00% · flat / 24H"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-texture/mobile-390x844-dark.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-texture/mobile-390x844-dark.png",
       "crumbs": 5,
       "cracks": 9,
       "crumbline": 8,
@@ -42,7 +42,7 @@
       "chipText": "+0.00% · flat / 24H"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440-fullpage-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-texture/desktop-1440-fullpage-light.png",
       "crumbs": 5,
       "cracks": 9,
       "crumbline": 8,

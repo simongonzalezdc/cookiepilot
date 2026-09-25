@@ -2,7 +2,7 @@
   "pass5": "v6.5 final (tap floor 41→0, mobile fold wins: feedctx + strip row 1 above fold)",
   "captures": [
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440x900-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440x900-light.png",
       "giant": "451ms",
       "price": "COOK$0.000069434+0.00% · flat",
       "chips": 9,
@@ -23,7 +23,7 @@
       "feedctxMobileOnly": "none"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440x900-dark.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440x900-dark.png",
       "giant": "451ms",
       "price": "COOK$0.000069434+0.00% · flat",
       "chips": 9,
@@ -44,7 +44,7 @@
       "feedctxMobileOnly": "none"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-final/mobile-390x844-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-final/mobile-390x844-light.png",
       "giant": "451ms",
       "price": "COOK$0.000069434+0.00% · flat",
       "chips": 9,
@@ -65,7 +65,7 @@
       "feedctxMobileOnly": "flex"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-final/mobile-390x844-dark.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-final/mobile-390x844-dark.png",
       "giant": "451ms",
       "price": "COOK$0.000069434+0.00% · flat",
       "chips": 9,
@@ -86,7 +86,7 @@
       "feedctxMobileOnly": "flex"
     },
     {
-      "file": "/Users/simongonzalezdecruz/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440-fullpage-light.png",
+      "file": "~/workspaces/cookiepilot/docs/v6-captures-final/desktop-1440-fullpage-light.png",
       "giant": "438ms",
       "price": "COOK$0.000069434+0.00% · flat",
       "chips": 9,

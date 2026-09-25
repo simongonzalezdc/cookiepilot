@@ -188,7 +188,7 @@ Skills applied: art-direction, data-viz, micro-motion (static-equivalent law), c
 
 # v6.3 — REAL BITE + CROSS-BROWSER + FULL LATEST-PACK GATE (CEO directives 2026-09-13: bite realism, "Chrome and Safari and all other browsers", "ALL tastecheck (latest) skill packs + latest interview"; implemented same day)
 
-Latest pack: `/Users/simongonzalezdecruz/workspaces/tastecheck/skills/` (read this pass, not memory). Pipeline run per its SKILL.md order: improve-existing-website (direction seat, existing site) → foundations → structure → surface → verification → tastecheck-pass gate INCLUDING release-gate.mjs.
+Latest pack: `~/workspaces/tastecheck/skills/` (read this pass, not memory). Pipeline run per its SKILL.md order: improve-existing-website (direction seat, existing site) → foundations → structure → surface → verification → tastecheck-pass gate INCLUDING release-gate.mjs.
 
 ## What shipped
 - **REAL BITE crescent** (`charts.tsx` `realBiteGeometry`): replaces the scalloped-circle notch the CEO called fake. Crescent removal anchored on the outer edge; wound edge = double dental-arc (wide shallow upper incisor row + narrower deeper lower row crossing at two cusp points — wound edge is the deeper envelope), 4–6 seeded incisor bumps per arc, mulberry32 seed `0xd1bc3`, depth 18–20% of ring radius at center, mouth 52–58° of rim. **Tasteroll**: 3 candidates vision-checked via org bridge (minimax) — deep/wide candidate FAILED ("one clean concave arc… lacks clustered, uneven tooth marks", 3/10); the winner won BOTH order-swapped head-to-heads ("more irregular tooth impressions with varied depth"). Crumb scatter stays (shed at the wound, gravity-sagged, now kept off the ring hollow); crackle strokes only on the surviving dough track.
